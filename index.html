@@ -2,457 +2,1669 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PPA Central — Portones Eléctricos · Distribuidor Autorizado PPA Latam</title>
-<meta name="description" content="Distribuidor Autorizado PPA Latam en Colombia. Portones eléctricos, barreras vehiculares y automatismos para hogares, conjuntos, negocios e industria. Florencia, Caquetá.">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>NARA · Asesora IA PPA Central</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Barlow',sans-serif;background:#F5F4F0;color:#111;}
-.nav{background:#111;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;border-bottom:3px solid #E85C00;position:sticky;top:0;z-index:100;}
-.nav-logo{display:flex;align-items:center;gap:12px;}
-.nav-logo-box{width:38px;height:38px;border-radius:8px;background:#E85C00;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:#fff;}
-.nav-brand{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#fff;}
-.nav-sub{font-size:8px;color:#E85C00;letter-spacing:2px;text-transform:uppercase;margin-top:1px;opacity:.8;}
-.nav-links{display:flex;align-items:center;gap:4px;}
-.nl{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:1px;font-weight:600;padding:6px 12px;cursor:pointer;text-decoration:none;transition:color .2s;}
-.nl:hover{color:#E85C00;}
-.btn-wa-sm{background:#25D366;color:#fff;border:none;padding:7px 14px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;text-decoration:none;}
-.btn-wa-sm:hover{background:#1EBF5A;}
-.cot-strip{background:#E85C00;padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.cs-left{display:flex;align-items:center;gap:10px;}
-.cs-dot{width:8px;height:8px;border-radius:50%;background:#fff;}
-.cs-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.75);font-weight:700;}
-.cs-t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;color:#fff;}
-.cs-s{font-size:10px;color:rgba(255,255,255,.6);margin-top:1px;}
-.btn-cot-w{background:#fff;color:#E85C00;border:none;padding:8px 18px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;text-decoration:none;}
-.btn-cot-w:hover{background:#f0f0f0;}
-.hero{background:#111;padding:60px 32px 52px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:center;}
-.hero::before{content:'';position:absolute;right:0;top:0;width:45%;height:100%;background:rgba(232,92,0,.07);}
-.hero::after{content:'PPA';position:absolute;right:-10px;top:-20px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:200px;color:rgba(232,92,0,.04);letter-spacing:-10px;pointer-events:none;}
-.hero-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#E85C00;font-weight:700;margin-bottom:14px;}
-.hero-h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:72px;line-height:.88;text-transform:uppercase;letter-spacing:-3px;color:#fff;margin-bottom:10px;}
-.hero-h1 span{color:#E85C00;}
-.hero-tagline{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:20px;color:#FF8C3A;text-transform:uppercase;margin-bottom:18px;}
-.hero-promesa{font-size:13px;color:#666;line-height:1.85;max-width:380px;margin-bottom:28px;padding-left:14px;border-left:2px solid #E85C00;font-style:italic;}
-.hero-promesa strong{color:#FF8C3A;font-style:normal;}
-.hero-btns{display:flex;gap:10px;flex-wrap:wrap;}
-.btn-hero-p{background:#E85C00;color:#fff;border:none;padding:12px 22px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;text-decoration:none;transition:background .2s;}
-.btn-hero-p:hover{background:#FF6B00;}
-.btn-hero-s{background:transparent;color:#FF8C3A;border:1px solid rgba(232,92,0,.4);padding:12px 22px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;text-decoration:none;transition:all .2s;}
-.btn-hero-s:hover{border-color:#E85C00;background:rgba(232,92,0,.07);}
-.hero-visual{position:relative;z-index:1;}
-.motor-card{background:#1A1A1A;border:1px solid #2A2A2A;border-radius:14px;padding:22px;text-align:center;}
-.motor-badge{display:inline-block;background:rgba(232,92,0,.15);border:1px solid rgba(232,92,0,.3);color:#FF8C3A;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:10px;}
-.motor-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;color:#fff;margin-bottom:4px;}
-.motor-tech{font-size:11px;color:#555;margin-bottom:14px;}
-.motor-specs{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.spec-box{background:#222;border-radius:8px;padding:10px;}
-.spec-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#E85C00;}
-.spec-l{font-size:9px;color:#555;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E85C00;}
-.stat-box{background:#fff;padding:20px;text-align:center;}
-.stat-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;color:#E85C00;}
-.stat-l{font-size:9px;color:#999;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;}
-.dolor-section{background:#fff;padding:56px 32px;border-top:1px solid #E8E6E0;}
-.dolor-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#E85C00;font-weight:700;margin-bottom:10px;}
-.dolor-h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:42px;color:#111;line-height:.95;text-transform:uppercase;margin-bottom:6px;}
-.dolor-sub{font-size:14px;color:#888;margin-bottom:32px;max-width:500px;line-height:1.7;}
-.dolor-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;}
-.dolor-card{background:#F5F4F0;border-radius:12px;padding:20px;border-left:3px solid #E85C00;}
-.dolor-q{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:#111;margin-bottom:6px;line-height:1.2;}
-.dolor-a{font-size:12px;color:#888;line-height:1.6;}
-.dolor-cta{background:#111;border-radius:12px;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
-.dolor-cta-t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:#fff;}
-.dolor-cta-s{font-size:12px;color:#555;margin-top:3px;}
-.btn-dolor{background:#E85C00;color:#fff;border:none;padding:11px 22px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;text-decoration:none;transition:background .2s;}
-.btn-dolor:hover{background:#FF6B00;}
-.solucion-section{background:#F5F4F0;padding:56px 32px;}
-.sol-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#E85C00;font-weight:700;margin-bottom:10px;}
-.sol-h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:42px;color:#111;line-height:.95;text-transform:uppercase;margin-bottom:6px;}
-.sol-sub{font-size:14px;color:#888;margin-bottom:32px;max-width:520px;line-height:1.7;}
-.sol-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-.sol-card{background:#fff;border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid #E8E6E0;transition:all .2s;text-decoration:none;display:block;}
-.sol-card:hover{border-color:#E85C00;transform:translateY(-2px);}
-.sol-top{height:100px;position:relative;display:flex;align-items:flex-end;padding:14px;}
-.sol-ico{position:absolute;right:10px;top:10px;font-size:32px;opacity:.2;color:#fff;}
-.sol-line{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px;}
-.sol-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:#fff;line-height:1.1;}
-.sol-body{padding:14px;}
-.sol-pregunta{font-size:12px;color:#555;line-height:1.55;font-style:italic;margin-bottom:10px;border-left:2px solid #E85C00;padding-left:10px;}
-.sol-accion{font-size:11px;color:#E85C00;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:4px;}
-.ssg-section{background:#111;padding:56px 32px;}
-.ssg-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#E85C00;font-weight:700;margin-bottom:10px;}
-.ssg-h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:42px;color:#fff;line-height:.95;text-transform:uppercase;margin-bottom:6px;}
-.ssg-sub{font-size:14px;color:#555;margin-bottom:36px;max-width:480px;line-height:1.7;}
-.ssg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;}
-.ssg-card{border-radius:12px;padding:24px;border:1px solid #1E1E1E;background:#161616;}
-.ssg-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:48px;color:#E85C00;line-height:1;margin-bottom:8px;opacity:.3;}
-.ssg-t{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;color:#fff;margin-bottom:8px;}
-.ssg-p{font-size:12px;color:#555;line-height:1.7;}
-.ssg-p strong{color:#FF8C3A;}
-.ssg-garantia{background:rgba(232,92,0,.08);border:1px solid rgba(232,92,0,.2);border-radius:10px;padding:20px 24px;display:flex;align-items:center;gap:20px;}
-.ssg-g-icon{font-size:32px;color:#E85C00;flex-shrink:0;}
-.ssg-g-t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#fff;margin-bottom:4px;}
-.ssg-g-s{font-size:12px;color:#555;line-height:1.6;}
-.instalador-banner{background:linear-gradient(135deg,#E85C00,#8B2800);padding:36px 32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;}
-.inst-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700;margin-bottom:8px;}
-.inst-h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:38px;color:#fff;line-height:.95;text-transform:uppercase;margin-bottom:10px;}
-.inst-sub{font-size:13px;color:rgba(255,255,255,.7);line-height:1.65;max-width:480px;}
-.inst-sub strong{color:#fff;}
-.btn-inst{background:#fff;color:#E85C00;border:none;padding:14px 26px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:background .2s;}
-.btn-inst:hover{background:#f0f0f0;}
-.redes-section{background:#fff;padding:44px 32px;border-top:1px solid #E8E6E0;}
-.redes-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;}
-.red-card{border-radius:10px;padding:16px 10px;text-align:center;cursor:pointer;border:1px solid #E8E6E0;background:#F5F4F0;transition:border-color .2s;text-decoration:none;display:block;}
-.red-card:hover{border-color:#E85C00;}
-.red-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;color:#111;margin:8px 0 3px;}
-.red-handle{font-size:9px;color:#999;margin-bottom:6px;}
-.red-badge{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block;}
-.cta-section{background:#F5F4F0;padding:44px 32px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;border-top:1px solid #E8E6E0;}
-.cta-lbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#E85C00;font-weight:700;margin-bottom:10px;}
-.cta-h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:44px;color:#111;line-height:.92;text-transform:uppercase;margin-bottom:14px;}
-.cta-h2 span{color:#E85C00;}
-.cta-sub{font-size:13px;color:#888;line-height:1.75;margin-bottom:24px;}
-.cta-btns{display:flex;gap:10px;}
-.btn-cta-p{background:#E85C00;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;text-decoration:none;transition:background .2s;}
-.btn-cta-p:hover{background:#FF6B00;}
-.btn-cta-wa{background:#25D366;color:#fff;border:none;padding:13px 24px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;text-decoration:none;transition:background .2s;}
-.btn-cta-wa:hover{background:#1EBF5A;}
-.cta-info{background:#fff;border-radius:12px;padding:26px;border:1px solid #E8E6E0;}
-.cta-info-t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#111;margin-bottom:14px;}
-.cta-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #F0EEE8;cursor:pointer;text-decoration:none;}
-.cta-row:last-child{border-bottom:none;}
-.cta-row:hover .cta-row-t{color:#E85C00;}
-.cta-row-icon{width:30px;height:30px;border-radius:6px;background:#E85C00;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:#fff;}
-.cta-row-t{font-size:13px;color:#111;font-weight:600;transition:color .2s;display:block;}
-.cta-row-s{font-size:10px;color:#999;margin-top:1px;}
-.footer{background:#111;border-top:3px solid #E85C00;padding:28px 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:start;}
-.footer-brand{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#E85C00;margin-bottom:6px;}
-.footer-info{font-size:10px;color:#555;line-height:2.2;}
-.footer-col-t{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#E85C00;margin-bottom:10px;}
-.footer-link{font-size:11px;color:#555;display:block;padding:3px 0;cursor:pointer;text-decoration:none;}
-.footer-link:hover{color:#E85C00;}
-.footer-social{display:flex;gap:8px;margin-top:10px;}
-.fsoc{width:30px;height:30px;border-radius:6px;background:#1A1A1A;border:1px solid #2A2A2A;display:flex;align-items:center;justify-content:center;font-size:14px;color:#666;cursor:pointer;transition:all .2s;text-decoration:none;}
-.fsoc:hover{background:#E85C00;border-color:#E85C00;color:#fff;}
-.footer-tag{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:#1A1A1A;text-align:right;align-self:end;}
-@media(max-width:768px){
-  .hero{grid-template-columns:1fr;padding:40px 20px;}
-  .hero-visual{display:none;}
-  .hero-h1{font-size:52px;}
-  .nav-links .nl{display:none;}
-  .cot-strip{flex-direction:column;align-items:flex-start;gap:10px;padding:12px 20px;}
-  .dolor-grid{grid-template-columns:1fr;}
-  .sol-grid{grid-template-columns:1fr 1fr;}
-  .ssg-grid{grid-template-columns:1fr;}
-  .stats-row{grid-template-columns:repeat(2,1fr);}
-  .redes-grid{grid-template-columns:repeat(3,1fr);}
-  .instalador-banner{grid-template-columns:1fr;}
-  .cta-section{grid-template-columns:1fr;}
-  .footer{grid-template-columns:1fr;}
-  .footer-tag{text-align:left;}
+/* ══════════════════════════════════════
+   TOKENS — WCAG AA compliant (contraste ≥4.5:1)
+   Fondo: #0A0A0A  Texto: #F5F2EE = 14.2:1 ✓
+   Fondo: #0A0A0A  Naranja: #FF6B1A = 4.8:1 ✓
+══════════════════════════════════════ */
+:root{
+  /* Fondos */
+  --bg:       #0A0A0A;
+  --bg1:      #131313;
+  --bg2:      #1A1A1A;
+  --bg3:      #222222;
+  --bg4:      #2C2C2C;
+  --border:   #333333;
+  --border2:  #444444;
+
+  /* Texto — todos ≥4.5:1 sobre fondos oscuros */
+  --txt:      #F5F2EE;   /* Principal — 14.2:1 */
+  --txt2:     #C8C4BC;   /* Secundario — 8.1:1 */
+  --txt3:     #8A8680;   /* Muted — 4.6:1 ✓ */
+
+  /* Marca */
+  --naranja:  #FF6B1A;   /* 4.8:1 sobre #0A0A0A ✓ */
+  --naranja2: #E85C00;
+  --naranja3: #FF8C3A;
+  --naranja-bg:#FF6B1A18;
+
+  /* Semánticos */
+  --verde:    #22C55E;
+  --verde-bg: #22C55E15;
+  --azul:     #60A5FA;
+
+  /* Tipografía */
+  --font-title: 'Montserrat', sans-serif;
+  --font-body:  'Inter', sans-serif;
+  --font-mono:  'JetBrains Mono', monospace;
+
+  /* Segmentos Tribu Naranja */
+  --l01: #005293;
+  --l02: #4D4F53;
+  --l03: #F15A22;
+  --l04: #981E32;
+}
+
+/* ── RESET ── */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:var(--bg);overflow:hidden;}
+body{
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--txt);
+  display:flex;
+  flex-direction:column;
+  max-width:480px;
+  margin:0 auto;
+  height: 100dvh;
+}
+
+/* ══════════════════════════════════════
+   TOPBAR NARA
+══════════════════════════════════════ */
+.topbar{
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  z-index: 10;
+}
+.tl-left{ display:flex; align-items:center; gap:12px; }
+.tl-right{ display:flex; align-items:center; gap:8px; }
+.tl-name{
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: .06em;
+  color: var(--naranja);
+}
+.tl-sub{
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: var(--txt3);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+.tl-status{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--txt3);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.status-dot{
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--verde);
+  box-shadow: 0 0 6px var(--verde);
+}
+.cloud-dot{width:6px;height:6px;border-radius:50%;background:var(--txt3);}
+.cloud-dot.ok{background:var(--verde);}
+
+/* ══════════════════════════════════════
+   HERO NARA — grande y visual
+══════════════════════════════════════ */
+.nara-hero{
+  background: var(--bg1);
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.nara-hero::before{
+  content:'';
+  position:absolute;
+  top:-40px; right:-40px;
+  width:180px; height:180px;
+  border-radius:50%;
+  background: radial-gradient(circle, #FF6B1A15 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{ display:flex; align-items:center; gap:16px; }
+.hero-icon{ flex-shrink:0; position:relative; }
+.hero-text{ flex:1; min-width:0; }
+.hero-greeting{
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--naranja);
+  letter-spacing: .03em;
+  line-height: 1.1;
+}
+.hero-tagline{
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--txt2);
+  margin-top: 5px;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════
+   CHAT CONTAINER
+══════════════════════════════════════ */
+.chat-scroll{
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Burbujas NARA (izquierda) ── */
+.bubble-nara{
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  max-width: 92%;
+  align-self: flex-start;
+}
+.bubble-avatar{
+  flex-shrink:0;
+  width: 30px; height: 30px;
+  margin-top: 2px;
+}
+.bubble-body{ flex:1; min-width:0; }
+.bubble-name{
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--naranja);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.bubble-txt{
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px 14px 14px 14px;
+  padding: 11px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--txt);
+  line-height: 1.6;
+}
+.bubble-txt strong{
+  color: var(--naranja3);
+  font-weight: 600;
+}
+.bubble-meta{
+  font-size: 10px;
+  color: var(--txt3);
+  margin-top: 4px;
+  margin-left: 2px;
+}
+
+/* ── Burbujas cliente (derecha) ── */
+.bubble-user{
+  align-self: flex-end;
+  max-width: 78%;
+}
+.bubble-user .bubble-txt{
+  background: var(--naranja2);
+  border-color: var(--naranja);
+  border-radius: 14px 4px 14px 14px;
+  color: #fff;
+  font-size: 13px;
+}
+.bubble-user .bubble-meta{
+  text-align: right;
+}
+
+/* ── Opciones de respuesta ── */
+.opciones-grid{
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 340px;
+}
+.opciones-grid.col2{ grid-template-columns: 1fr 1fr; }
+.opciones-grid.col1{ grid-template-columns: 1fr; }
+.opcion-btn{
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 10px 13px;
+  cursor: pointer;
+  transition: all .18s;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.opcion-btn:active{ transform: scale(.97); }
+.opcion-btn:hover{ border-color: var(--naranja); background: var(--naranja-bg); }
+.opcion-btn.sel{
+  border-color: var(--naranja);
+  background: var(--naranja-bg);
+}
+.op-icon{ font-size: 20px; flex-shrink:0; }
+.op-lbl{
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--txt);
+  line-height: 1.3;
+}
+.op-sub{
+  font-size: 10px;
+  color: var(--txt3);
+  margin-top: 1px;
+}
+
+/* ── Typing indicator — ondas NARA ── */
+.typing{
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  align-self: flex-start;
+}
+.typing-nara-wave{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+}
+@keyframes typingBounce{
+  0%,80%,100%{ transform:translateY(0); opacity:.5; }
+  40%{ transform:translateY(-6px); opacity:1; }
+}
+
+/* ── Separador de fecha ── */
+.chat-date{
+  text-align: center;
+  font-size: 10px;
+  color: var(--txt3);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 4px 0;
+}
+
+/* ══════════════════════════════════════
+   INPUT ÁREA — captura de datos
+══════════════════════════════════════ */
+.input-card{
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 4px;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 340px;
+}
+.input-label{
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--naranja);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.nara-input{
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 10px 13px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--txt);
+  margin-bottom: 8px;
+  outline: none;
+  transition: border-color .2s;
+}
+.nara-input::placeholder{ color: var(--txt3); }
+.nara-input:focus{ border-color: var(--naranja); }
+.btn-primary{
+  width: 100%;
+  background: var(--naranja2);
+  color: #fff;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .04em;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all .18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-primary:active{ transform: scale(.98); }
+.btn-primary:hover{ background: var(--naranja); }
+
+/* ══════════════════════════════════════
+   TARJETAS DE PROPUESTA
+══════════════════════════════════════ */
+.propuesta-wrap{
+  align-self: flex-start;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 360px;
+}
+.prop-card{
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.prop-card.recomendado{ border-color: var(--naranja); }
+.prop-header{
+  padding: 10px 13px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.prop-badge{
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--naranja-bg);
+  color: var(--naranja3);
+  border: 1px solid var(--naranja)44;
+}
+.prop-badge.rec{ background: var(--naranja2); color:#fff; border-color: var(--naranja2); }
+.prop-body{ padding: 11px 13px 12px; }
+.prop-nombre{
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--txt);
+  line-height: 1.3;
+}
+.prop-sku{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--txt3);
+  margin-top: 4px;
+}
+.prop-specs{
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.prop-spec{
+  font-size: 10px;
+  color: var(--txt2);
+  background: var(--bg3);
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+.prop-precio{
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--naranja3);
+  margin-top: 9px;
+}
+.prop-precio-lbl{
+  font-size: 10px;
+  color: var(--txt3);
+  margin-top: 2px;
+}
+.prop-razon{
+  font-size: 12px;
+  color: var(--txt2);
+  margin-top: 8px;
+  line-height: 1.5;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+
+/* ── Nota de accesorios y precios ── */
+.prop-nota{
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 13px;
+  font-size: 12px;
+  color: var(--txt2);
+  line-height: 1.6;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.prop-nota-icon{ font-size: 16px; flex-shrink:0; }
+
+/* ── Cremallera extra ── */
+.crem-card{
+  background: var(--naranja-bg);
+  border: 1px solid var(--naranja)44;
+  border-radius: 10px;
+  padding: 10px 13px;
+  font-size: 12px;
+  color: var(--txt);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ══════════════════════════════════════
+   BOTÓN WHATSAPP FINAL
+══════════════════════════════════════ */
+.btn-wa{
+  background: #25D366;
+  color: #fff;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: .03em;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all .18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 340px;
+  align-self: flex-start;
+}
+.btn-wa:active{ transform: scale(.98); }
+.btn-wa svg{ width:20px; height:20px; }
+
+/* ── Botón visita ── */
+.btn-visita{
+  background: var(--bg2);
+  border: 1px solid var(--naranja);
+  color: var(--naranja3);
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .18s;
+  width: 100%;
+  max-width: 340px;
+  align-self: flex-start;
+}
+.btn-visita-no{
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--txt3);
+  font-family: var(--font-body);
+  font-size: 12px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 340px;
+  align-self: flex-start;
+}
+
+/* ══════════════════════════════════════
+   ANIMACIONES
+══════════════════════════════════════ */
+@keyframes ripple1{ 0%{r:0;opacity:.9} 100%{r:14;opacity:0} }
+@keyframes ripple2{ 0%{r:0;opacity:.75} 100%{r:24;opacity:0} }
+@keyframes ripple3{ 0%{r:0;opacity:.5} 100%{r:34;opacity:0} }
+@keyframes ripple4{ 0%{r:0;opacity:.25} 100%{r:40;opacity:0} }
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(10px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.anim{ animation: fadeUp .35s ease forwards; }
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
+.toast{
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--txt);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all .3s;
+  z-index: 100;
+  white-space: nowrap;
+}
+.toast.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-logo">
-    <div class="nav-logo-box">PC</div>
-    <div>
-      <div class="nav-brand">PPA Central</div>
-      <div class="nav-sub">Distribuidor Autorizado PPA Latam</div>
-    </div>
-  </div>
-  <div class="nav-links">
-    <span class="nl">Nosotros</span>
-    <span class="nl">Catálogo</span>
-    <span class="nl">Proyectos</span>
-    <span class="nl">Contacto</span>
-    <a class="btn-wa-sm" href="https://wa.me/573177772333?text=Hola%20PPA%20Central" target="_blank">
-      <i class="ti ti-brand-whatsapp"></i> WhatsApp
-    </a>
-  </div>
-</nav>
+<!-- ══ HERO NARA — grande y visual ══ -->
+<div style="
+  background: linear-gradient(160deg, #1A0A00 0%, #2A1200 40%, #0A0A0A 100%);
+  border-bottom: 1px solid #FF6B1A33;
+  padding: 28px 20px 22px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+">
+  <!-- glow de fondo -->
+  <div style="position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,#FF6B1A22 0%,transparent 70%);pointer-events:none"></div>
+  <div style="position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,#FF6B1A11 0%,transparent 70%);pointer-events:none"></div>
 
-<div class="cot-strip">
-  <div class="cs-left">
-    <div class="cs-dot"></div>
-    <div>
-      <div class="cs-lbl">Herramienta comercial · En línea ahora</div>
-      <div class="cs-t">Cotizador PPA Central v9.5</div>
-      <div class="cs-s">Propuesta profesional en 3 minutos · Envío directo por WhatsApp</div>
-    </div>
-  </div>
-  <a class="btn-cot-w" href="https://ppacentral.github.io/Cotizador" target="_blank">
-    <i class="ti ti-calculator"></i> Abrir cotizador
-  </a>
-</div>
+  <!-- contenido hero -->
+  <div style="display:flex;align-items:center;gap:20px;position:relative;z-index:1">
 
-<div class="hero">
-  <div>
-    <div class="hero-eyebrow">Distribuidor Autorizado · PPA Latam · Colombia</div>
-    <div class="hero-h1">Portones<br><span>Eléctricos</span></div>
-    <div class="hero-tagline">Tu acceso. Inteligente. Seguro.</div>
-    <div class="hero-promesa">
-      Abre cuando debe abrir. Cierra cuando debe cerrar.<br>
-      <strong>Sin drama, sin excusas.</strong><br>
-      PPA lleva más de 40 años diseñando accesos que funcionan exactamente como los esperas — y a la altura de lo que mereces.
+    <!-- ícono grande -->
+    <div style="flex-shrink:0">
+      <svg width="110" height="110" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="5" fill="#FF6B1A"/>
+        <circle cx="40" cy="40" r="9" stroke="#FF6B1A" stroke-width="1.5" fill="none" opacity=".35"/>
+        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="3.5" fill="none">
+          <animate attributeName="r" values="0;14" dur="2.4s" repeatCount="indefinite" begin="0s"/>
+          <animate attributeName="opacity" values="1;0" dur="2.4s" repeatCount="indefinite" begin="0s"/>
+        </circle>
+        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.8" fill="none">
+          <animate attributeName="r" values="0;22" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
+          <animate attributeName="opacity" values=".82;0" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
+        </circle>
+        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.2" fill="none">
+          <animate attributeName="r" values="0;30" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
+          <animate attributeName="opacity" values=".58;0" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
+        </circle>
+        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1.6" fill="none">
+          <animate attributeName="r" values="0;38" dur="2.4s" repeatCount="indefinite" begin="1.14s"/>
+          <animate attributeName="opacity" values=".32;0" dur="2.4s" repeatCount="indefinite" begin="1.14s"/>
+        </circle>
+        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1" fill="none">
+          <animate attributeName="r" values="0;46" dur="2.4s" repeatCount="indefinite" begin="1.52s"/>
+          <animate attributeName="opacity" values=".14;0" dur="2.4s" repeatCount="indefinite" begin="1.52s"/>
+        </circle>
+      </svg>
     </div>
-    <div class="hero-btns">
-      <a class="btn-hero-p" href="https://ppacentral.github.io/Cotizador" target="_blank">
-        <i class="ti ti-calculator"></i> Cotizar ahora
-      </a>
-      <a class="btn-hero-s" href="https://wa.me/573177772333?text=Hola%20PPA%20Central%2C%20quiero%20hablar%20con%20un%20asesor" target="_blank">
-        <i class="ti ti-brand-whatsapp"></i> Hablar con asesor
-      </a>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="motor-card">
-      <i class="ti ti-settings-automation" style="font-size:52px;color:#E85C00;display:block;margin-bottom:10px"></i>
-      <div class="motor-badge">Solución estrella 2026</div>
-      <div class="motor-name">Jet Flex 24V</div>
-      <div class="motor-tech">Tecnología Jetflex · Alta velocidad</div>
-      <div class="motor-specs">
-        <div class="spec-box"><div class="spec-n">6s</div><div class="spec-l">Apertura</div></div>
-        <div class="spec-box"><div class="spec-n">200</div><div class="spec-l">Ciclos sin luz</div></div>
-        <div class="spec-box"><div class="spec-n">24V</div><div class="spec-l">Tecnología</div></div>
-        <div class="spec-box"><div class="spec-n">App</div><div class="spec-l">Control</div></div>
+
+    <!-- texto -->
+    <div style="flex:1;min-width:0">
+      <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:38px;color:#FF6B1A;letter-spacing:.06em;line-height:1">NARA</div>
+      <div style="font-family:'Inter',sans-serif;font-size:12px;color:#C8C4BC;margin-top:5px;line-height:1.5">
+        Asesora de inteligencia artificial<br>
+        <span style="color:#FF6B1A88">PPA Central · Distribuidor Autorizado PPA Latam</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:10px">
+        <div style="width:7px;height:7px;border-radius:50%;background:#22C55E;box-shadow:0 0 8px #22C55E"></div>
+        <span style="font-family:'Inter',sans-serif;font-size:10px;color:#8A8680;letter-spacing:.1em;text-transform:uppercase">En línea · 269 productos</span>
+        <div class="cloud-dot" id="cloudDot" style="margin-left:6px" title="Precios en tiempo real"></div>
       </div>
     </div>
+
   </div>
 </div>
 
-<div class="stats-row">
-  <div class="stat-box"><div class="stat-n">+40</div><div class="stat-l">Años PPA</div></div>
-  <div class="stat-box"><div class="stat-n">4</div><div class="stat-l">Líneas</div></div>
-  <div class="stat-box"><div class="stat-n">100%</div><div class="stat-l">Respaldo local</div></div>
-  <div class="stat-box"><div class="stat-n">#1</div><div class="stat-l">Latam</div></div>
+<!-- ══ CHAT ══ -->
+<div class="chat-scroll" id="chat">
+  <div class="chat-date" id="chat-date"></div>
 </div>
 
-<div class="dolor-section">
-  <div class="dolor-eyebrow">¿Te identificas con alguna de estas situaciones?</div>
-  <div class="dolor-h2">Algo en tu acceso<br>no está funcionando.</div>
-  <div class="dolor-sub">No tiene que ser así. Antes de comprar cualquier cosa, identifica lo que realmente está pasando.</div>
-  <div class="dolor-grid">
-    <div class="dolor-card">
-      <div class="dolor-q">¿Tienes que bajarte del carro para abrir el portón?</div>
-      <div class="dolor-a">En 2026 eso es opcional. La tecnología PPA lo resuelve antes de que frenes.</div>
-    </div>
-    <div class="dolor-card">
-      <div class="dolor-q">¿Tu conjunto tiene problemas con la entrada vehicular?</div>
-      <div class="dolor-a">Cada apertura sin registro es un riesgo. Cada falla es una queja en la junta.</div>
-    </div>
-    <div class="dolor-card">
-      <div class="dolor-q">¿Tu negocio pierde tiempo en accesos lentos o manuales?</div>
-      <div class="dolor-a">Un acceso lento no es solo incomodidad — es un cuello de botella disfrazado de costumbre.</div>
-    </div>
-    <div class="dolor-card">
-      <div class="dolor-q">¿Tu proyecto va a entregar accesos que decepcionen?</div>
-      <div class="dolor-a">El comprador no recuerda el precio del m². Sí recuerda si la puerta falló el primer día.</div>
-    </div>
-  </div>
-  <div class="dolor-cta">
-    <div>
-      <div class="dolor-cta-t">¿Reconociste tu situación?</div>
-      <div class="dolor-cta-s">Nuestro cotizador te guía al equipo exacto para tu caso — en 3 minutos.</div>
-    </div>
-    <a class="btn-dolor" href="https://ppacentral.github.io/Cotizador" target="_blank">
-      Encontrar mi solución <i class="ti ti-arrow-right"></i>
-    </a>
-  </div>
-</div>
+<div class="toast" id="toast"></div>
 
-<div class="solucion-section">
-  <div class="sol-eyebrow">Portafolio PPA Central</div>
-  <div class="sol-h2">La tecnología exacta<br>para tu realidad.</div>
-  <div class="sol-sub">No vendemos productos — conectamos tu situación con la solución correcta. Cuatro líneas, un solo propósito.</div>
-  <div class="sol-grid">
-    <a class="sol-card" href="https://ppacentral.github.io/Cotizador" target="_blank">
-      <div class="sol-top" style="background:linear-gradient(135deg,#00192E,#004080)">
-        <div class="sol-ico"><i class="ti ti-home"></i></div>
-        <div><div class="sol-line">Línea 01</div><div class="sol-name">Tu Casa,<br>Tu Ritmo</div></div>
+<script>
+// ══════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════
+const SHEETS_ID  = '1qyDqL0Nj4K4La5zalvuqQCpM1VL10ecm';
+const SHEETS_URL = `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:json&sheet=Lista%20de%20Precios%20PPA%202025`;
+const BITRIX_HOOK = 'https://b24-4kxmmv.bitrix24.co/rest/1/yhxx3e3goq98d4di/';
+const WA_NUM = '573177772333';
+const CLAUDE_API_KEY = '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';
+
+let preciosSheets = {};
+let sheetsOk = false;
+let respuestas = {};
+let clienteNombre = '';
+let clienteWA = '';
+let motivarVisita = false;
+let chatLibreActivo = false;
+let historialChat = [];
+
+// ══════════════════════════════════════
+// CATÁLOGO EQUIPOS
+// ══════════════════════════════════════
+const EQUIPOS = {
+  corredera_res:[
+    {id:'dz-sh-m',  n:'DZ STARK HOME — Mono',        sku:'E02243104', tec:'MONO',              kg:400,  vel:'14 seg', v:'127V',   p:693000},
+    {id:'dz-sh-jf', n:'DZ STARK HOME — Jetflex',     sku:'E02252400', tec:'JETFLEX',           kg:450,  vel:'4 seg',  v:'Bivolt', p:1200000},
+    {id:'dz-hub-m', n:'DZ HUB — Mono',               sku:'E02130103', tec:'MONO',              kg:450,  vel:'13.5s',  v:'127V',   p:750000},
+    {id:'dz-hub-l', n:'DZ HUB — Legero',             sku:'E02213101', tec:'LEGERO',            kg:500,  vel:'6.5 seg',v:'Bivolt', p:800000},
+    {id:'dz-st-m',  n:'DZ STARK — Mono',             sku:'E02244102', tec:'MONO',              kg:600,  vel:'13.5s',  v:'127V',   p:842000},
+    {id:'dz-st-jf', n:'DZ STARK — Jetflex',          sku:'E02253400', tec:'JETFLEX',           kg:650,  vel:'5.5 seg',v:'Bivolt', p:1402000},
+    {id:'dz-rio-m', n:'DZ RIO — Mono',               sku:'E02481005', tec:'MONO',              kg:700,  vel:'13.5s',  v:'127V',   p:1076000},
+    {id:'dz-rio-jf',n:'DZ RIO — Jetflex',            sku:'E02514006', tec:'JETFLEX',           kg:800,  vel:'4.5 seg',v:'Bivolt', p:1655000},
+    {id:'dz-eu',    n:'DZ EURUS STEEL — Jetflex',    sku:'E02834001', tec:'JETFLEX',           kg:800,  vel:'4.5 seg',v:'Bivolt', p:1671000},
+  ],
+  corredera_ind:[
+    {id:'dz-ind-m', n:'DZ INDUSTRIAL — Mono 1000kg', sku:'E06281000', tec:'MONO',              kg:1000, vel:'13 seg', v:'127V',   p:1692000},
+    {id:'dz-ind-jf',n:'DZ INDUSTRIAL — Jetflex',     sku:'E06184003', tec:'JETFLEX',           kg:1000, vel:'5.5 seg',v:'Bivolt', p:2230000},
+    {id:'dz-ind-j2',n:'DZ INDUSTRIAL — Jetflex 1300',sku:'E06684000', tec:'JETFLEX',           kg:1300, vel:'4.5 seg',v:'Bivolt', p:2384000},
+    {id:'dz-ind-j3',n:'DZ INDUSTRIAL — Jetflex 1500',sku:'E06264001', tec:'JETFLEX',           kg:1500, vel:'4 seg',  v:'Bivolt', p:2616000},
+    {id:'dz-ind-br',n:'DZ INDUSTRIAL — Brushless',   sku:'E06614002', tec:'JETFLEX BRUSHLESS', kg:2200, vel:'5 seg',  v:'Bivolt', p:2692000},
+    {id:'dz-bru',   n:'DZ BRUTALLE — Jetflex 3000kg',sku:'E06704002', tec:'JETFLEX',           kg:3000, vel:'7 seg',  v:'Bivolt', p:4450000},
+  ],
+  batiente:[
+    {id:'pivo-sk-s1',n:'PIVO SK Mono 1H Standar (2m)',  sku:'E03481004',           tec:'MONO',    kg:125,vel:'9.5s',v:'127V',  p:1153000},
+    {id:'pivo-sk-s2',n:'PIVO SK Mono 1H Super (3m)',    sku:'E03481005',           tec:'MONO',    kg:125,vel:'16.5s',v:'127V', p:1216000},
+    {id:'pivo-hm-s1',n:'PIVO HOME 1H Standar (2m)',     sku:'E03414004 + A17818',  tec:'JETFLEX', kg:125,vel:'2.5s',v:'Bivolt',p:1683000},
+    {id:'pivo-hm-s2',n:'PIVO HOME 1H Super (3m)',       sku:'E03414004 + A17819',  tec:'JETFLEX', kg:125,vel:'4.5s',v:'Bivolt',p:1771000},
+    {id:'pivo-sk-d1',n:'PIVO SK Mono Doble Standar',    sku:'E03481000',           tec:'MONO',    kg:125,vel:'9.5s',v:'127V',  p:1676000},
+    {id:'pivo-sk-d2',n:'PIVO SK Mono Doble Super',      sku:'E03481001',           tec:'MONO',    kg:125,vel:'16.5s',v:'127V', p:1800000},
+    {id:'pivo-hm-d1',n:'PIVO HOME Doble Standar',       sku:'E03414005 + A17818',  tec:'JETFLEX', kg:125,vel:'2.5s',v:'Bivolt',p:2495000},
+    {id:'pivo-hm-d2',n:'PIVO HOME Doble Super',         sku:'E03414005 + A17819',  tec:'JETFLEX', kg:125,vel:'4.5s',v:'Bivolt',p:2671000},
+    {id:'pivo-cd-s', n:'PIVO CONDOMINIUM 1H Standar',   sku:'E07154004',           tec:'JETFLEX', kg:300,vel:'6s',  v:'Bivolt',p:1662000},
+    {id:'pivo-cd-m', n:'PIVO CONDOMINIUM 1H Super',     sku:'E07124014',           tec:'JETFLEX', kg:300,vel:'12s', v:'Bivolt',p:1800000},
+    {id:'pivo-cd-g', n:'PIVO CONDOMINIUM 1H Mega',      sku:'E07194005',           tec:'JETFLEX', kg:300,vel:'16s', v:'Bivolt',p:2048000},
+    {id:'pivo-cd-ds',n:'PIVO CONDOMINIUM Doble Standar',sku:'E07154003',           tec:'JETFLEX', kg:300,vel:'6s',  v:'Bivolt',p:3062000},
+    {id:'pivo-cd-dm',n:'PIVO CONDOMINIUM Doble Super',  sku:'E07124011',           tec:'JETFLEX', kg:300,vel:'12s', v:'Bivolt',p:3383000},
+    {id:'pivo-cd-dg',n:'PIVO CONDOMINIUM Doble Mega',   sku:'E07194003',           tec:'JETFLEX', kg:300,vel:'16s', v:'Bivolt',p:3670000},
+    {id:'pivo-lig',  n:'PIVO LIGER UNIVERSAL 9m',       sku:'E07042001',           tec:'MONO',    kg:500,vel:'5s',  v:'220V',  p:4316000},
+  ],
+  seccional:[
+    {id:'bh-w',    n:'BH-W STEEL con WiFi',   sku:'E04661000',        tec:'MONO',    kg:100,vel:'20s', v:'127V',  p:1030000},
+    {id:'bh-ur2',  n:'BH URUS 24V — 1000N',   sku:'E04671004',        tec:'24V',     kg:150,vel:'16s', v:'127V',  p:985000},
+    {id:'bh-ur3',  n:'BH URUS 24V — 1200N',   sku:'E04671005',        tec:'24V',     kg:200,vel:'8s',  v:'Bivolt',p:1062000},
+    {id:'bh-cd-jf',n:'BH CADEMEX — Jetflex',  sku:'E04474004',        tec:'JETFLEX', kg:450,vel:'5.5s',v:'Bivolt',p:1385000},
+    {id:'bh-cd-m', n:'BH CADEMEX — Mono',     sku:'E04441006',        tec:'MONO',    kg:350,vel:'19s', v:'127V',  p:1000000},
+  ],
+  barrera:[
+    {id:'kd2',   n:'KD2',          sku:'E08163000', tec:'LEGERO',            vel:'4s',   v:'220V',   p:2308000, brazo:'Hasta 3m'},
+    {id:'k1',    n:'K1',           sku:'F08184001', tec:'JETFLEX',           vel:'1.5s', v:'Bivolt', p:3385000, brazo:'2 a 4m'},
+    {id:'k10',   n:'K10 24V',      sku:'F08154005', tec:'JETFLEX 24V',       vel:'2-4s', v:'Bivolt', p:4724000, brazo:'2 a 4.5m'},
+    {id:'bar',   n:'BARRIER',      sku:'F08104073', tec:'JETFLEX BRUSHLESS', vel:'1.5s', v:'Bivolt', p:4538000, brazo:'2 a 5m'},
+    {id:'sempar',n:'SEM PARAR',    sku:'F08032000', tec:'JETFLEX BRUSHLESS', vel:'1.5s', v:'Bivolt', p:10770000,brazo:'3m (incluido)'},
+  ],
+  cortina:[
+    {id:'br1',   n:'BR1-500',      sku:'E05132002', tec:'MONO',    kg:500,vel:'6m/min',v:'220V',  p:1762000},
+    {id:'roller',n:'ROLLER',       sku:'E09331001', tec:'MONO',    kg:300,vel:'5.3m/m',v:'127V',  p:848000},
+  ],
+};
+
+// Astas por modelo de barrera
+const ASTAS = {
+  kd2:   [{sku:'A19906',n:'Asta Slim 3m Natural',p:354000},{sku:'A19601',n:'Asta Slim 3m Blanco',p:430000},{sku:'A19417',n:'Asta Slim 3m LED',p:992000}],
+  k1:    [{sku:'A19906',n:'Asta Slim 3m Natural',p:354000},{sku:'A19601',n:'Asta Slim 3m Blanco',p:430000},{sku:'A19604',n:'Asta Slim 4m Blanco',p:662000},{sku:'A19420',n:'Asta Slim 4m LED',p:1247000}],
+  k10:   [{sku:'A19906',n:'Asta Slim 3m Natural',p:354000},{sku:'A19601',n:'Asta Slim 3m Blanco',p:430000},{sku:'A19604',n:'Asta Slim 4.5m Blanco',p:662000},{sku:'A19420',n:'Asta Slim 4.5m LED',p:1247000}],
+  bar:   [{sku:'A17068',n:'Asta Rect. 3m',p:431000},{sku:'A170744M',n:'Asta Rect. 4m',p:738000},{sku:'A170745M',n:'Asta Rect. 5m',p:754000},{sku:'A17074',n:'Asta Rect. 6m',p:846000},{sku:'F05234',n:'Asta Articulada 6m',p:985000}],
+  sempar:[],
+};
+
+// Cremalleras
+const CREMALLERAS = {
+  POP:  {sku:'A16768',n:'Cremallera Residencial POP',p:40000},
+  GOLD: {sku:'A16771',n:'Cremallera Residencial GOLD',p:60000},
+  IND:  {sku:'A16811',n:'Cremallera Industrial GOLD',p:102000},
+};
+
+function getCatalogoFlat(){ return Object.values(EQUIPOS).flat(); }
+function findBySku(sku){
+  const flat = getCatalogoFlat();
+  return flat.find(e=>e.sku===sku)||flat.find(e=>e.sku.replace(/\s/g,'')===sku.replace(/\s/g,''));
+}
+
+// Segmentos Tribu Naranja
+const SEG = {
+  casa:     {code:'L01',n:'Tu Casa, Tu Ritmo',      color:'#005293'},
+  conjunto: {code:'L02',n:'Tu Conjunto',             color:'#4D4F53'},
+  negocio:  {code:'L03',n:'Tu Negocio',              color:'#F15A22'},
+  industria:{code:'L04',n:'Tu Industria / Bodega',   color:'#981E32'},
+};
+
+// ══════════════════════════════════════
+// GOOGLE SHEETS
+// ══════════════════════════════════════
+async function cargarSheets(){
+  try{
+    const res = await Promise.race([
+      fetch(SHEETS_URL),
+      new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),4000))
+    ]);
+    const txt = await res.text();
+    const m = txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+    if(!m) throw new Error('formato');
+    const rows = JSON.parse(m[1])?.table?.rows||[];
+    rows.forEach(row=>{
+      const sku=row.c?.[4]?.v, psvp=row.c?.[10]?.v;
+      if(sku&&psvp&&typeof psvp==='number'&&psvp>0) preciosSheets[String(sku).trim()]=psvp;
+    });
+    sheetsOk = Object.keys(preciosSheets).length>0;
+    if(sheetsOk){
+      getCatalogoFlat().forEach(e=>{ if(preciosSheets[e.sku]) e.p=preciosSheets[e.sku]; });
+      const dot=document.getElementById('cloudDot');
+      if(dot){ dot.classList.add('ok'); dot.title='✅ Precios actualizados'; }
+    }
+  }catch(e){ console.warn('Sheets:', e.message); }
+}
+
+// ══════════════════════════════════════
+// BITRIX24
+// ══════════════════════════════════════
+async function enviarBitrix(nombre, wa, datos, recomendaciones){
+  if(location.protocol==='file:') return;
+  try{
+    const tel = wa.replace(/\D/g,'');
+    const seg = SEG[datos.lugar]||SEG.casa;
+    const equipo = recomendaciones[0]?.nombre||'—';
+    const contacto = new URLSearchParams();
+    contacto.append('fields[NAME]', nombre.split(' ')[0]||nombre);
+    contacto.append('fields[LAST_NAME]', nombre.split(' ').slice(1).join(' ')||'');
+    if(tel) contacto.append('fields[PHONE][0][VALUE]',`+57${tel}`);
+    contacto.append('fields[PHONE][0][VALUE_TYPE]','MOBILE');
+    contacto.append('fields[SOURCE_ID]','WEB');
+    contacto.append('fields[SOURCE_DESCRIPTION]','NARA · Asesora IA PPA Central');
+    contacto.append('fields[COMMENTS]',
+      `Segmento: ${seg.n} | Tipo: ${datos.tipo} | Trafico: ${datos.trafico} | Visita: ${motivarVisita?'SÍ':'No solicitada'} | Equipo recomendado: ${equipo}`
+    );
+    const rc = await fetch(`${BITRIX_HOOK}crm.contact.add`,{method:'POST',body:contacto});
+    const dc = await rc.json();
+    const cid = dc?.result||null;
+    const neg = new URLSearchParams();
+    neg.append('fields[TITLE]',`NARA · ${nombre} | ${equipo}`);
+    neg.append('fields[STAGE_ID]','NEW');
+    neg.append('fields[SOURCE_ID]','WEB');
+    neg.append('fields[CURRENCY_ID]','COP');
+    if(cid) neg.append('fields[CONTACT_ID]',String(cid));
+    neg.append('fields[COMMENTS]',`Captado por NARA · PPA Central | ${seg.n} | ${datos.tipo} | Visita: ${motivarVisita?'SÍ':'No'}`);
+    await fetch(`${BITRIX_HOOK}crm.deal.add`,{method:'POST',body:neg});
+    toast('✅ Tu información fue recibida');
+  }catch(e){ console.warn('Bitrix:',e.message); }
+}
+
+// ══════════════════════════════════════
+// MOTOR DE RECOMENDACIÓN
+// ══════════════════════════════════════
+function motorRecomendacion(r){
+  const tipo    = r.tipo||'';
+  const lugar   = r.lugar||'';
+  const hojas   = r.hojas||'1';
+  const medida  = parseFloat(r.medida)||0;
+  const carril  = r.carril||'3';
+  const trafico = r.trafico||'bajo';
+  let recs = [];
+
+  if(tipo==='corredera'){
+    const ind = lugar==='industria'||trafico==='muy_intenso';
+    const com = lugar==='negocio'||trafico==='intenso';
+    if(ind){
+      recs=[
+        {sku:'E06184003',badge:'⭐ Recomendado',razon:'Motor industrial — torque extra, ciclos intensivos, durabilidad garantizada.'},
+        {sku:'E06264001',badge:'Alta capacidad',razon:'Para portones de hasta 1500 kg o tráfico muy intenso.'},
+        {sku:'E06614002',badge:'Sin mantenimiento',razon:'Brushless — el de menor mantenimiento del mercado. Ideal 24/7.'},
+      ];
+    } else if(com){
+      recs=[
+        {sku:'E02514006',badge:'⭐ Recomendado',razon:'DZ RIO Jetflex — velocidad y durabilidad para uso comercial.'},
+        {sku:'E02253400',badge:'2ª opción',razon:'DZ STARK Jetflex — confiable y económico para uso moderado.'},
+        {sku:'E06184003',badge:'Con margen',razon:'Industrial como garantía. Diego recomienda sobredimensionar.'},
+      ];
+    } else {
+      recs=[
+        {sku:'E02253400',badge:'⭐ Recomendado',razon:'DZ STARK Jetflex — velocidad y precisión residencial.'},
+        {sku:'E02514006',badge:'Mayor durabilidad',razon:'DZ RIO Jetflex — si quieres que dure décadas.'},
+        {sku:'E02244102',badge:'Económico',razon:'DZ STARK Mono — confiable para uso bajo, inversión menor.'},
+      ];
+    }
+    recs._cremallera = medida>4;
+    recs._tipoCrem = ind?'IND':com?'GOLD':'POP';
+  }
+
+  if(tipo==='batiente'){
+    const d = hojas==='2';
+    const m = medida||2;
+    if(m<=2){
+      recs = d
+        ?[{sku:'E03481000',badge:'⭐ Recomendado',razon:'PIVO SK Mono Doble Standar — confiable y económico para 2 hojas.'},
+          {sku:'E03414005 + A17818',badge:'Más velocidad',razon:'PIVO HOME Jetflex — apertura más rápida.'},
+          {sku:'E07154003',badge:'Conjuntos',razon:'PIVO SK CONDOMINIUM — para mayor tráfico.'}]
+        :[{sku:'E03481004',badge:'⭐ Recomendado',razon:'PIVO SK Mono 1 hoja Standar — solución residencial confiable.'},
+          {sku:'E03414004 + A17818',badge:'Más velocidad',razon:'PIVO HOME Jetflex — apertura en 2.5 seg.'},
+          {sku:'E07154004',badge:'Conjuntos',razon:'PIVO SK CONDOMINIUM 1 hoja — para uso más intensivo.'}];
+    } else if(m<=3.5){
+      recs = d
+        ?[{sku:'E03481001',badge:'⭐ Recomendado',razon:'PIVO SK Mono Doble Super — para hojas hasta 3.5m.'},
+          {sku:'E03414005 + A17819',badge:'Más velocidad',razon:'PIVO HOME Jetflex Super.'},
+          {sku:'E07124011',badge:'Alta exigencia',razon:'PIVO SK CONDOMINIUM Doble Super.'}]
+        :[{sku:'E03481005',badge:'⭐ Recomendado',razon:'PIVO SK Mono 1H Super — para hojas hasta 3.5m.'},
+          {sku:'E03414004 + A17819',badge:'Más velocidad',razon:'PIVO HOME Jetflex Super.'},
+          {sku:'E07124014',badge:'Alta exigencia',razon:'PIVO SK CONDOMINIUM 1H Super.'}];
+    } else if(m<=4.5){
+      recs = d
+        ?[{sku:'E07154003',badge:'⭐ Recomendado',razon:'PIVO SK CONDOMINIUM Doble Mega — para hojas hasta 4.5m.'},
+          {sku:'E07194003',badge:'Más velocidad',razon:'PIVO CONDOMINIUM Jetflex Doble Mega.'},
+          {sku:'E07124011',badge:'3ª opción',razon:'PIVO SK CONDOMINIUM Doble Super.'}]
+        :[{sku:'E07194005',badge:'⭐ Recomendado',razon:'PIVO SK CONDOMINIUM 1H Mega — hasta 4.5m.'},
+          {sku:'E07194001+A16510',badge:'Más velocidad',razon:'PIVO CONDOMINIUM Jetflex 1H.'},
+          {sku:'E07154004',badge:'Económico',razon:'PIVO SK CONDOMINIUM 1H Standar.'}];
+    } else {
+      recs=[
+        {sku:'E07042001',badge:'⭐ Caso especial',razon:`PIVO LIGER UNIVERSAL — para hojas mayores a 4.5m.${d?' ⚠ Requiere DOS motores (uno por hoja).':''}`},
+        {sku:'E07231000',badge:'2ª opción',razon:'PIVO LIGER 6m — si la hoja es hasta 6m.'},
+      ];
+    }
+  }
+
+  if(tipo==='barrera'){
+    const c = carril;
+    if(trafico==='muy_intenso'){
+      recs=[
+        {sku:'F08032000',badge:'⭐ Alta exigencia',razon:'SEM PARAR — 1200 ciclos/día. Para peajes, plantas, flujo máximo.'},
+        {sku:'F08104073',badge:'600 ciclos',razon:'BARRIER Brushless — el de menor mantenimiento.'},
+        {sku:'F08154005',badge:'K10 24V',razon:'Para accesos intensivos con carril hasta 4.5m.'},
+      ];
+    } else if(trafico==='intenso'){
+      recs=[
+        {sku:'F08154005',badge:'⭐ Recomendado',razon:'K10 24V — bielas, brazo hasta 4.5m. Ideal uso intensivo.'},
+        {sku:'F08104073',badge:'Alta durabilidad',razon:'BARRIER Brushless — hasta 600 ciclos, mínimo mantenimiento.'},
+        {sku:'F08184001',badge:'Económico',razon:'K1 Jetflex — rápido y confiable hasta 4m.'},
+      ];
+    } else {
+      // Según ancho de carril
+      if(c==='3'){
+        recs=[
+          {sku:'E08163000',badge:'⭐ Recomendado',razon:'KD2 — confiable para uso normal, brazo hasta 3m.'},
+          {sku:'F08184001',badge:'2ª opción',razon:'K1 Jetflex — más velocidad, hasta 4m.'},
+          {sku:'F08154005',badge:'Con margen',razon:'K10 24V si anticipa mayor tráfico en el futuro.'},
+        ];
+      } else if(c==='4'){
+        recs=[
+          {sku:'F08184001',badge:'⭐ Recomendado',razon:'K1 Jetflex — exacto para carriles de 3 a 4m.'},
+          {sku:'F08154005',badge:'Con margen',razon:'K10 24V — si quiere brazo hasta 4.5m.'},
+          {sku:'E08163000',badge:'Económico',razon:'KD2 solo si el carril es exactamente 3m.'},
+        ];
+      } else if(c==='4.5'){
+        recs=[
+          {sku:'F08154005',badge:'⭐ Recomendado',razon:'K10 24V — diseñado para carriles hasta 4.5m.'},
+          {sku:'F08104073',badge:'Mayor capacidad',razon:'BARRIER — si el tráfico puede crecer.'},
+          {sku:'F08184001',badge:'Alternativa',razon:'K1 hasta 4m si el carril real es menor.'},
+        ];
+      } else { // 5-6m+
+        recs=[
+          {sku:'F08104073',badge:'⭐ Recomendado',razon:'BARRIER Brushless — para carriles de 4.5m a 6m. Compatible con asta articulada.'},
+          {sku:'F08032000',badge:'Máximo tráfico',razon:'SEM PARAR si el flujo vehicular es muy alto.'},
+          {sku:'F08154005',badge:'K10',razon:'Solo si el carril definitivo queda en 4.5m.'},
+        ];
+      }
+    }
+    recs._esBarrera = true;
+    recs._carril = c;
+  }
+
+  if(tipo==='seccional'){
+    recs=[
+      {sku:'E04474004',badge:'⭐ Recomendado',razon:'BH CADEMEX Jetflex — sube vertical, ideal techo bajo.'},
+      {sku:'E04671004',badge:'Con batería',razon:'BH URUS 24V — autonomía en cortes de energía.'},
+      {sku:'E04441006',badge:'Económico',razon:'BH CADEMEX Mono — para uso bajo con menor inversión.'},
+    ];
+  }
+
+  if(tipo==='cortina'){
+    recs=[
+      {sku:'E05132002',badge:'⭐ Recomendado',razon:'BR1-500 — motor cortina comercial. Incluye téstera.'},
+      {sku:'E09331001',badge:'Pequeño',razon:'ROLLER Mono — para cortinas hasta 16m².'},
+    ];
+  }
+
+  return recs;
+}
+
+// ══════════════════════════════════════
+// UTILIDADES
+// ══════════════════════════════════════
+function fmtCOP(n){
+  return '$'+Math.round(n).toLocaleString('es-CO');
+}
+
+function toast(msg, dur=3000){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), dur);
+}
+
+function hora(){
+  const d = new Date();
+  return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
+}
+
+function setFecha(){
+  const d = new Date();
+  const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  document.getElementById('chat-date').textContent =
+    `${dias[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]}`;
+}
+
+// ══════════════════════════════════════
+// MOTOR DE CHAT — scroll inteligente
+// ══════════════════════════════════════
+const chat = document.getElementById('chat');
+
+// Scroll suave al elemento recién agregado — no al fondo absoluto
+function scrollToEl(el){
+  setTimeout(()=>{
+    el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    actualizarFlecha();
+  }, 60);
+}
+
+// Solo cuando necesitamos ir al fondo (input, botones de acción)
+function scrollBottom(){
+  setTimeout(()=>{
+    chat.scrollTop = chat.scrollHeight;
+    actualizarFlecha();
+  }, 60);
+}
+
+// ── Flecha ↓ flotante ──────────────────
+function actualizarFlecha(){
+  const flecha = document.getElementById('flecha-abajo');
+  if(!flecha) return;
+  const hayMasAbajo = chat.scrollHeight - chat.scrollTop - chat.clientHeight > 20;
+  flecha.style.opacity = hayMasAbajo ? '1' : '0';
+  flecha.style.pointerEvents = hayMasAbajo ? 'auto' : 'none';
+}
+
+chat.addEventListener('scroll', actualizarFlecha);
+
+// Actualizar flecha cada vez que aparece contenido nuevo en el chat
+const _observer = new MutationObserver(actualizarFlecha);
+_observer.observe(chat, { childList: true, subtree: false });
+
+// Crear flecha flotante en el DOM
+(function crearFlecha(){
+  const f = document.createElement('button');
+  f.id = 'flecha-abajo';
+  f.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="6 9 12 15 18 9" transform="rotate(180 12 12)"/></svg>`;
+  f.style.cssText = `
+    position:fixed;
+    bottom:80px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#E85C00;
+    color:#fff;
+    border:none;
+    border-radius:50%;
+    width:40px; height:40px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    box-shadow:0 4px 16px #E85C0066;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s;
+    z-index:100;
+  `;
+  f.onclick = ()=>{
+    chat.scrollTo({ top: chat.scrollHeight, behavior:'smooth' });
+  };
+  document.body.appendChild(f);
+})();
+
+function avatarSVG(size=24){
+  return `<svg width="${size}" height="${size}" viewBox="0 0 80 80" fill="none">
+    <circle cx="40" cy="40" r="4" fill="#FF6B1A"/>
+    <circle cx="40" cy="40" r="7" stroke="#FF6B1A" stroke-width="1.2" fill="none" opacity=".3"/>
+    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.5" fill="none">
+      <animate attributeName="r" values="0;14" dur="2.4s" repeatCount="indefinite" begin="0s"/>
+      <animate attributeName="opacity" values="1;0" dur="2.4s" repeatCount="indefinite" begin="0s"/>
+    </circle>
+    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2" fill="none">
+      <animate attributeName="r" values="0;24" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
+      <animate attributeName="opacity" values=".75;0" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
+    </circle>
+    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1.4" fill="none">
+      <animate attributeName="r" values="0;34" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
+      <animate attributeName="opacity" values=".45;0" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
+    </circle>
+  </svg>`;
+}
+
+// Agrega burbuja de NARA con typing de 1 segundo y onda grande
+function naraMsg(html, delay=0){
+  const ondaTyping = `<svg width="72" height="72" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="40" cy="40" r="6" fill="#FF6B1A"/>
+    <circle cx="40" cy="40" r="11" stroke="#FF6B1A" stroke-width="1.8" fill="none" opacity=".45"/>
+    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="3.5" fill="none">
+      <animate attributeName="r" values="0;18" dur="1.4s" repeatCount="indefinite" begin="0s"/>
+      <animate attributeName="opacity" values="1;0" dur="1.4s" repeatCount="indefinite" begin="0s"/>
+    </circle>
+    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.8" fill="none">
+      <animate attributeName="r" values="0;27" dur="1.4s" repeatCount="indefinite" begin="0.28s"/>
+      <animate attributeName="opacity" values=".8;0" dur="1.4s" repeatCount="indefinite" begin="0.28s"/>
+    </circle>
+    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2" fill="none">
+      <animate attributeName="r" values="0;36" dur="1.4s" repeatCount="indefinite" begin="0.56s"/>
+      <animate attributeName="opacity" values=".5;0" dur="1.4s" repeatCount="indefinite" begin="0.56s"/>
+    </circle>
+    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1.2" fill="none">
+      <animate attributeName="r" values="0;44" dur="1.4s" repeatCount="indefinite" begin="0.84s"/>
+      <animate attributeName="opacity" values=".25;0" dur="1.4s" repeatCount="indefinite" begin="0.84s"/>
+    </circle>
+  </svg>`;
+
+  return new Promise(res=>{
+    setTimeout(()=>{
+      const typing = document.createElement('div');
+      typing.className='typing anim';
+      typing.innerHTML=`<div class="typing-nara-wave">${ondaTyping}</div>`;
+      chat.appendChild(typing);
+      actualizarFlecha();
+
+      setTimeout(()=>{
+        typing.remove();
+        const wrap = document.createElement('div');
+        wrap.className='bubble-nara anim';
+        wrap.innerHTML=`
+          <div class="bubble-avatar">${avatarSVG(28)}</div>
+          <div class="bubble-body">
+            <div class="bubble-name">NARA</div>
+            <div class="bubble-txt">${html}</div>
+            <div class="bubble-meta">${hora()} ✓✓</div>
+          </div>`;
+        chat.appendChild(wrap);
+        actualizarFlecha();
+        res();
+      }, 1000);
+    }, delay);
+  });
+}
+
+// Agrega burbuja de usuario
+function userMsg(texto){
+  const wrap = document.createElement('div');
+  wrap.className='bubble-user anim';
+  wrap.innerHTML=`
+    <div class="bubble-txt">${texto}</div>
+    <div class="bubble-meta">${hora()}</div>`;
+  chat.appendChild(wrap);
+  actualizarFlecha();
+}
+
+// Agrega opciones
+function agregarOpciones(opciones, cols, onSel){
+  const grid = document.createElement('div');
+  grid.className=`opciones-grid ${cols===2?'col2':'col1'} anim`;
+  grid.id='opciones-activas';
+  opciones.forEach(op=>{
+    const btn = document.createElement('div');
+    btn.className='opcion-btn';
+    btn.innerHTML=`<div class="op-icon">${op.icon}</div>
+      <div><div class="op-lbl">${op.lbl}</div>${op.sub?`<div class="op-sub">${op.sub}</div>`:''}</div>`;
+    btn.onclick=()=>{
+      document.querySelectorAll('#opciones-activas .opcion-btn').forEach(b=>b.classList.remove('sel'));
+      btn.classList.add('sel');
+      setTimeout(()=>{ grid.remove(); onSel(op); }, 300);
+    };
+    grid.appendChild(btn);
+  });
+  chat.appendChild(grid);
+  actualizarFlecha();
+}
+
+// ══════════════════════════════════════
+// FLUJO NARA — máximo 1 minuto
+// ══════════════════════════════════════
+async function iniciarNara(){
+  setFecha();
+  await cargarSheets();
+
+  // MSG 1 — Apertura aspiracional
+  await naraMsg(`Hola, soy <strong>NARA</strong> 🔶<br><br>¿Sabes qué tienen en común las casas, conjuntos y negocios que más admiras?<br><br><strong>Sus puertas se abren solas.</strong><br><br>Dame 30 segundos — te muestro cómo tu espacio da ese salto hoy.`, 900);
+
+  // MSG 2 — Segmento
+  await naraMsg(`¿Dónde está el acceso que quieres transformar?`);
+  await new Promise(res=>{
+    agregarOpciones([
+      {icon:'🏠', lbl:'Mi casa',             sub:'Casa, finca o apartamento'},
+      {icon:'🏘', lbl:'Mi conjunto',         sub:'Condominio o unidad residencial'},
+      {icon:'🏪', lbl:'Mi negocio',          sub:'Local, oficina o comercio'},
+      {icon:'🏭', lbl:'Mi industria/bodega', sub:'Planta, bodega o sector industrial'},
+    ], 2, op=>{
+      const lbl = op.lbl.toLowerCase().replace('mi ','');
+      respuestas.lugar = lbl==='casa'?'casa':lbl.includes('conjunto')?'conjunto':lbl.includes('negocio')?'negocio':'industria';
+      // Tráfico por defecto según segmento
+      respuestas.trafico = {casa:'bajo',conjunto:'intenso',negocio:'moderado',industria:'muy_intenso'}[respuestas.lugar];
+      userMsg(op.icon+' '+op.lbl);
+      res();
+    });
+  });
+
+  // MSG 3 — Tipo de acceso
+  await naraMsg(`¿Y qué va a <strong>abrirse solo</strong> desde hoy?`);
+  await new Promise(res=>{
+    agregarOpciones([
+      {icon:'🚗', lbl:'Portón corredera',  sub:'Se desliza a un lado'},
+      {icon:'🚪', lbl:'Portón batiente',   sub:'Abre hacia adentro o afuera'},
+      {icon:'🚧', lbl:'Barrera vehicular', sub:'Control de parqueadero'},
+      {icon:'🏪', lbl:'Cortina metálica',  sub:'Local comercial'},
+      {icon:'🏠', lbl:'Garaje seccional',  sub:'Sube verticalmente'},
+    ], 2, op=>{
+      const t = op.lbl.toLowerCase();
+      respuestas.tipo = t.includes('corredera')?'corredera':t.includes('batiente')?'batiente':t.includes('barrera')?'barrera':t.includes('cortina')?'cortina':'seccional';
+      // Medidas y carril por defecto — el especialista afina en visita
+      respuestas.medida = 3;
+      respuestas.hojas = '1';
+      respuestas.carril = '4';
+      userMsg(op.icon+' '+op.lbl);
+      res();
+    });
+  });
+
+  // MSG 4 — Datos del cliente
+  await naraMsg(`Ya tengo lo que necesito 🎯<br>¿Me das tu nombre y WhatsApp para enviarte la propuesta?`);
+  await new Promise(res=>{
+    const card = document.createElement('div');
+    card.className='input-card anim';
+    card.innerHTML=`
+      <div class="input-label">Tus datos</div>
+      <input class="nara-input" id="inp-nombre" type="text" placeholder="Tu nombre completo" autocomplete="name">
+      <input class="nara-input" id="inp-wa" type="tel" placeholder="WhatsApp (sin +57)" autocomplete="tel" inputmode="numeric">
+      <button class="btn-primary" onclick="capturarDatos()">
+        Ver mi propuesta 🔶
+      </button>`;
+    chat.appendChild(card);
+    actualizarFlecha();
+
+    window.capturarDatos = ()=>{
+      const nom = document.getElementById('inp-nombre').value.trim();
+      const wa  = document.getElementById('inp-wa').value.trim();
+      if(!nom){ toast('⚠ Ingresa tu nombre'); return; }
+      if(!wa||wa.replace(/\D/g,'').length<10){ toast('⚠ Ingresa tu WhatsApp (10 dígitos)'); return; }
+      clienteNombre = nom;
+      clienteWA = wa;
+      card.remove();
+      userMsg(`${nom} · 📱 ${wa}`);
+      res();
+    };
+  });
+
+  // MSG 7 — Propuesta JOLT
+  const recs = motorRecomendacion(respuestas);
+  const nombreCorto = clienteNombre.split(' ')[0];
+
+  const fraseDinamica = getFraseDinamica(clienteNombre, respuestas.lugar, respuestas.tipo);
+  await naraMsg(fraseDinamica);
+
+  await naraMsg(`👇 <strong>Mi top 3 para tu caso</strong> — los más instalados por la Tribu Naranja:`);
+
+  const propWrap = document.createElement('div');
+  propWrap.className='propuesta-wrap anim';
+  const badges = ['⭐ El más elegido','✅ También funciona','💎 El que dura siempre'];
+
+  recs.slice(0,3).forEach((rec,i)=>{
+    const eq = findBySku(rec.sku)||{n:rec.sku,sku:rec.sku,tec:'—',p:0,vel:'—',v:'—'};
+    const card = document.createElement('div');
+    card.className=`prop-card${i===0?' recomendado':''}`;
+    card.innerHTML=`
+      <div class="prop-header">
+        <span class="prop-badge${i===0?' rec':''}">${badges[i]||rec.badge}</span>
       </div>
-      <div class="sol-body">
-        <div class="sol-pregunta">"Quiero que mi casa me reconozca antes de llegar."</div>
-        <div class="sol-accion">Descubrir mi opción <i class="ti ti-arrow-right" style="font-size:10px"></i></div>
-      </div>
-    </a>
-    <a class="sol-card" href="https://ppacentral.github.io/Cotizador" target="_blank">
-      <div class="sol-top" style="background:linear-gradient(135deg,#2A2B2E,#4A4C50)">
-        <div class="sol-ico"><i class="ti ti-building-community"></i></div>
-        <div><div class="sol-line">Línea 02</div><div class="sol-name">Tu<br>Conjunto</div></div>
-      </div>
-      <div class="sol-body">
-        <div class="sol-pregunta">"Necesito que el acceso funcione. Siempre. Sin quejas."</div>
-        <div class="sol-accion">Descubrir mi opción <i class="ti ti-arrow-right" style="font-size:10px"></i></div>
-      </div>
-    </a>
-    <a class="sol-card" href="https://ppacentral.github.io/Cotizador" target="_blank">
-      <div class="sol-top" style="background:linear-gradient(135deg,#2A1000,#8B3000)">
-        <div class="sol-ico"><i class="ti ti-building-store"></i></div>
-        <div><div class="sol-line">Línea 03</div><div class="sol-name">Tu<br>Negocio</div></div>
-      </div>
-      <div class="sol-body">
-        <div class="sol-pregunta">"La imagen de mi empresa empieza en la puerta."</div>
-        <div class="sol-accion">Descubrir mi opción <i class="ti ti-arrow-right" style="font-size:10px"></i></div>
-      </div>
-    </a>
-    <a class="sol-card" href="https://ppacentral.github.io/Cotizador" target="_blank">
-      <div class="sol-top" style="background:linear-gradient(135deg,#200008,#6A0020)">
-        <div class="sol-ico"><i class="ti ti-building-factory-2"></i></div>
-        <div><div class="sol-line">Línea 04</div><div class="sol-name">Tu<br>Industria</div></div>
-      </div>
-      <div class="sol-body">
-        <div class="sol-pregunta">"Mi operación no se puede detener. Ni un segundo."</div>
-        <div class="sol-accion">Descubrir mi opción <i class="ti ti-arrow-right" style="font-size:10px"></i></div>
-      </div>
-    </a>
-  </div>
-</div>
+      <div class="prop-body">
+        <div class="prop-nombre">${eq.n}</div>
+        <div class="prop-sku">${eq.sku}</div>
+        <div class="prop-specs">
+          ${eq.tec?`<span class="prop-spec">${eq.tec}</span>`:''}
+          ${eq.vel?`<span class="prop-spec">⚡ ${eq.vel}</span>`:''}
+          ${eq.v?`<span class="prop-spec">${eq.v}</span>`:''}
+          ${eq.kg?`<span class="prop-spec">${eq.kg} kg</span>`:''}
+          ${eq.brazo?`<span class="prop-spec">🚧 ${eq.brazo}</span>`:''}
+        </div>
+        <div class="prop-precio">${fmtCOP(eq.p)}</div>
+        <div class="prop-precio-lbl">Precio de referencia · no incluye instalación</div>
+        <div class="prop-razon">${rec.razon}</div>
+      </div>`;
+    propWrap.appendChild(card);
+  });
 
-<div class="ssg-section">
-  <div class="ssg-eyebrow">¿Por qué PPA Central?</div>
-  <div class="ssg-h2">No somos los únicos.<br>Somos los correctos.</div>
-  <div class="ssg-sub">Tres razones que nuestros clientes repiten siempre — antes de recomendar.</div>
-  <div class="ssg-grid">
-    <div class="ssg-card">
-      <div class="ssg-num">01</div>
-      <div class="ssg-t">Situación entendida</div>
-      <div class="ssg-p">No te vendemos un motor — te preguntamos qué necesitas. Nuestro cotizador analiza tu situación y te conecta con la <strong>tecnología exacta para tu caso</strong>, no la más cara ni la más popular.</div>
-    </div>
-    <div class="ssg-card">
-      <div class="ssg-num">02</div>
-      <div class="ssg-t">Solución respaldada</div>
-      <div class="ssg-p">Somos Distribuidores Autorizados PPA Latam — la marca <strong>#1 en automatismos de alta velocidad en Latinoamérica</strong>, con más de 40 años de respaldo real. No improvisamos. No experimentamos contigo.</div>
-    </div>
-    <div class="ssg-card">
-      <div class="ssg-num">03</div>
-      <div class="ssg-t">Garantía sin letra chica</div>
-      <div class="ssg-p">Repuestos originales, soporte técnico local y una red de instaladores certificados lista para actuar. <strong>Cuando algo necesita atención — respondemos.</strong> Porque aquí tú eres el jefe.</div>
-    </div>
-  </div>
-  <div class="ssg-garantia">
-    <i class="ti ti-shield-check ssg-g-icon"></i>
-    <div>
-      <div class="ssg-g-t">Abre cuando debe abrir. Cierra cuando debe cerrar.</div>
-      <div class="ssg-g-s">Sin drama, sin excusas. PPA lleva más de 40 años diseñando accesos que funcionan exactamente como los esperas — y a la altura de lo que mereces.</div>
-    </div>
-  </div>
-</div>
+  // Cremallera extra si aplica
+  if(recs._cremallera){
+    const tipoCrem = recs._tipoCrem||'POP';
+    const crem = CREMALLERAS[tipoCrem];
+    const nota = document.createElement('div');
+    nota.className='crem-card';
+    nota.innerHTML=`<span>⚙</span>
+      <div>
+        <div style="font-family:var(--font-title);font-weight:700;font-size:12px;color:var(--naranja3)">Cremallera adicional obligatoria</div>
+        <div style="font-size:11px;color:var(--txt2);margin-top:2px">${crem.n} · <span style="font-family:var(--font-mono)">${crem.sku}</span></div>
+        <div style="font-family:var(--font-mono);font-size:13px;color:var(--naranja3);margin-top:4px">${fmtCOP(crem.p)}</div>
+        <div style="font-size:10px;color:var(--txt3);margin-top:2px">Portón mayor a 4m requiere una cremallera adicional</div>
+      </div>`;
+    propWrap.appendChild(nota);
+  }
 
-<div class="instalador-banner">
-  <div>
-    <div class="inst-eyebrow">Universo Naranja · Red de instaladores PPA Central</div>
-    <div class="inst-h2">¿Quieres ser<br>instalador PPA?</div>
-    <div class="inst-sub">Únete al <strong>Universo Naranja</strong> — la red de técnicos e instaladores que trabajan con la mejor tecnología de automatización de Latinoamérica. Capacitación, respaldo y negocio real.</div>
-  </div>
-  <a class="btn-inst" href="https://wa.me/573177772333?text=Hola%20PPA%20Central%2C%20quiero%20ser%20instalador%20del%20Universo%20Naranja" target="_blank">
-    <i class="ti ti-brand-whatsapp" style="color:#25D366"></i> Quiero ser instalador
-  </a>
-</div>
+  // Asta si es barrera
+  if(recs._esBarrera){
+    const recEq = findBySku(recs[0]?.sku);
+    const eqId = recEq?.id||'k1';
+    const astasDisp = ASTAS[eqId]||ASTAS.k1;
+    if(astasDisp.length){
+      const notaAsta = document.createElement('div');
+      notaAsta.className='prop-nota';
+      notaAsta.innerHTML=`<div class="prop-nota-icon">🚧</div>
+        <div>
+          <div style="font-family:var(--font-title);font-weight:700;font-size:12px;color:var(--naranja3);margin-bottom:4px">Asta recomendada para tu barrera</div>
+          ${astasDisp.slice(0,2).map(a=>`
+            <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)">
+              <div>
+                <div style="font-size:12px;color:var(--txt)">${a.n}</div>
+                <div style="font-family:var(--font-mono);font-size:10px;color:var(--txt3)">${a.sku}</div>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:13px;color:var(--naranja3)">${fmtCOP(a.p)}</div>
+            </div>`).join('')}
+        </div>`;
+      propWrap.appendChild(notaAsta);
+    }
+  }
 
-<div class="redes-section">
-  <div class="sol-eyebrow" style="margin-bottom:6px">Síguenos · @ppacentral</div>
-  <div class="sol-h2" style="margin-bottom:20px">Únete a la comunidad</div>
-  <div class="redes-grid">
-    <a class="red-card" href="https://wa.me/573177772333" target="_blank">
-      <i class="ti ti-brand-whatsapp" style="font-size:28px;color:#25D366"></i>
-      <div class="red-name">WhatsApp</div><div class="red-handle">+57 317 777 2 333</div>
-      <span class="red-badge" style="background:rgba(37,211,102,.12);color:#1a6b3a">Convierte directo</span>
-    </a>
-    <a class="red-card" href="https://instagram.com/ppacentral" target="_blank">
-      <i class="ti ti-brand-instagram" style="font-size:28px;color:#E1306C"></i>
-      <div class="red-name">Instagram</div><div class="red-handle">@ppacentral</div>
-      <span class="red-badge" style="background:rgba(225,48,108,.1);color:#8B1A47">Visual · Viral</span>
-    </a>
-    <a class="red-card" href="https://tiktok.com/@ppacentral" target="_blank">
-      <i class="ti ti-brand-tiktok" style="font-size:28px;color:#111"></i>
-      <div class="red-name">TikTok</div><div class="red-handle">@ppacentral</div>
-      <span class="red-badge" style="background:rgba(0,0,0,.08);color:#555">Alcance masivo</span>
-    </a>
-    <a class="red-card" href="https://facebook.com/ppacentral" target="_blank">
-      <i class="ti ti-brand-facebook" style="font-size:28px;color:#1877F2"></i>
-      <div class="red-name">Facebook</div><div class="red-handle">@ppacentral</div>
-      <span class="red-badge" style="background:rgba(24,119,242,.1);color:#0a4080">Conjuntos · B2C</span>
-    </a>
-    <a class="red-card" href="https://youtube.com/@ppacentral" target="_blank">
-      <i class="ti ti-brand-youtube" style="font-size:28px;color:#FF0000"></i>
-      <div class="red-name">YouTube</div><div class="red-handle">@ppacentral</div>
-      <span class="red-badge" style="background:rgba(255,0,0,.08);color:#8B0000">Tutoriales · SEO</span>
-    </a>
-    <a class="red-card" href="https://linkedin.com/company/ppacentral" target="_blank">
-      <i class="ti ti-brand-linkedin" style="font-size:28px;color:#0A66C2"></i>
-      <div class="red-name">LinkedIn</div><div class="red-handle">@ppacentral</div>
-      <span class="red-badge" style="background:rgba(10,102,194,.1);color:#064080">B2B · Proyectos</span>
-    </a>
-  </div>
-</div>
+  // Notas
+  const notaAcc = document.createElement('div');
+  notaAcc.className='prop-nota';
+  notaAcc.innerHTML=`<div class="prop-nota-icon">🔧</div>
+    <div style="font-size:12px;color:var(--txt2);line-height:1.6">
+      Los <strong style="color:var(--txt)">accesorios perimetrales</strong> — fotoceldas, semáforos y protecciones — los cotizamos en sitio. Cada acceso es diferente.
+    </div>`;
+  propWrap.appendChild(notaAcc);
 
-<div class="cta-section">
-  <div>
-    <div class="cta-lbl">Tu decisión, tu momento</div>
-    <div class="cta-h2">¿Listo para<br><span>encontrar<br>tu solución?</span></div>
-    <div class="cta-sub">Nuestro cotizador te guía. Nuestros asesores te acompañan. Tú decides cuándo y cómo.</div>
-    <div class="cta-btns">
-      <a class="btn-cta-p" href="https://ppacentral.github.io/Cotizador" target="_blank">
-        <i class="ti ti-calculator"></i> Ir al cotizador
-      </a>
-      <a class="btn-cta-wa" href="https://wa.me/573177772333?text=Hola%20PPA%20Central" target="_blank">
-        <i class="ti ti-brand-whatsapp"></i> Escribir ahora
-      </a>
-    </div>
-  </div>
-  <div class="cta-info">
-    <div class="cta-info-t">PPA Central</div>
-    <a class="cta-row" href="https://share.google/K079uJQnRt0rwRsgf" target="_blank">
-      <div class="cta-row-icon"><i class="ti ti-map-pin"></i></div>
-      <div><div class="cta-row-t">Florencia, Caquetá <i class="ti ti-external-link" style="font-size:10px;color:#E85C00"></i></div><div class="cta-row-s">Calle 11A #17-44 · Ver en Maps</div></div>
-    </a>
-    <a class="cta-row" href="tel:+573177772333">
-      <div class="cta-row-icon"><i class="ti ti-phone"></i></div>
-      <div><div class="cta-row-t">+57 317 777 2 333</div><div class="cta-row-s">Lunes a Sábado</div></div>
-    </a>
-    <a class="cta-row" href="https://ppacentral.com" target="_blank">
-      <div class="cta-row-icon"><i class="ti ti-world"></i></div>
-      <div><div class="cta-row-t">ppacentral.com</div><div class="cta-row-s">@ppacentral en todas las redes</div></div>
-    </a>
-    <a class="cta-row" href="https://wa.me/573177772333" target="_blank">
-      <div class="cta-row-icon" style="background:#25D366"><i class="ti ti-brand-whatsapp"></i></div>
-      <div><div class="cta-row-t">Respuesta inmediata</div><div class="cta-row-s">Cotización en 3 minutos</div></div>
-    </a>
-  </div>
-</div>
+  const notaPrecio = document.createElement('div');
+  notaPrecio.className='prop-nota';
+  notaPrecio.innerHTML=`<div class="prop-nota-icon">💡</div>
+    <div style="font-size:12px;color:var(--txt2);line-height:1.6">
+      Precios de referencia sugeridos al público. El valor final depende de tu instalación. No se totalizan.
+    </div>`;
+  propWrap.appendChild(notaPrecio);
 
-<div class="footer">
-  <div>
-    <div class="footer-brand">PPA Central</div>
-    <div class="footer-info">Distribuidor Autorizado PPA Latam<br>Calle 11A #17-44 · Florencia, Caquetá<br>+57 317 777 2 333 · ppacentral.com</div>
-    <div class="footer-social">
-      <a class="fsoc" href="https://wa.me/573177772333" target="_blank" aria-label="WhatsApp"><i class="ti ti-brand-whatsapp"></i></a>
-      <a class="fsoc" href="https://instagram.com/ppacentral" target="_blank" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
-      <a class="fsoc" href="https://tiktok.com/@ppacentral" target="_blank" aria-label="TikTok"><i class="ti ti-brand-tiktok"></i></a>
-      <a class="fsoc" href="https://facebook.com/ppacentral" target="_blank" aria-label="Facebook"><i class="ti ti-brand-facebook"></i></a>
-      <a class="fsoc" href="https://youtube.com/@ppacentral" target="_blank" aria-label="YouTube"><i class="ti ti-brand-youtube"></i></a>
-      <a class="fsoc" href="https://linkedin.com/company/ppacentral" target="_blank" aria-label="LinkedIn"><i class="ti ti-brand-linkedin"></i></a>
-    </div>
-  </div>
-  <div>
-    <div class="footer-col-t">Soluciones</div>
-    <a class="footer-link" href="https://ppacentral.github.io/Cotizador" target="_blank">Tu Casa, Tu Ritmo</a>
-    <a class="footer-link" href="https://ppacentral.github.io/Cotizador" target="_blank">Tu Conjunto</a>
-    <a class="footer-link" href="https://ppacentral.github.io/Cotizador" target="_blank">Tu Negocio</a>
-    <a class="footer-link" href="https://ppacentral.github.io/Cotizador" target="_blank">Tu Industria</a>
-    <a class="footer-link" href="https://wa.me/573177772333?text=Quiero%20ser%20instalador%20del%20Universo%20Naranja" target="_blank" style="color:#E85C00;margin-top:8px;font-weight:700">Universo Naranja · Instaladores</a>
-  </div>
-  <div style="text-align:right">
-    <div class="footer-tag">#PPACentral</div>
-    <div style="font-size:9px;color:#444;margin-top:8px">2026 © PPA Central<br>Distribuidor Autorizado PPA Latam</div>
-  </div>
-</div>
+  chat.appendChild(propWrap);
+  actualizarFlecha();
 
+  // MSG 7b — frase de estatus
+  await naraMsg(`Cualquiera de estas opciones transforma tu entrada, ${nombreCorto}.<br><br>No es solo un motor — es <strong>seguridad, confort y el primer detalle que las visitas notan.</strong><br><br>La tecnología PPA lleva más de 40 años haciendo exactamente eso.`);
+
+  // MSG 8 — Visita + regalo sutil
+  const fraseDiseno = {
+    casa:     'el plano de tu portón — el diseño real de tu acceso',
+    conjunto: 'el diseño técnico del sistema de acceso del conjunto',
+    negocio:  'el plano eléctrico y de acceso de tu local',
+    industria:'el diseño de ingeniería de tu acceso industrial',
+  }[respuestas.lugar||'casa'];
+
+  await naraMsg(`Una cosa más, <strong>${nombreCorto}</strong> —<br><br>Si nos das el espacio para visitarte, un especialista va donde estás y perfecciona esta propuesta en sitio. <strong>Sin costo. Ese es mi regalo.</strong> 📐<br><br>Y cuando tu proyecto tome forma, te entregamos <em>${fraseDiseno}</em>. El que pocos tienen.<br><br><strong>¿Aceptas la visita?</strong>`);
+
+  await new Promise(res=>{
+    const btnSi = document.createElement('button');
+    const btnNo = document.createElement('button');
+    btnSi.className='btn-visita anim';
+    btnSi.textContent='📍 Sí, acepto la visita';
+    btnSi.onclick=()=>{ motivarVisita=true; btnSi.remove(); btnNo.remove(); userMsg('📍 Sí, acepto la visita'); res(); };
+    btnNo.className='btn-visita-no anim';
+    btnNo.textContent='Por ahora me quedo con esto';
+    btnNo.onclick=()=>{ btnSi.remove(); btnNo.remove(); userMsg('Por ahora me quedo con esto'); res(); };
+    chat.appendChild(btnSi);
+    chat.appendChild(btnNo);
+    actualizarFlecha();
+  });
+
+  // Registrar en Bitrix
+  const recsData = recs.slice(0,3).map(r=>{ const eq=findBySku(r.sku)||{n:r.sku}; return {nombre:eq.n,sku:r.sku}; });
+  await enviarBitrix(clienteNombre, clienteWA, respuestas, recsData);
+
+  // MSG 9 — Cierre + WhatsApp
+  await naraMsg(motivarVisita
+    ? `Listo, <strong>${nombreCorto}</strong> 🔶 Tu propuesta viaja por WhatsApp y la visita queda en agenda.<br><br>Y recuerda — también podemos escalar con <strong>cámaras, alarmas y domótica.</strong> Todo un universo que PPA Central sabe controlar.<br><br><em>Soy NARA — aquí seguiré cuando me necesites.</em>`
+    : `Listo, <strong>${nombreCorto}</strong> 🔶 Tu propuesta ya viaja por WhatsApp.<br><br>Y recuerda — también podemos escalar con <strong>cámaras, alarmas y domótica.</strong> Todo un universo que PPA Central sabe controlar.<br><br><em>Soy NARA — aquí seguiré cuando me necesites.</em>`
+  );
+
+  // Generar ID de proyecto
+  const proyectoID = `NARA-${Date.now().toString().slice(-6)}`;
+  const segCodigo = {casa:'L01',conjunto:'L02',negocio:'L03',industria:'L04'}[respuestas.lugar||'casa'];
+  const segNombre = {casa:'Tu Casa · Tu Ritmo',conjunto:'Tu Conjunto',negocio:'Tu Negocio',industria:'Tu Industria'}[respuestas.lugar||'casa'];
+
+  // Botón WhatsApp — envía propuesta
+  const btnWA = document.createElement('button');
+  btnWA.className='btn-wa anim';
+  btnWA.innerHTML=`<svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Recibir mi propuesta por WhatsApp`;
+  btnWA.onclick=()=>{
+    const equipoTop = findBySku(recs[0]?.sku);
+    const lineas = [
+      `🔶 *Propuesta PPA Central · ${clienteNombre}*`,
+      `📋 Proyecto #${proyectoID} · ${segCodigo} ${segNombre}`,
+      ``,
+      `Tu solución de acceso automatizado está lista.`,
+      ``,
+      `⭐ *Equipo recomendado:*`,
+      `${equipoTop?.n||'Ver propuesta'} · ${fmtCOP(equipoTop?.p||0)}`,
+      equipoTop?.sku ? `SKU: ${equipoTop.sku}` : '',
+      ``,
+      recs[1] ? `✅ *2ª opción:* ${findBySku(recs[1].sku)?.n||recs[1].sku}` : '',
+      recs[2] ? `💎 *3ª opción:* ${findBySku(recs[2].sku)?.n||recs[2].sku}` : '',
+      ``,
+      motivarVisita ? `📍 *Visita solicitada* — un especialista se contactará contigo pronto.` : '',
+      respuestas.sistemaCompleto ? `🔐 *Sistema completo solicitado* — cámaras, alarmas y control de acceso incluidos en el diseño.` : '',
+      ``,
+      `💡 Precios de referencia. El valor final incluye instalación y visita técnica.`,
+      ``,
+      `_Propuesta generada por NARA · Asesora IA PPA Central_`,
+      `_Distribuidor Autorizado PPA Latam · Florencia, Caquetá_`,
+    ].filter(Boolean).join('\n');
+
+    window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(lineas)}`,'_blank');
+  };
+  chat.appendChild(btnWA);
+  actualizarFlecha();
+
+  // Chat libre con IA
+  await new Promise(res => setTimeout(res, 1200));
+  await naraMsg(`¿Tienes alguna pregunta sobre tu solución, los equipos o cualquier cosa de PPA Central? <strong>Pregúntame con confianza</strong> — ya tengo todo tu caso. 🔶`);
+  activarChatLibre();
+}
+
+// ══════════════════════════════════════
+// CHAT LIBRE — NARA responde con Claude API
+// ══════════════════════════════════════
+function activarChatLibre(){
+  chatLibreActivo = true;
+
+  // Construir contexto del cliente para el system prompt
+  const segNombre = respuestas.lugar ? {casa:'Tu Casa Tu Ritmo',conjunto:'Tu Conjunto',negocio:'Tu Negocio',industria:'Tu Industria'}[respuestas.lugar]||'Residencial' : 'No definido';
+  const catalogoResumen = `
+Portones correderos residenciales: DZ STARK HOME (desde $693.000), DZ HUB, DZ STARK, DZ RIO, DZ EURUS STEEL (hasta $1.671.000).
+Portones correderos industriales: DZ INDUSTRIAL 1000kg ($1.692.000), 1500kg, 2000kg, DZ INDUSTRY BRUSHLESS.
+Portones batientes: PIVO SK (desde $726.000), PIVO HOME, PIVO SK CONDOMINIUM, PIVO LIGER (hasta $4.316.000).
+Puertas seccionales: BH-W STEEL WiFi ($1.030.000), BH URUS 24V, BH CADEMEX Jetflex ($1.385.000).
+Barreras vehiculares: KD2 ($2.308.000), K1 ($3.385.000), K10 24V ($4.724.000), BARRIER Brushless ($4.538.000), SEM PARAR ($10.770.000).
+Cortinas: BR1-500 ($1.762.000), ROLLER ($848.000).
+Cremalleras: Residencial POP ($40.000), GOLD ($60.000), Industrial GOLD ($102.000).
+Astas para barreras: Slim 3m ($354.000-$992.000), Slim 4m ($662.000-$1.247.000), Rect 3m-6m ($431.000-$985.000).`;
+
+  const systemPrompt = `Eres NARA, la asesora de inteligencia artificial de PPA Central, distribuidor autorizado de PPA Latam en Colombia, con sede en Florencia, Caquetá. 
+
+IDENTIDAD:
+- Tu nombre NARA viene de Naranja — la tribu y filosofía de PPA Central.
+- Eres la primera asesora IA especializada en automatismos y seguridad electrónica de Colombia.
+- Hablas con calidez, precisión técnica y seguridad. Nunca eres genérica.
+- Usas emojis con moderación: 🔶 para momentos clave, otros cuando refuerzan el mensaje.
+- Siempre ofreces soluciones premium e integrales, nunca genéricas.
+
+CLIENTE EN CONVERSACIÓN:
+- Nombre: ${clienteNombre || 'el cliente'}
+- Segmento: ${segNombre}
+- Tipo de acceso: ${respuestas.tipo || 'no definido'}
+- Tráfico: ${respuestas.trafico || 'no definido'}
+- Visita solicitada: ${motivarVisita ? 'SÍ' : 'No por ahora'}
+
+CATÁLOGO PPA CENTRAL (precios de referencia sin instalación):
+${catalogoResumen}
+
+REGLAS DE RESPUESTA:
+1. Responde SIEMPRE en español colombiano natural, cálido y profesional.
+2. Sé conciso — máximo 3-4 párrafos cortos o una lista breve.
+3. Si preguntan por precios, da rangos del catálogo y aclara que el precio final depende de la instalación.
+4. Si preguntan algo fuera de tu área (legal, médico, etc.), redirige amablemente hacia temas de automatización y seguridad.
+5. Siempre ofrece el siguiente paso: visita en sitio, WhatsApp, o más información.
+6. Nunca inventes productos, SKUs o precios que no estén en el catálogo.
+7. El número de WhatsApp de PPA Central es ${WA_NUM} — menciónalo cuando sea relevante.
+8. Cierra mensajes importantes con: "Recuerda que eres Libre y Digital. 🔶"`;
+
+  // Crear input flotante
+  const inputZone = document.createElement('div');
+  inputZone.id = 'chat-libre-input';
+  inputZone.style.cssText = `
+    position: sticky;
+    bottom: 0;
+    background: #131313;
+    border-top: 1px solid #333;
+    padding: 12px 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    z-index: 20;
+    flex-shrink: 0;
+  `;
+  inputZone.innerHTML = `
+    <textarea id="nara-libre-input" placeholder="Pregúntale algo a NARA..." rows="1"
+      style="flex:1;background:#222;border:1px solid #444;border-radius:12px;padding:11px 14px;
+      font-family:'Inter',sans-serif;font-size:14px;color:#F5F2EE;resize:none;outline:none;
+      line-height:1.5;max-height:100px;overflow-y:auto;transition:border-color .2s;"
+      onfocus="this.style.borderColor='#FF6B1A'" onblur="this.style.borderColor='#444'"
+    ></textarea>
+    <button id="nara-libre-send" style="
+      background:#E85C00;border:none;border-radius:10px;padding:11px 16px;
+      cursor:pointer;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;
+      font-size:13px;white-space:nowrap;transition:all .18s;flex-shrink:0;
+    ">Enviar</button>
+  `;
+
+  // Insertar después del chat-scroll
+  const chatScroll = document.getElementById('chat');
+  chatScroll.parentNode.insertBefore(inputZone, chatScroll.nextSibling);
+
+  // Auto-resize textarea
+  const textarea = document.getElementById('nara-libre-input');
+  textarea.addEventListener('input', () => {
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
+  });
+
+  // Enter para enviar (Shift+Enter para nueva línea)
+  textarea.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      enviarMensajeLibre();
+    }
+  });
+
+  document.getElementById('nara-libre-send').onclick = enviarMensajeLibre;
+
+  // Scroll al input para que el usuario lo vea
+  setTimeout(()=>{
+    inputZone.scrollIntoView({behavior:'smooth', block:'end'});
+    document.getElementById('nara-libre-input').focus();
+  }, 400);
+}
+
+async function enviarMensajeLibre(){
+  const textarea = document.getElementById('nara-libre-input');
+  const texto = textarea.value.trim();
+  if(!texto) return;
+
+  textarea.value = '';
+  textarea.style.height = 'auto';
+
+  // Mostrar mensaje del usuario
+  userMsg(texto);
+
+  // Agregar al historial
+  historialChat.push({role:'user', content: texto});
+
+  // Typing indicator
+  const chat = document.getElementById('chat');
+  const typing = document.createElement('div');
+  typing.className = 'typing';
+  typing.innerHTML = `<div class="typing-nara-wave">
+    <svg width="48" height="48" viewBox="0 0 80 80" fill="none">
+      <circle cx="40" cy="40" r="5" fill="#FF6B1A"/>
+      <circle cx="40" cy="40" r="9" stroke="#FF6B1A" stroke-width="1.5" fill="none" opacity=".4"/>
+      <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="3" fill="none">
+        <animate attributeName="r" values="0;16" dur="1.6s" repeatCount="indefinite" begin="0s"/>
+        <animate attributeName="opacity" values="1;0" dur="1.6s" repeatCount="indefinite" begin="0s"/>
+      </circle>
+      <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.4" fill="none">
+        <animate attributeName="r" values="0;24" dur="1.6s" repeatCount="indefinite" begin="0.3s"/>
+        <animate attributeName="opacity" values=".8;0" dur="1.6s" repeatCount="indefinite" begin="0.3s"/>
+      </circle>
+      <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1.8" fill="none">
+        <animate attributeName="r" values="0;32" dur="1.6s" repeatCount="indefinite" begin="0.6s"/>
+        <animate attributeName="opacity" values=".5;0" dur="1.6s" repeatCount="indefinite" begin="0.6s"/>
+      </circle>
+    </svg>
+  </div>`;
+  chat.appendChild(typing);
+  actualizarFlecha();
+
+  // Deshabilitar input mientras espera
+  const sendBtn = document.getElementById('nara-libre-send');
+  const inputEl = document.getElementById('nara-libre-input');
+  if(sendBtn) sendBtn.disabled = true;
+  if(inputEl) inputEl.disabled = true;
+
+  try{
+    // Construir contexto del cliente
+    const segNombre = respuestas.lugar ? {casa:'Tu Casa Tu Ritmo',conjunto:'Tu Conjunto',negocio:'Tu Negocio',industria:'Tu Industria'}[respuestas.lugar]||'Residencial' : 'No definido';
+    const catalogoResumen = `Portones correderos residenciales: DZ STARK HOME (desde $693.000), DZ HUB, DZ STARK, DZ RIO, DZ EURUS STEEL (hasta $1.671.000). Portones correderos industriales: DZ INDUSTRIAL 1000kg ($1.692.000), 1500kg, 2000kg, DZ INDUSTRY BRUSHLESS. Portones batientes: PIVO SK (desde $726.000), PIVO HOME, PIVO SK CONDOMINIUM, PIVO LIGER (hasta $4.316.000). Puertas seccionales: BH-W STEEL WiFi ($1.030.000), BH URUS 24V, BH CADEMEX Jetflex ($1.385.000). Barreras vehiculares: KD2 ($2.308.000), K1 ($3.385.000), K10 24V ($4.724.000), BARRIER Brushless ($4.538.000), SEM PARAR ($10.770.000). Cortinas: BR1-500 ($1.762.000), ROLLER ($848.000).`;
+    const systemPrompt = `Eres NARA, la asesora de inteligencia artificial de PPA Central, distribuidor autorizado de PPA Latam en Colombia, con sede en Florencia, Caquetá. Tu nombre viene de Naranja — la tribu y filosofía de PPA Central. Eres la primera asesora IA especializada en automatismos y seguridad electrónica de Colombia. Hablas con calidez, precisión técnica y seguridad. Usas emojis con moderación: 🔶 para momentos clave. Siempre ofreces soluciones premium e integrales.
+
+Cliente: ${clienteNombre||'el cliente'} | Segmento: ${segNombre} | Tipo: ${respuestas.tipo||'no definido'} | Tráfico: ${respuestas.trafico||'no definido'} | Visita: ${motivarVisita?'SÍ':'No por ahora'}
+
+Catálogo: ${catalogoResumen}
+
+Reglas: Responde en español colombiano natural, conciso (máximo 3-4 párrafos). Da precios de referencia del catálogo y aclara que el precio final depende de la instalación. Nunca inventes productos. WhatsApp PPA Central: ${WA_NUM}. Cierra mensajes importantes con: "Recuerda que eres Libre y Digital. 🔶"`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': CLAUDE_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: historialChat
+      })
+    });
+
+    const data = await response.json();
+    const respuestaTexto = data?.content?.[0]?.text || 'Hubo un problema al procesar tu pregunta. Escríbeme por WhatsApp y te respondo de inmediato. 🔶';
+
+    // Agregar respuesta al historial
+    historialChat.push({role:'assistant', content: respuestaTexto});
+
+    // Remover typing y mostrar respuesta
+    typing.remove();
+    await naraMsg(respuestaTexto.replace(/\n/g, '<br>'));
+
+  } catch(err){
+    typing.remove();
+    await naraMsg('Tuve un pequeño inconveniente técnico. Escríbeme directamente por WhatsApp y te atiendo de inmediato. 🔶');
+    console.warn('Claude API:', err);
+  } finally {
+    if(sendBtn) sendBtn.disabled = false;
+    if(inputEl) inputEl.disabled = false;
+    if(inputEl) inputEl.focus();
+  }
+}
+
+// ══════════════════════════════════════
+// FRASES DINÁMICAS — personalizadas por segmento y tipo
+// Cada visita diferente. Preparado para IA cuando conectemos API.
+// ══════════════════════════════════════
+const FRASES = {
+  casa: {
+    corredera:[
+      n=>`${n}, se acabó llegar a casa con lluvia esperando que alguien abra. Tu portón va a reconocerte solo. 🏠`,
+      n=>`${n}, tu casa merece que todo funcione sin que tengas que pensar en ello. Esto es exactamente eso.`,
+      n=>`${n}, cada llegada a casa debería ser fácil. Mira lo que encontré para ti:`,
+    ],
+    batiente:[
+      n=>`${n}, nada de forcejear con llaves ni esperar que alguien abra. Tu portón va a abrirse solo cuando llegues. 🏠`,
+      n=>`${n}, la comodidad empieza desde que doblas la esquina. Esto lo cambia todo:`,
+    ],
+    seccional:[
+      n=>`${n}, entrar al garaje debería ser lo más fácil del día. Con esto, lo será. 🏠`,
+      n=>`${n}, el garaje automático no es un lujo — es lo que ya tiene el vecino que va un paso adelante.`,
+    ],
+    default:[
+      n=>`${n}, tu casa tiene que funcionar para ti, no al revés. Mira lo que encontré:`,
+    ],
+  },
+  conjunto: {
+    barrera:[
+      n=>`${n}, los conjuntos que automatizan su acceso reducen incidentes en un 60%. El tuyo va a ser uno de ellos. 🏘`,
+      n=>`${n}, control de acceso real significa saber quién entra y cuándo. Esto lo resuelve:`,
+    ],
+    default:[
+      n=>`${n}, un conjunto bien automatizado vale más y da más tranquilidad. Mira lo que encontré:`,
+      n=>`${n}, la seguridad del conjunto empieza en el acceso. Esto es lo que te recomiendo:`,
+    ],
+  },
+  negocio: {
+    cortina:[
+      n=>`${n}, cada minuto que pierdes abriendo la cortina a mano es un cliente que no entra. Eso termina hoy. 🏪`,
+      n=>`${n}, tu local abierto en segundos. Sin llaves, sin esperas, sin complicaciones:`,
+    ],
+    corredera:[
+      n=>`${n}, en un negocio el tiempo es dinero. Un acceso automático lo devuelve con creces. Mira esto:`,
+    ],
+    default:[
+      n=>`${n}, automatizar tu negocio no es un gasto — es lo primero que notan tus clientes. Esto es lo que encontré:`,
+      n=>`${n}, los negocios que automatizan trabajan mejor, punto. Aquí está tu solución:`,
+    ],
+  },
+  industria: {
+    corredera:[
+      n=>`${n}, en operaciones industriales el tiempo de acceso impacta directamente la producción. Esto lo resuelve. 🏭`,
+      n=>`${n}, una bodega sin acceso automático pierde minutos que se convierten en costos. Esto cambia eso:`,
+    ],
+    barrera:[
+      n=>`${n}, control de acceso industrial significa trazabilidad y seguridad en cada movimiento. Aquí está:`,
+    ],
+    default:[
+      n=>`${n}, tu operación merece un acceso a la altura. Esto es lo que encontré para tu caso:`,
+      n=>`${n}, en industria la confiabilidad no es negociable. Por eso te recomiendo esto:`,
+    ],
+  },
+};
+
+function getFraseDinamica(nombre, lugar, tipo){
+  const nombreCorto = nombre.split(' ')[0]||nombre;
+  const segFrases = FRASES[lugar]||FRASES.casa;
+  const tipoFrases = segFrases[tipo]||segFrases.default||FRASES.casa.default;
+  const pool = tipoFrases;
+  const idx = Math.floor(Math.random()*pool.length);
+  return pool[idx](nombreCorto);
+}
+
+// ══════════════════════════════════════
+// ARRANCAR
+// ══════════════════════════════════════
+iniciarNara();
+</script>
 </body>
 </html>

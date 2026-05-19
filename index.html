@@ -157,31 +157,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;display:flex;ali
 .clc-btn{padding:4px 11px;background:var(--org-dim);border:1px solid var(--org-dim2);border-radius:20px;font-size:10px;color:var(--org);cursor:pointer;transition:all .18s;font-family:var(--sans)}
 .clc-btn:hover{background:var(--org);color:#fff;border-color:var(--org)}
 
-/* NARA PANEL */
-#nara{background:var(--bg1);border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 420px}
-.nara-left{padding:60px 48px;border-right:1px solid var(--border)}
-.np-h{font-family:var(--serif);font-size:clamp(24px,2.8vw,38px);font-weight:700;line-height:1.12;margin-bottom:12px}
-.np-h em{font-style:italic;color:var(--org)}
-.np-d{font-size:15px;color:var(--txt2);line-height:1.75;margin-bottom:32px;max-width:400px;font-weight:300}
-.npfeats{display:flex;flex-direction:column;gap:9px}
-.npf{display:flex;gap:13px;align-items:flex-start;padding:12px;border-radius:var(--r);border:1px solid transparent;transition:all .22s;cursor:pointer}
-.npf:hover{border-color:var(--border);background:var(--bg2)}
-.npf-ico{width:34px;height:34px;border-radius:var(--r);background:var(--org-dim);border:1px solid var(--org-dim2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.npf-ico svg{width:16px;height:16px;fill:var(--org)}
-.npf-t{font-family:var(--serif);font-size:13px;font-weight:700;margin-bottom:2px}
-.npf-d{font-size:11px;color:var(--txt2);line-height:1.5}
+/* ══ NARA FLOTANTE ══ */
+#nara-fab{position:fixed;bottom:24px;right:24px;z-index:900;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.nara-fab-btn{width:80px;height:80px;border-radius:50%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .25s;padding:0;filter:drop-shadow(0 4px 16px rgba(255,85,0,.5))}
+.nara-fab-btn:hover{transform:scale(1.08)}
 
-/* CHAT NARA */
-.nara-right{display:flex;flex-direction:column;min-height:600px}
-.chd{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;flex-shrink:0}
-.chav{position:relative;width:32px;height:32px}
-.chav-c{width:32px;height:32px;border-radius:50%;background:var(--org);display:flex;align-items:center;justify-content:center}
-.chav-c svg{width:16px;height:16px;fill:#fff}
-.chav-r1{position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--org);opacity:0;animation:op 2.4s ease-out infinite}
-.chav-r2{position:absolute;inset:-9px;border-radius:50%;border:1px solid var(--org);opacity:0;animation:op 2.4s ease-out infinite .6s}
+/* CHAT PANEL FLOTANTE */
+.nara-panel{position:fixed;bottom:100px;right:28px;z-index:899;width:380px;max-height:600px;background:var(--bg1);border:1px solid var(--border);border-radius:var(--r-xl);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.6);transform:translateY(20px) scale(.96);opacity:0;pointer-events:none;transition:all .28s cubic-bezier(.4,0,.2,1)}
+.nara-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all}
+.np-head{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;position:relative}
+.np-close{position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt2);font-size:14px;line-height:1;transition:all .18s}
+.np-close:hover{color:var(--txt)}
 .ch-name{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--org)}
 .ch-stat{font-family:var(--mono);font-size:9px;color:var(--txt3)}
-.chmsgs{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:9px;min-height:400px;max-height:520px}
+
+/* MENSAJES */
+.chmsgs{flex:1;overflow-y:auto;padding:14px 14px;display:flex;flex-direction:column;gap:9px;min-height:280px;max-height:380px}
 .chmsgs::-webkit-scrollbar{width:2px}
 .chmsgs::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 .cm{display:flex;flex-direction:column;gap:3px;animation:fi .3s ease-out}
@@ -189,27 +180,78 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;display:flex;ali
 .cm.nara{align-items:flex-start}
 .cm.user{align-items:flex-end}
 .cm-lbl{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:.1em;padding:0 3px}
-.cm-bub{padding:9px 12px;border-radius:var(--r);font-size:13px;line-height:1.65;max-width:90%}
+.cm-bub{padding:9px 12px;border-radius:var(--r);font-size:13px;line-height:1.65;max-width:92%}
 .cm.nara .cm-bub{background:var(--bg2);border:1px solid var(--border);border-top-left-radius:2px}
 .cm.user .cm-bub{background:var(--org);color:#fff;border-bottom-right-radius:2px}
 .cm.nara .cm-bub strong{color:var(--org)}
 .cm.nara .cm-bub em{font-style:italic;font-family:var(--serif);color:var(--txt2)}
-.chzone{padding:11px 18px 14px;border-top:1px solid var(--border);flex-shrink:0}
-.qbtns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
-.qb{padding:4px 9px;border-radius:20px;border:1px solid var(--border2);font-size:10px;color:var(--txt2);cursor:pointer;transition:all .18s;background:none;font-family:var(--sans)}
-.qb:hover{border-color:var(--org-dim2);color:var(--org);background:var(--org-dim)}
-.chrow{display:flex;gap:7px}
-.chinp{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:9px 13px;font-size:13px;color:var(--txt);font-family:var(--sans);outline:none;transition:border-color .2s;resize:none}
-.chinp:focus{border-color:var(--org)}
-.chinp::placeholder{color:var(--txt3)}
-.chsnd{width:36px;height:36px;background:var(--org);border:none;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
-.chsnd:hover{background:var(--org2)}
-.chsnd svg{width:15px;height:15px;fill:#fff}
 .typbub{display:inline-flex;gap:4px;align-items:center;padding:9px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);border-top-left-radius:2px}
 .typbub span{width:5px;height:5px;border-radius:50%;background:var(--org);animation:bl 1.4s ease-in-out infinite}
 .typbub span:nth-child(2){animation-delay:.2s}
 .typbub span:nth-child(3){animation-delay:.4s}
 @keyframes bl{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+
+/* BOTONES GUIADOS */
+.ops-wrap{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:4px;animation:fi .3s ease-out}
+.op-btn{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:10px 11px;cursor:pointer;text-align:left;transition:all .22s;display:flex;flex-direction:column;gap:2px;font-family:var(--sans)}
+.op-btn:hover,.op-btn:active{border-color:var(--org);background:var(--org-dim);transform:translateY(-2px)}
+.op-ico{font-size:18px;margin-bottom:2px}
+.op-lbl{font-family:var(--serif);font-size:12px;font-weight:700;color:var(--txt);line-height:1.2}
+.op-sub{font-size:10px;color:var(--txt2);line-height:1.3}
+
+/* INPUT DATOS */
+.input-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px;display:flex;flex-direction:column;gap:9px;animation:fi .3s ease-out}
+.input-lbl{font-family:var(--mono);font-size:9px;color:var(--org);letter-spacing:.14em;text-transform:uppercase}
+.nara-inp{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 12px;font-size:13px;color:var(--txt);font-family:var(--sans);outline:none;transition:border-color .2s;width:100%}
+.nara-inp:focus{border-color:var(--org)}
+.nara-inp::placeholder{color:var(--txt3)}
+.btn-primary{padding:11px;background:var(--org);border:none;border-radius:var(--r);font-size:13px;font-weight:600;color:#fff;cursor:pointer;transition:all .2s;font-family:var(--sans);width:100%}
+.btn-primary:hover{background:var(--org2)}
+
+/* PROPUESTA */
+.prop-wrap{display:flex;flex-direction:column;gap:9px;animation:fi .3s ease-out}
+.prop-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:13px;position:relative;overflow:hidden}
+.prop-card.top{border-color:var(--org-dim2)}
+.prop-card.top::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--org),transparent)}
+.prop-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-family:var(--mono);font-size:9px;background:var(--bg3);color:var(--txt2);margin-bottom:7px}
+.prop-badge.rec{background:var(--org-dim);color:var(--org);border:1px solid var(--org-dim2)}
+.prop-n{font-family:var(--serif);font-size:13px;font-weight:700;margin-bottom:2px;line-height:1.3}
+.prop-sku{font-family:var(--mono);font-size:9px;color:var(--txt3);margin-bottom:7px}
+.prop-specs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.prop-spec{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:20px;background:var(--bg3);border:1px solid var(--border);color:var(--txt2)}
+.prop-spec.tec{background:var(--org-dim);border-color:var(--org-dim2);color:var(--org)}
+.prop-precio{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--org)}
+.prop-precio-lbl{font-size:9px;color:var(--txt3);margin-top:1px;font-family:var(--mono)}
+.prop-razon{font-size:11px;color:var(--txt2);line-height:1.5;margin-top:7px;padding-top:7px;border-top:1px solid var(--border)}
+.prop-nota{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;display:flex;gap:8px;align-items:flex-start;font-size:11px;color:var(--txt2);line-height:1.5}
+
+/* BOTONES ACCIÓN */
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:9px;padding:13px;background:var(--org);border:none;border-radius:var(--r-lg);font-size:13px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;font-family:var(--sans);width:100%;animation:fi .3s ease-out}
+.btn-wa:hover{background:var(--org2);transform:translateY(-1px)}
+.btn-visita{display:block;width:100%;padding:10px;background:var(--org-dim);border:1px solid var(--org-dim2);border-radius:var(--r);font-size:12px;font-weight:600;color:var(--org);cursor:pointer;transition:all .2s;font-family:var(--sans);text-align:center;animation:fi .3s ease-out;margin-top:4px}
+.btn-visita:hover{background:var(--org);color:#fff}
+.btn-visita-no{display:block;width:100%;padding:9px;background:transparent;border:1px solid var(--border);border-radius:var(--r);font-size:11px;color:var(--txt2);cursor:pointer;transition:all .2s;font-family:var(--sans);text-align:center;animation:fi .3s ease-out;margin-top:4px}
+.btn-visita-no:hover{border-color:var(--border2);color:var(--txt)}
+
+/* INPUT CHAT LIBRE */
+.chzone{padding:10px 14px 13px;border-top:1px solid var(--border);flex-shrink:0}
+.qbtns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.qb{padding:4px 8px;border-radius:20px;border:1px solid var(--border2);font-size:10px;color:var(--txt2);cursor:pointer;transition:all .18s;background:none;font-family:var(--sans)}
+.qb:hover{border-color:var(--org-dim2);color:var(--org);background:var(--org-dim)}
+.chrow{display:flex;gap:6px}
+.chinp{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:8px 12px;font-size:13px;color:var(--txt);font-family:var(--sans);outline:none;transition:border-color .2s;resize:none}
+.chinp:focus{border-color:var(--org)}
+.chinp::placeholder{color:var(--txt3)}
+.chsnd{width:34px;height:34px;background:var(--org);border:none;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.chsnd:hover{background:var(--org2)}
+.chsnd svg{width:14px;height:14px;fill:#fff}
+
+/* BADGE NOTIFICACIÓN */
+.nara-badge{position:absolute;top:-3px;right:-3px;width:18px;height:18px;border-radius:50%;background:var(--rojo,#E53E3E);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;opacity:0;transition:opacity .2s}
+.nara-badge.show{opacity:1}
+
+/* SECCIÓN NARA en página (referencia) */
+#nara{padding:80px 48px;background:var(--bg1);border-top:1px solid var(--border)}
 
 /* REDES SOCIALES */
 #redes{padding:64px 48px;background:var(--bg1);border-top:1px solid var(--border)}
@@ -427,58 +469,106 @@ footer{padding:44px 48px;border-top:1px solid var(--border);display:grid;grid-te
   </div>
 </section>
 
-<!-- NARA PANEL -->
-<section id="nara">
-  <div class="nara-left">
-    <div class="eyebrow"><div class="eline"></div><span class="tag">NARA · Asesora IA</span></div>
-    <h2 class="np-h">Asesora técnica.<br><em>24 horas.</em><br>Sin esperar.</h2>
-    <p class="np-d">NARA es la primera asesora IA especializada en automatismos de Colombia. Entiende tu caso, recomienda el equipo correcto y genera tu propuesta — en minutos.</p>
-    <div class="npfeats">
-      <div class="npf" onclick="inject('¿Cuánto cuesta instalar un portón automático?')">
-        <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
-        <div><div class="npf-t">Cotización en 3 minutos</div><div class="npf-d">4 preguntas. Tu propuesta lista para WhatsApp.</div></div>
+<!-- NARA FLOTANTE FAB + PANEL -->
+<div id="nara-fab">
+  <!-- Botón flotante -->
+  <div style="position:relative">
+    <button class="nara-fab-btn" onclick="toggleNara()" id="naraFabBtn" aria-label="Hablar con NARA">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="pointer-events:none">
+        <circle cx="40" cy="40" r="40" fill="#FF5500"/>
+        <circle cx="40" cy="40" r="7" fill="#fff"/>
+        <circle cx="40" cy="40" r="12" stroke="#fff" stroke-width="1.5" fill="none" opacity=".35"/>
+        <circle cx="40" cy="40" r="0" stroke="#fff" stroke-width="3" fill="none">
+          <animate attributeName="r" values="0;18" dur="2.4s" repeatCount="indefinite" begin="0s"/>
+          <animate attributeName="opacity" values="1;0" dur="2.4s" repeatCount="indefinite" begin="0s"/>
+        </circle>
+        <circle cx="40" cy="40" r="0" stroke="#fff" stroke-width="2.4" fill="none">
+          <animate attributeName="r" values="0;26" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
+          <animate attributeName="opacity" values=".82;0" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
+        </circle>
+        <circle cx="40" cy="40" r="0" stroke="#fff" stroke-width="1.8" fill="none">
+          <animate attributeName="r" values="0;34" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
+          <animate attributeName="opacity" values=".58;0" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
+        </circle>
+        <circle cx="40" cy="40" r="0" stroke="#fff" stroke-width="1.2" fill="none">
+          <animate attributeName="r" values="0;38" dur="2.4s" repeatCount="indefinite" begin="1.14s"/>
+          <animate attributeName="opacity" values=".32;0" dur="2.4s" repeatCount="indefinite" begin="1.14s"/>
+        </circle>
+      </svg>
+    </button>
+    <div class="nara-badge" id="naraBadge" style="pointer-events:none">1</div>
+  </div>
+</div>
+
+<!-- PANEL NARA FLOTANTE -->
+<div class="nara-panel" id="naraPanel">
+  <div class="np-head">
+    <!-- Ícono vivo pequeño en el header -->
+    <div style="position:relative;width:36px;height:36px;flex-shrink:0">
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--org);display:flex;align-items:center;justify-content:center;position:relative;z-index:2">
+        <svg width="36" height="36" viewBox="0 0 80 80" fill="none" style="position:absolute;inset:0">
+          <circle cx="40" cy="40" r="5" fill="#fff"/>
+          <circle cx="40" cy="40" r="0" stroke="#fff" stroke-width="2.5" fill="none">
+            <animate attributeName="r" values="0;14" dur="2.4s" repeatCount="indefinite" begin="0s"/>
+            <animate attributeName="opacity" values="1;0" dur="2.4s" repeatCount="indefinite" begin="0s"/>
+          </circle>
+          <circle cx="40" cy="40" r="0" stroke="#fff" stroke-width="1.8" fill="none">
+            <animate attributeName="r" values="0;22" dur="2.4s" repeatCount="indefinite" begin="0.5s"/>
+            <animate attributeName="opacity" values=".7;0" dur="2.4s" repeatCount="indefinite" begin="0.5s"/>
+          </circle>
+        </svg>
       </div>
-      <div class="npf" onclick="inject('¿Qué motor PPA me recomiendas para mi caso?')">
-        <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-        <div><div class="npf-t">Recomendación técnica exacta</div><div class="npf-d">El equipo correcto. Ni más, ni menos.</div></div>
+    </div>
+    <div>
+      <div class="ch-name">NARA</div>
+      <div class="ch-stat" id="naraStatus">● en línea · 269 productos · PPA Central</div>
+    </div>
+    <button class="np-close" onclick="toggleNara()">&times;</button>
+  </div>
+  <div class="chmsgs" id="chmsgs"></div>
+  <div class="chzone" id="chzone">
+    <div id="qbtns" style="margin-bottom:8px">
+      <button onclick="iniciarCotizacion()" id="btnCotizar" style="width:100%;padding:12px 16px;background:var(--org);border:none;border-radius:var(--r);font-size:13px;font-weight:700;color:#fff;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:7px;transition:background .2s">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Iniciar cotización guiada
+      </button>
+      <div style="display:flex;gap:5px;flex-wrap:wrap">
+        <button class="qb" onclick="inject('¿Qué cámaras y alarmas tienen?')">Seguridad y CCTV</button>
+        <button class="qb" onclick="inject('Necesito una barrera vehicular')">Barreras</button>
+        <button class="qb" onclick="inject('Quiero agendar visita técnica')">Visita técnica</button>
       </div>
-      <div class="npf" onclick="inject('¿Qué diferencia hay entre Jetflex, Brushless y tecnología Mono?')">
-        <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M12 22a10 10 0 110-20 10 10 0 010 20zm0-14v4m0 4v.01"/></svg></div>
-        <div><div class="npf-t">Tecnología PPA explicada</div><div class="npf-d">Jetflex, Brushless, 24V — claro y directo.</div></div>
-      </div>
-      <div class="npf" onclick="inject('Quiero agendar una visita técnica sin costo')">
-        <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
-        <div><div class="npf-t">Visita técnica sin costo</div><div class="npf-d">Un especialista va hasta ti. Diagnóstico gratis.</div></div>
-      </div>
+    </div>
+    <div class="chrow">
+      <textarea class="chinp" id="chinp" rows="1" placeholder="Pregúntame lo que necesites..."></textarea>
+      <button class="chsnd" onclick="chatSend()" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
     </div>
   </div>
-  <div class="nara-right">
-    <div class="chd">
-      <div class="chav">
-        <div class="chav-c"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div>
-        <div class="chav-r1"></div><div class="chav-r2"></div>
-      </div>
-      <div><div class="ch-name">NARA</div><div class="ch-stat">● en línea · 269 productos · PPA Central</div></div>
+</div>
+
+<!-- SECCIÓN NARA en página (para scroll nav) -->
+<section id="nara" style="padding:60px 48px;background:var(--bg1);border-top:1px solid var(--border)">
+  <div class="eyebrow"><div class="eline"></div><span class="tag">NARA · Asesora IA</span></div>
+  <h2 class="sec-h2" style="margin-bottom:10px">Asesora técnica.<br><em>24 horas. Sin esperar.</em></h2>
+  <p class="sec-sub">NARA es la primera asesora IA especializada en automatismos de Colombia. Te guía, cotiza y recomienda — todo desde el botón naranja en la esquina.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:36px">
+    <div class="npf" onclick="toggleNara();setTimeout(()=>iniciarCotizacion(),400)">
+      <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+      <div><div class="npf-t">Cotización guiada</div><div class="npf-d">Paso a paso con botones. Tu propuesta en minutos.</div></div>
     </div>
-    <div class="chmsgs" id="chmsgs">
-      <div class="cm nara"><div class="cm-lbl">NARA</div><div class="cm-bub">¡Hola! Soy <strong>NARA</strong>, tu asesora de PPA Central.<br><br><em>¿Qué espacio quieres automatizar?</em> Me adapto exactamente a tu caso.</div></div>
+    <div class="npf" onclick="toggleNara();setTimeout(()=>inject('¿Qué motor PPA me recomiendas para mi caso?'),400)">
+      <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+      <div><div class="npf-t">Recomendación exacta</div><div class="npf-d">El equipo correcto. Ni más, ni menos.</div></div>
     </div>
-    <div class="chzone">
-      <div class="qbtns">
-        <button class="qb" onclick="inject('Quiero cotizar un portón para mi casa')">Portón residencial</button>
-        <button class="qb" onclick="inject('Necesito barrera vehicular para mi negocio')">Barrera / Talanquera</button>
-        <button class="qb" onclick="inject('¿Cuáles son los precios?')">Ver precios</button>
-        <button class="qb" onclick="inject('Quiero agendar visita técnica')">Agendar visita</button>
-        <button class="qb" onclick="inject('¿Qué cámaras y sistemas de seguridad tienen?')">Seguridad y CCTV</button>
-      </div>
-      <div class="chrow">
-        <textarea class="chinp" id="chinp" rows="1" placeholder="Escríbeme aquí..."></textarea>
-        <button class="chsnd" onclick="chatSend()" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
-      </div>
+    <div class="npf" onclick="toggleNara();setTimeout(()=>inject('¿Qué diferencia hay entre Jetflex, Brushless y tecnología Mono?'),400)">
+      <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M12 22a10 10 0 110-20 10 10 0 010 20zm0-14v4m0 4v.01"/></svg></div>
+      <div><div class="npf-t">Tecnología PPA</div><div class="npf-d">Jetflex, Brushless, 24V — claro y directo.</div></div>
+    </div>
+    <div class="npf" onclick="toggleNara();setTimeout(()=>inject('Quiero agendar una visita técnica sin costo'),400)">
+      <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
+      <div><div class="npf-t">Visita técnica gratis</div><div class="npf-d">Un especialista va hasta ti. Sin costo.</div></div>
     </div>
   </div>
 </section>
-
 <!-- REDES SOCIALES -->
 <section id="redes">
   <div class="eyebrow"><div class="eline"></div><span class="tag">Síguenos</span></div>
@@ -655,42 +745,19 @@ let CK='';
 (async()=>{try{const r=await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`,{headers:{'X-Master-Key':JB_KEY,'X-Bin-Meta':'false'}});const d=await r.json();CK=d.k||'';}catch(e){}})();
 
 /* ══ UTILIDADES ══ */
-const SEG_LABEL={
-  corredera:'Motor corredizo',batiente:'Motor batiente',seccional:'Motor seccional / basculante',
-  cortina:'Motor cortina',puerta_social:'Puerta social / automática',barrera:'Barrera · Talanquera vehicular',
-  accesorios:'Accesorio',alarmas:'Alarma · Central',control_acceso:'Control de acceso',cctv:'Cámara · CCTV'
-};
-const SEG_ASPIR={
-  corredera:'Tu portón desliza en segundos. Silencioso, preciso.',
-  batiente:'Abre hacia ti. Elegante, rápido, sin esfuerzo.',
-  seccional:'Sube vertical, ocupa cero espacio. El garaje optimizado.',
-  cortina:'Tu local abre y cierra solo. Seguridad sin interrupciones.',
-  puerta_social:'Acceso fluido en vidrio. Moderno y automatizado.',
-  barrera:'Nadie entra sin autorización. Control total del flujo.',
-  accesorios:'Los detalles que completan la solución perfecta.',
-  alarmas:'Tu espacio protegido incluso cuando no estás.',
-  control_acceso:'Quién entra, cuándo y cómo — tú decides.',
-  cctv:'Tus ojos cuando no puedes estar.'
-};
-const SEG_IMGS={
-  corredera:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/porton-corredizo-ppa-r59mhdz6yaf52nxeoetaj1cfolmzvlmz7poyf5hu3k.png',
-  batiente:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/Modulo-Smart-PPA-r58th1elmws9nkwixzhl7kpjet3pq1n6ynxt1lync0.jpeg',
-  seccional:'https://ppalatam.com/wp-content/uploads/2024/07/PPA-Logos-Tecnologias-JETFLEX_1685624921958.webp',
-  cortina:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/entrada-celta-trade-park-cundinamarca-r5il1zekhv6rlfzha0pgyn0ozcmv6iu3sq1kk7duow.webp',
-  puerta_social:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/UHF-r58fi7mpnggax3ad3mwadgmngfh22zgehwh0yvibvk.jpg',
-  barrera:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/barrera-vehicular-ppa-r59mium5l0f74tsy51keeo28y6fjunfy2y85anbsf4.jpg',
-  accesorios:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/Modulo-Smart-PPA-r58th1elmws9nkwixzhl7kpjet3pq1n6ynxt1lync0.jpeg',
-  alarmas:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/entrada-celta-trade-park-cundinamarca-r5il1zekhv6rlfzha0pgyn0ozcmv6iu3sq1kk7duow.webp',
-  control_acceso:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/UHF-r58fi7mpnggax3ad3mwadgmngfh22zgehwh0yvibvk.jpg',
-  cctv:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/Barrera-Automatica-KD2-r58fdax1ylqeaef1riifcp7zrzo1vvyv5ltqquscdc.jpg'
-};
+const SEG_LABEL={corredera:'Motor corredizo',batiente:'Motor batiente',seccional:'Motor seccional',cortina:'Motor cortina',puerta_social:'Puerta social · automática',barrera:'Barrera · Talanquera',accesorios:'Accesorio',alarmas:'Alarma · Central',control_acceso:'Control de acceso',cctv:'Cámara · CCTV'};
+const SEG_ASPIR={corredera:'Tu portón desliza en segundos. Silencioso, preciso.',batiente:'Abre hacia ti. Elegante, rápido, sin esfuerzo.',seccional:'Sube vertical, ocupa cero espacio.',cortina:'Tu local abre y cierra solo.',puerta_social:'Acceso fluido en vidrio. Moderno.',barrera:'Nadie entra sin autorización.',accesorios:'Los detalles que completan la solución.',alarmas:'Tu espacio protegido siempre.',control_acceso:'Quién entra, cuándo y cómo — tú decides.',cctv:'Tus ojos cuando no puedes estar.'};
+const SEG_IMGS={corredera:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/porton-corredizo-ppa-r59mhdz6yaf52nxeoetaj1cfolmzvlmz7poyf5hu3k.png',batiente:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/Modulo-Smart-PPA-r58th1elmws9nkwixzhl7kpjet3pq1n6ynxt1lync0.jpeg',seccional:'https://ppalatam.com/wp-content/uploads/2024/07/PPA-Logos-Tecnologias-JETFLEX_1685624921958.webp',cortina:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/entrada-celta-trade-park-cundinamarca-r5il1zekhv6rlfzha0pgyn0ozcmv6iu3sq1kk7duow.webp',puerta_social:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/UHF-r58fi7mpnggax3ad3mwadgmngfh22zgehwh0yvibvk.jpg',barrera:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/barrera-vehicular-ppa-r59mium5l0f74tsy51keeo28y6fjunfy2y85anbsf4.jpg',accesorios:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/Modulo-Smart-PPA-r58th1elmws9nkwixzhl7kpjet3pq1n6ynxt1lync0.jpeg',alarmas:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/entrada-celta-trade-park-cundinamarca-r5il1zekhv6rlfzha0pgyn0ozcmv6iu3sq1kk7duow.webp',control_acceso:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/UHF-r58fi7mpnggax3ad3mwadgmngfh22zgehwh0yvibvk.jpg',cctv:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/Barrera-Automatica-KD2-r58fdax1ylqeaef1riifcp7zrzo1vvyv5ltqquscdc.jpg'};
 
 function fmt(n){return'$'+Math.round(n).toLocaleString('es-CO')}
 function flat(){return Object.values(CAT).flat()}
-function findSku(sku){return flat().find(p=>p.sku===sku)}
+function findSku(s){return flat().find(p=>p.sku===s)}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+function hora(){const d=new Date();return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0')}
+function fechaDoc(){const d=new Date();return d.getFullYear()+''+String(d.getMonth()+1).padStart(2,'0')+''+String(d.getDate()).padStart(2,'0')+'_'+String(d.getHours()).padStart(2,'0')+''+String(d.getMinutes()).padStart(2,'0')+''+String(d.getSeconds()).padStart(2,'0')}
+function horaActual(){const d=new Date();const dias=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];const meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];return`${dias[d.getDay()]} ${d.getDate()} de ${meses[d.getMonth()]}, ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')} · Florencia, Caquetá`;}
 
-/* ══ SHEETS sincronización ══ */
+/* ══ SHEETS SINCRONIZACIÓN ══ */
 (async()=>{
   try{
     const r=await Promise.race([fetch(SHEETS_URL),new Promise((_,rej)=>setTimeout(()=>rej(),5000))]);
@@ -698,34 +765,22 @@ function toast(m){const t=document.getElementById('toast');t.textContent=m;t.cla
     const m=txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
     if(!m)return;
     const rows=JSON.parse(m[1])?.table?.rows||[];
-    let updated=0;
-    rows.forEach(row=>{
-      const sku=row.c?.[4]?.v,p=row.c?.[10]?.v;
-      if(sku&&p&&typeof p==='number'&&p>0){
-        const eq=findSku(String(sku).trim());
-        if(eq&&eq.p!==Math.round(p)){eq.p=Math.round(p);updated++;}
-      }
-    });
-    if(updated>0){renderVisual();console.log(`Sheets: ${updated} precios actualizados`);}
+    let upd=0;
+    rows.forEach(row=>{const sku=row.c?.[4]?.v,p=row.c?.[10]?.v;if(sku&&p&&typeof p==='number'&&p>0){const eq=findSku(String(sku).trim());if(eq&&eq.p!==Math.round(p)){eq.p=Math.round(p);upd++;}}});
+    if(upd>0){renderVisual();console.log(`Sheets: ${upd} actualizados`);}
   }catch(e){}
 })();
 
 /* ══ GRID VISUAL ASPIRACIONAL ══ */
 const VISUAL_SEGS=['corredera','batiente','barrera','puerta_social','control_acceso','cctv'];
 function renderVisual(){
-  const g=document.getElementById('aspirGrid');g.innerHTML='';
+  const g=document.getElementById('aspirGrid');if(!g)return;g.innerHTML='';
   VISUAL_SEGS.forEach((seg,i)=>{
-    const prods=CAT[seg]||[];
-    const ej=prods[0];
-    if(!ej)return;
+    const prods=CAT[seg]||[];const ej=prods[0];if(!ej)return;
     const wide=i===0||i===5;
-    const d=document.createElement('div');
-    d.className='acard'+(wide?' acard-wide':'');
-    const sp=[];
-    if(ej.tec)sp.push(`<span class="acard-spec tec">${ej.tec}</span>`);
-    if(ej.kg)sp.push(`<span class="acard-spec">${ej.kg}</span>`);
-    if(ej.vel)sp.push(`<span class="acard-spec">${ej.vel}</span>`);
-    d.innerHTML=`<img class="acard-bg" src="${SEG_IMGS[seg]||''}" alt="${SEG_LABEL[seg]}">
+    const d=document.createElement('div');d.className='acard'+(wide?' acard-wide':'');
+    const sp=[];if(ej.tec)sp.push(`<span class="acard-spec tec">${ej.tec}</span>`);if(ej.kg)sp.push(`<span class="acard-spec">${ej.kg}</span>`);if(ej.vel)sp.push(`<span class="acard-spec">${ej.vel}</span>`);
+    d.innerHTML=`<img class="acard-bg" src="${SEG_IMGS[seg]}" alt="${SEG_LABEL[seg]}">
       <div class="acard-ov"></div>
       <div class="acard-cnt">
         <div class="acard-tag">${SEG_LABEL[seg]}</div>
@@ -739,9 +794,9 @@ function renderVisual(){
             <button class="clc-btn" onclick="event.stopPropagation();openModal(CAT['${seg}'][0])">Ver</button>
           </div>
         </div>
-        <div class="acard-cta">Explorar ${SEG_LABEL[seg].toLowerCase()} <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <div class="acard-cta">Explorar <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>`;
-    d.onclick=()=>{selSeg(seg==='corredera'?'casa':seg==='batiente'?'casa':seg==='barrera'?'negocio':'negocio');goTo('nara');}
+    d.onclick=()=>{toggleNara();setTimeout(()=>iniciarCotizacion(),400);}
     g.appendChild(d);
   });
 }
@@ -749,31 +804,11 @@ renderVisual();
 
 /* ══ CATÁLOGO EXPANDIDO ══ */
 let catExp=false,filtAct='todos';
-const SEG_FILTERS=[
-  {k:'todos',l:'Todos (269)'},
-  {k:'corredera',l:'Corredizos'},
-  {k:'batiente',l:'Batientes'},
-  {k:'seccional',l:'Seccionales'},
-  {k:'cortina',l:'Cortinas'},
-  {k:'puerta_social',l:'Puertas sociales'},
-  {k:'barrera',l:'Barreras · Talanqueras'},
-  {k:'accesorios',l:'Accesorios'},
-  {k:'alarmas',l:'Alarmas'},
-  {k:'control_acceso',l:'Control acceso'},
-  {k:'cctv',l:'CCTV'},
-];
-
+const SEG_FILTERS=[{k:'todos',l:'Todos (269)'},{k:'corredera',l:'Corredizos'},{k:'batiente',l:'Batientes'},{k:'seccional',l:'Seccionales'},{k:'cortina',l:'Cortinas'},{k:'puerta_social',l:'Puertas sociales'},{k:'barrera',l:'Barreras · Talanqueras'},{k:'accesorios',l:'Accesorios'},{k:'alarmas',l:'Alarmas'},{k:'control_acceso',l:'Control acceso'},{k:'cctv',l:'CCTV'}];
 function buildFilters(){
-  const c=document.getElementById('catFs');c.innerHTML='';
-  SEG_FILTERS.forEach(f=>{
-    const b=document.createElement('button');
-    b.className='catf'+(f.k===filtAct?' on':'');
-    b.textContent=f.l;
-    b.onclick=()=>{filtAct=f.k;document.querySelectorAll('.catf').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderList();};
-    c.appendChild(b);
-  });
+  const c=document.getElementById('catFs');if(!c)return;c.innerHTML='';
+  SEG_FILTERS.forEach(f=>{const b=document.createElement('button');b.className='catf'+(f.k===filtAct?' on':'');b.textContent=f.l;b.onclick=()=>{filtAct=f.k;document.querySelectorAll('.catf').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderList();};c.appendChild(b);});
 }
-
 function expCat(){
   if(catExp)return;catExp=true;
   const s=document.getElementById('catexp');s.style.display='block';
@@ -781,27 +816,18 @@ function expCat(){
   buildFilters();renderList();
   setTimeout(()=>s.scrollIntoView({behavior:'smooth',block:'start'}),200);
 }
-
 function renderList(){
   const q=(document.getElementById('catSearch')?.value||'').toLowerCase();
-  const g=document.getElementById('clgrid');g.innerHTML='';
+  const g=document.getElementById('clgrid');if(!g)return;g.innerHTML='';
   const list=filtAct==='todos'?flat():(CAT[filtAct]||[]);
   const filtered=q?list.filter(p=>p.n.toLowerCase().includes(q)||p.sku.toLowerCase().includes(q)||(p.tec||'').toLowerCase().includes(q)):list;
   filtered.forEach(p=>{
     const d=document.createElement('div');d.className='clc';d.onclick=()=>openModal(p);
-    const sp=[];
-    if(p.tec)sp.push(`<span class="cls tec">${p.tec}</span>`);
-    if(p.kg)sp.push(`<span class="cls">${p.kg}</span>`);
-    if(p.vel)sp.push(`<span class="cls">${p.vel}</span>`);
-    if(p.v)sp.push(`<span class="cls">${p.v}</span>`);
-    d.innerHTML=`<div class="clc-cat">${SEG_LABEL[filtAct]||p.cat||''}</div>
-      <div class="clc-n">${p.n}</div>
-      <div class="clc-sku">${p.sku}</div>
-      <div class="clc-specs">${sp.join('')}</div>
-      <div class="clc-foot"><div class="clc-p">${fmt(p.p)}</div><button class="clc-btn">Ver</button></div>`;
+    const sp=[];if(p.tec)sp.push(`<span class="cls tec">${p.tec}</span>`);if(p.kg)sp.push(`<span class="cls">${p.kg}</span>`);if(p.vel)sp.push(`<span class="cls">${p.vel}</span>`);if(p.v)sp.push(`<span class="cls">${p.v}</span>`);
+    d.innerHTML=`<div class="clc-cat">${SEG_LABEL[p.cat]||p.cat||''}</div><div class="clc-n">${p.n}</div><div class="clc-sku">${p.sku}</div><div class="clc-specs">${sp.join('')}</div><div class="clc-foot"><div class="clc-p">${fmt(p.p)}</div><button class="clc-btn">Ver</button></div>`;
     g.appendChild(d);
   });
-  if(!filtered.length){g.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--txt3);font-family:var(--mono);font-size:12px">No se encontraron productos</div>`;}
+  if(!filtered.length){g.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--txt3);font-family:var(--mono);font-size:12px">Sin resultados</div>`;}
 }
 
 /* ══ MODAL PRODUCTO ══ */
@@ -810,162 +836,410 @@ function openModal(p){
   document.getElementById('mTag').textContent=SEG_LABEL[seg]||p.cat||'';
   document.getElementById('mName').textContent=p.n;
   document.getElementById('mSku').textContent='SKU: '+p.sku;
-  const sp=[
-    {l:'Tecnología',v:p.tec||'—'},
-    {l:'Capacidad / Brazo',v:p.kg||'—'},
-    {l:'Velocidad',v:p.vel||'—'},
-    {l:'Voltaje',v:p.v||'—'},
-  ];
+  const sp=[{l:'Tecnología',v:p.tec||'—'},{l:'Capacidad',v:p.kg||'—'},{l:'Velocidad',v:p.vel||'—'},{l:'Voltaje',v:p.v||'—'}];
   document.getElementById('mSpecs').innerHTML=sp.map(s=>`<div class="m-spec"><div class="m-sl">${s.l}</div><div class="m-sv">${s.v}</div></div>`).join('');
   document.getElementById('mPv').textContent=fmt(p.p);
   const inclEl=document.getElementById('mIncl');
-  if(p.incluye){inclEl.style.display='block';document.getElementById('mInclTxt').textContent=p.incluye;}
-  else{inclEl.style.display='none';}
-  document.getElementById('mBwa').onclick=()=>{
-    const txt=`Hola PPA Central! Me interesa el ${p.n} (${p.sku}) — ${fmt(p.p)}. ¿Me asesoran?`;
-    window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(txt)}`,'_blank');
-  };
+  if(p.incluye){inclEl.style.display='block';document.getElementById('mInclTxt').textContent=p.incluye;}else{inclEl.style.display='none';}
+  document.getElementById('mBwa').onclick=()=>window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(`Hola PPA Central! Me interesa el ${p.n} (${p.sku}) — ${fmt(p.p)}. ¿Me asesoran?`)}`,'_blank');
+  document.getElementById('mBnara').onclick=()=>{clM();toggleNara();setTimeout(()=>inject(`Me interesa el producto ${p.n} (${p.sku}) a ${fmt(p.p)}. ¿Puedes describirme sus cualidades?`),400);};
   document.getElementById('mov').classList.add('open');
-  trackEvento('producto_visto',{n:p.n,sku:p.sku,p:p.p});
 }
-function clM(e){if(!e||e.target===document.getElementById('mov')||e.currentTarget.tagName==='BUTTON')document.getElementById('mov').classList.remove('open');}
+function clM(e){if(!e||e.target===document.getElementById('mov')||e.currentTarget?.tagName==='BUTTON')document.getElementById('mov').classList.remove('open');}
 
 /* ══ MODAL INSTALADOR ══ */
 function openInst(){document.getElementById('iov').classList.add('open');}
-function clI(e){if(!e||e.target===document.getElementById('iov')||e.currentTarget.tagName==='BUTTON')document.getElementById('iov').classList.remove('open');}
+function clI(e){if(!e||e.target===document.getElementById('iov')||e.currentTarget?.tagName==='BUTTON')document.getElementById('iov').classList.remove('open');}
 async function envInst(){
-  const nom=document.getElementById('iNom').value.trim();
-  const wa=document.getElementById('iWa').value.trim();
-  const ciu=document.getElementById('iCiu').value.trim();
+  const nom=document.getElementById('iNom').value.trim();const wa=document.getElementById('iWa').value.trim();const ciu=document.getElementById('iCiu').value.trim();
   if(!nom||!wa){toast('Completa nombre y WhatsApp');return;}
   try{
-    const c=new URLSearchParams();
-    c.append('fields[NAME]',nom.split(' ')[0]);c.append('fields[LAST_NAME]',nom.split(' ').slice(1).join(' ')||'');
-    c.append('fields[PHONE][0][VALUE]',`+57${wa.replace(/\D/g,'')}`);c.append('fields[PHONE][0][VALUE_TYPE]','MOBILE');
-    c.append('fields[SOURCE_ID]','WEB');c.append('fields[SOURCE_DESCRIPTION]',`INSTALADOR · Tribu Naranja · ${ciu}`);
+    const c=new URLSearchParams();c.append('fields[NAME]',nom.split(' ')[0]);c.append('fields[LAST_NAME]',nom.split(' ').slice(1).join(' ')||'');c.append('fields[PHONE][0][VALUE]',`+57${wa.replace(/\D/g,'')}`);c.append('fields[PHONE][0][VALUE_TYPE]','MOBILE');c.append('fields[SOURCE_ID]','WEB');c.append('fields[SOURCE_DESCRIPTION]',`INSTALADOR · Tribu Naranja · ${ciu}`);
     await fetch(BITRIX+'crm.contact.add',{method:'POST',body:c});
-    const n=new URLSearchParams();
-    n.append('fields[TITLE]',`INSTALADOR · ${nom} · ${ciu}`);n.append('fields[STAGE_ID]','NEW');n.append('fields[SOURCE_ID]','WEB');
-    n.append('fields[COMMENTS]',`Tribu Naranja · Instalador · Ciudad: ${ciu}`);
+    const n=new URLSearchParams();n.append('fields[TITLE]',`INSTALADOR · ${nom} · ${ciu}`);n.append('fields[STAGE_ID]','NEW');n.append('fields[SOURCE_ID]','WEB');n.append('fields[COMMENTS]',`Tribu Naranja · Ciudad: ${ciu}`);
     await fetch(BITRIX+'crm.deal.add',{method:'POST',body:n});
   }catch(e){}
   window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(`Hola PPA Central! Soy ${nom} de ${ciu} y quiero unirme a la Tribu Naranja como instalador certificado.`)}`,'_blank');
   clI();
 }
 
-/* ══ ANALYTICS BÁSICO ══ */
-const eventos=[];
-function trackEvento(tipo,datos){
-  const ev={tipo,datos,ts:new Date().toISOString()};
-  eventos.push(ev);
-  try{const k='ppa_eventos';const prev=JSON.parse(sessionStorage.getItem(k)||'[]');prev.push(ev);sessionStorage.setItem(k,JSON.stringify(prev.slice(-100)));}catch(e){}
+/* ══ NARA FAB ══ */
+let naraOpen=false,naraGreeted=false;
+async function toggleNara(){
+  naraOpen=!naraOpen;
+  document.getElementById('naraPanel').classList.toggle('open',naraOpen);
+  document.getElementById('naraBadge').classList.remove('show');
+  if(naraOpen&&!naraGreeted){
+    naraGreeted=true;
+    await naraMsg(`¿Sabes qué tienen en común las casas, conjuntos y negocios que más admiras?<br><br><em>Sus puertas se abren solas.</em><br><br>Dame 30 segundos — te muestro cómo <strong>tu</strong> espacio da ese salto hoy.`,300);
+    await naraMsg(`Soy <strong>NARA</strong>, asesora IA de PPA Central. 🔶<br><em>${horaActual()}</em><br><br>¿Dónde quieres que tu vida se mueva sola?`);
+  }
+  if(naraOpen)setTimeout(()=>document.getElementById('chinp')?.focus(),500);
 }
 
-/* ══ CHAT NARA ══ */
-const hist=[];let busy=false;
+/* ══ MENSAJES ══ */
+const hist=[];let busy=false,modoGuiado=false;
+let resp={},clienteNom='',clienteWa='',motivaVisita=false;
+
+function scrollChat(){
+  const c=document.getElementById('chmsgs');if(!c)return;
+  const dist=c.scrollHeight-c.scrollTop-c.clientHeight;
+  if(dist<150)setTimeout(()=>{c.scrollTop=c.scrollHeight;},80);
+}
+function naraMsg(html,delay=0){
+  return new Promise(res=>{
+    setTimeout(()=>{
+      const c=document.getElementById('chmsgs');
+      const d=document.createElement('div');d.className='cm nara';
+      d.innerHTML=`<div class="cm-lbl">NARA · ${hora()}</div><div class="cm-bub">${html}</div>`;
+      c.appendChild(d);scrollChat();
+      setTimeout(res,300);
+    },delay);
+  });
+}
 function addMsg(r,t){
   const c=document.getElementById('chmsgs');
   const d=document.createElement('div');d.className='cm '+r;
-  d.innerHTML=`<div class="cm-lbl">${r==='nara'?'NARA':'Tú'}</div><div class="cm-bub">${t.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>')}</div>`;
-  c.appendChild(d);c.scrollTop=c.scrollHeight;
-  trackEvento(r==='user'?'chat_user':'chat_nara',{texto:t.substring(0,80)});
+  d.innerHTML=`<div class="cm-lbl">${r==='nara'?'NARA · '+hora():'Tú · '+hora()}</div><div class="cm-bub">${t.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>')}</div>`;
+  c.appendChild(d);scrollChat();
 }
+function userMsg(t){addMsg('user',t);}
 function showTyp(){
   const c=document.getElementById('chmsgs');
   const d=document.createElement('div');d.className='cm nara';d.id='typ';
   d.innerHTML=`<div class="cm-lbl">NARA</div><div class="typbub"><span></span><span></span><span></span></div>`;
-  c.appendChild(d);c.scrollTop=c.scrollHeight;
+  c.appendChild(d);scrollChat();
 }
 function hideTyp(){const t=document.getElementById('typ');if(t)t.remove();}
 
-const SYS=`Eres NARA, la asesora de inteligencia artificial de PPA Central — Distribuidor Autorizado PPA Latam en Colombia, sede en Florencia, Caquetá.
+/* ══ OPCIONES GUIADAS ══ */
+function agregarOpciones(ops,cols=2,cb){
+  const c=document.getElementById('chmsgs');
+  const wrap=document.createElement('div');wrap.className='ops-wrap';wrap.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  ops.forEach(op=>{
+    const btn=document.createElement('button');btn.className='op-btn';
+    btn.innerHTML=`<div class="op-ico">${op.icon}</div><div class="op-lbl">${op.lbl}</div>${op.sub?`<div class="op-sub">${op.sub}</div>`:''}`;
+    btn.onclick=()=>{wrap.querySelectorAll('.op-btn').forEach(b=>{b.style.opacity='.4';b.style.pointerEvents='none';});btn.style.opacity='1';btn.style.borderColor='var(--org)';btn.style.background='var(--org-dim)';setTimeout(()=>{wrap.remove();cb(op);},300);};
+    wrap.appendChild(btn);
+  });
+  c.appendChild(wrap);scrollChat();
+}
 
+/* ══ MOTOR RECOMENDACIÓN ══ */
+function motorRec(r){
+  const tipo=r.tipo||'',lugar=r.lugar||'',trafico=r.trafico||'bajo',medida=parseFloat(r.medida)||0,hojas=r.hojas||'1';
+  let recs=[];
+  if(tipo==='corredera'){
+    const ind=lugar==='industria'||trafico==='muy_intenso',com=lugar==='negocio'||trafico==='intenso';
+    if(ind)recs=[{sku:'E06184003',badge:'⭐ Recomendado',razon:'Motor industrial — torque extra, ciclos intensivos, durabilidad garantizada.'},{sku:'E06264001',badge:'Alta capacidad',razon:'Para portones hasta 1500 kg o tráfico muy intensivo.'},{sku:'E06614002',badge:'Sin mantenimiento',razon:'Brushless — ideal para operaciones 24/7.'}];
+    else if(com)recs=[{sku:'E02514006',badge:'⭐ Recomendado',razon:'DZ RIO Jetflex — velocidad y durabilidad para uso comercial.'},{sku:'E02253400',badge:'2ª opción',razon:'DZ STARK Jetflex — confiable y económico.'},{sku:'E06184003',badge:'Con margen',razon:'Industrial como garantía de larga vida.'}];
+    else recs=[{sku:'E02253400',badge:'⭐ Recomendado',razon:'DZ STARK Jetflex — velocidad y precisión residencial.'},{sku:'E02514006',badge:'Mayor durabilidad',razon:'DZ RIO Jetflex — si quieres que dure décadas.'},{sku:'E02244102',badge:'Económico',razon:'DZ STARK Mono — confiable para uso bajo.'}];
+    recs._cremallera=medida>4;recs._tipoCrem=ind?'IND':com?'GOLD':'POP';
+  }
+  if(tipo==='batiente'){
+    const d=hojas==='2',m=medida||2;
+    if(m<=2)recs=d?[{sku:'E03481000',badge:'⭐ Recomendado',razon:'PIVO SK Mono Doble Standar — confiable y económico.'},{sku:'E03414005 + A17818',badge:'Más velocidad',razon:'PIVO HOME Jetflex Doble.'},{sku:'E07154003',badge:'Conjuntos',razon:'PIVO CONDOMINIUM Doble para mayor tráfico.'}]:[{sku:'E03481004',badge:'⭐ Recomendado',razon:'PIVO SK Mono 1H Standar — solución residencial confiable.'},{sku:'E03414004 + A17818',badge:'Más velocidad',razon:'PIVO HOME Jetflex — apertura en 2.5 segundos.'},{sku:'E07154004',badge:'Conjuntos',razon:'PIVO CONDOMINIUM 1H para mayor uso.'}];
+    else if(m<=3.5)recs=d?[{sku:'E03481001',badge:'⭐ Recomendado',razon:'PIVO SK Mono Doble Super — para hojas hasta 3.5m.'},{sku:'E03414005 + A17819',badge:'Más velocidad',razon:'PIVO HOME Jetflex Super Doble.'},{sku:'E07124011',badge:'Alta exigencia',razon:'PIVO CONDOMINIUM Doble Super.'}]:[{sku:'E03481005',badge:'⭐ Recomendado',razon:'PIVO SK Mono 1H Super — para hojas hasta 3.5m.'},{sku:'E03414004 + A17819',badge:'Más velocidad',razon:'PIVO HOME Jetflex Super.'},{sku:'E07124014',badge:'Alta exigencia',razon:'PIVO CONDOMINIUM 1H Super.'}];
+    else recs=[{sku:'E07154003',badge:'⭐ Recomendado',razon:'PIVO CONDOMINIUM para hojas grandes.'},{sku:'E07042001',badge:'Hojas >4.5m',razon:'PIVO LIGER UNIVERSAL — para hojas mayores a 4.5m.'}];
+  }
+  if(tipo==='barrera'){
+    const muyInt=trafico==='muy_intenso',int=trafico==='intenso',carril=r.carril||'3';
+    if(muyInt)recs=[{sku:'F08032000',badge:'⭐ Alta exigencia',razon:'SEM PARAR — 1200 ciclos/día. Para peajes y plantas industriales.'},{sku:'F08104073',badge:'Sin mantenimiento',razon:'BARRIER Brushless — 600 ciclos, mínimo mantenimiento.'},{sku:'F08154005',badge:'K10 24V',razon:'Para accesos intensivos hasta 4.5m.'}];
+    else if(int)recs=[{sku:'F08154005',badge:'⭐ Recomendado',razon:'K10 24V — brazo hasta 4.5m, uso intensivo.'},{sku:'F08104073',badge:'Alta durabilidad',razon:'BARRIER Brushless — sin mantenimiento.'},{sku:'F08184001',badge:'Económico',razon:'K1 Jetflex — rápido y confiable hasta 4m.'}];
+    else if(carril==='3')recs=[{sku:'E08163000',badge:'⭐ Recomendado',razon:'KD2 — para carriles hasta 3m, uso normal.'},{sku:'F08184001',badge:'Más velocidad',razon:'K1 Jetflex — si quiere más velocidad.'},{sku:'F08154005',badge:'Con margen',razon:'K10 24V para anticipar mayor tráfico.'}];
+    else if(carril==='4')recs=[{sku:'F08184001',badge:'⭐ Recomendado',razon:'K1 Jetflex — exacto para carriles de 3 a 4m.'},{sku:'F08154005',badge:'Con margen',razon:'K10 24V si quiere brazo hasta 4.5m.'},{sku:'E08163000',badge:'Económico',razon:'KD2 si el carril es exactamente 3m.'}];
+    else recs=[{sku:'F08154005',badge:'⭐ Recomendado',razon:'K10 24V — diseñado para carriles hasta 4.5m.'},{sku:'F08104073',badge:'Mayor capacidad',razon:'BARRIER Brushless para carriles hasta 6m.'},{sku:'F08032000',badge:'Máximo tráfico',razon:'SEM PARAR si el flujo es muy alto.'}];
+    recs._esBarrera=true;
+  }
+  if(tipo==='seccional')recs=[{sku:'E04474004',badge:'⭐ Recomendado',razon:'BH CADEMEX Jetflex — sube vertical, ideal techo bajo.'},{sku:'E04671004',badge:'Con batería',razon:'BH URUS 24V — autonomía en cortes de energía.'},{sku:'E04441006',badge:'Económico',razon:'BH CADEMEX Mono para uso bajo.'}];
+  if(tipo==='cortina')recs=[{sku:'E05132002',badge:'⭐ Recomendado',razon:'BR1-500 — motor cortina comercial, incluye téstera.'},{sku:'E09331001',badge:'Pequeño',razon:'ROLLER Mono para cortinas hasta 16m².'}];
+  return recs;
+}
+
+const CREMS={POP:{sku:'A16768',n:'Cremallera Residencial POP',p:40000},GOLD:{sku:'A16771',n:'Cremallera Residencial GOLD',p:60000},IND:{sku:'A16811',n:'Cremallera Industrial GOLD',p:102000}};
+
+/* ══ FLUJO COTIZACIÓN GUIADA ══ */
+async function iniciarCotizacion(){
+  if(!naraOpen)toggleNara();
+  // Esperar saludo si aún no lo hizo
+  await new Promise(res=>setTimeout(res, naraGreeted?100:1200));
+  if(modoGuiado)return;
+  modoGuiado=true;resp={};clienteNom='';clienteWa='';motivaVisita=false;
+  document.getElementById('qbtns').style.display='none';
+
+  await naraMsg(`<strong>¿Dónde está el acceso que quieres transformar?</strong> Tócalo y arrancamos. 🔶`);
+
+  await new Promise(res=>{
+    agregarOpciones([
+      {icon:'🏡',lbl:'Mi casa',sub:'Casa, finca o apartamento'},
+      {icon:'🏘',lbl:'Mi conjunto',sub:'Condominio o unidad residencial'},
+      {icon:'🏪',lbl:'Mi negocio',sub:'Local, oficina o comercio'},
+      {icon:'🏭',lbl:'Mi industria',sub:'Planta, bodega o sector industrial'},
+    ],2,op=>{const l=op.lbl.toLowerCase();resp.lugar=l.includes('casa')?'casa':l.includes('conjunto')?'conjunto':l.includes('negocio')?'negocio':'industria';userMsg(op.icon+' '+op.lbl);res();});
+  });
+
+  await naraMsg(`¿Y qué es lo que va a <strong>abrirse solo</strong> desde hoy?`);
+  await new Promise(res=>{
+    agregarOpciones([
+      {icon:'🚗',lbl:'Portón corredera',sub:'Se desliza a un lado'},
+      {icon:'🚪',lbl:'Portón batiente',sub:'Abre hacia adentro o afuera'},
+      {icon:'🚧',lbl:'Barrera · Talanquera',sub:'Control vehicular'},
+      {icon:'🏪',lbl:'Cortina metálica',sub:'Local comercial'},
+      {icon:'🏠',lbl:'Garaje seccional',sub:'Sube verticalmente'},
+    ],2,op=>{const t=op.lbl.toLowerCase();resp.tipo=t.includes('corredera')?'corredera':t.includes('batiente')?'batiente':t.includes('barrera')?'barrera':t.includes('cortina')?'cortina':'seccional';userMsg(op.icon+' '+op.lbl);res();});
+  });
+
+  if(resp.tipo==='barrera'){
+    await naraMsg(`¿<strong>Cuánto mide el carril</strong> que necesitas cubrir?`);
+    await new Promise(res=>{agregarOpciones([{icon:'📏',lbl:'Hasta 3 metros'},{icon:'📏',lbl:'Entre 3 y 4 metros'},{icon:'📏',lbl:'Entre 4 y 4.5 m'},{icon:'📏',lbl:'Entre 4.5 y 6 m'}],2,op=>{const l=op.lbl;resp.carril=l.includes('3 m')?'3':l.includes('3 y 4')?'4':l.includes('4.5')?'4.5':'5';userMsg(op.icon+' '+op.lbl);res();});});
+  } else if(resp.tipo==='batiente'){
+    await naraMsg(`¿<strong>Cuántas hojas</strong> tiene ese portón?`);
+    await new Promise(res=>{agregarOpciones([{icon:'🚪',lbl:'Una hoja',sub:'Abre a un solo lado'},{icon:'🚪🚪',lbl:'Dos hojas',sub:'Abre al centro'}],2,op=>{resp.hojas=op.lbl.includes('Una')?'1':'2';userMsg(op.icon+' '+op.lbl);res();});});
+    await naraMsg(`¿Y <strong>cuántos metros mide cada hoja?</strong>`);
+    await new Promise(res=>{agregarOpciones([{icon:'📏',lbl:'Hasta 2 metros'},{icon:'📏',lbl:'Entre 2 y 3.5 m'},{icon:'📏',lbl:'Entre 3.5 y 4.5 m'},{icon:'📏',lbl:'Más de 4.5 m'},{icon:'❓',lbl:'No sé',sub:'Lo medimos en visita'}],2,op=>{const l=op.lbl;resp.medida=l.includes('2 m')?1.8:l.includes('2 y 3')?3:l.includes('3.5')?4:l.includes('4.5')?5:2;userMsg(op.icon+' '+op.lbl);res();});});
+  } else if(resp.tipo==='corredera'){
+    await naraMsg(`¿<strong>Cuánto mide ese portón de ancho?</strong>`);
+    await new Promise(res=>{agregarOpciones([{icon:'📏',lbl:'Menos de 3 m'},{icon:'📏',lbl:'Entre 3 y 4 m'},{icon:'📏',lbl:'Entre 4 y 6 m',sub:'Cremallera extra'},{icon:'📏',lbl:'Más de 6 m',sub:'Cremallera obligatoria'},{icon:'❓',lbl:'No sé',sub:'Lo medimos en visita'}],2,op=>{const l=op.lbl;resp.medida=l.includes('3 m')?2.5:l.includes('3 y 4')?3.5:l.includes('4 y 6')?5:l.includes('6')?7:2.5;userMsg(op.icon+' '+op.lbl);res();});});
+  }
+
+  await naraMsg(`¿<strong>Cuánto movimiento</strong> maneja ese acceso al día?`);
+  await new Promise(res=>{
+    agregarOpciones([
+      {icon:'🐢',lbl:'Solo mi familia',sub:'Pocas aperturas'},
+      {icon:'🚗',lbl:'Varias personas',sub:'Uso normal'},
+      {icon:'⚡',lbl:'Entra y sale siempre',sub:'Uso intensivo'},
+      {icon:'🏭',lbl:'Trabajo pesado',sub:'Muy intensivo · 24/7'},
+    ],2,op=>{const l=op.lbl;resp.trafico=l.includes('familia')?'bajo':l.includes('Varias')?'moderado':l.includes('siempre')?'intenso':'muy_intenso';userMsg(op.icon+' '+op.lbl);res();});
+  });
+
+  /* DATOS CLIENTE — Aquí captura para Bitrix */
+  await naraMsg(`Ya tengo tu solución. Para enviártela necesito tus datos:`);
+  await new Promise(res=>{
+    const card=document.createElement('div');card.className='input-card';
+    card.innerHTML=`<div class="input-lbl">Tus datos</div>
+      <input class="nara-inp" id="inp-nom" type="text" placeholder="Tu nombre completo" autocomplete="name">
+      <input class="nara-inp" id="inp-wa" type="tel" placeholder="WhatsApp (sin +57)" inputmode="numeric" autocomplete="tel">
+      <button class="btn-primary" onclick="window.capturarDatos()">Ver mi solución →</button>`;
+    document.getElementById('chmsgs').appendChild(card);
+    scrollChat();
+    window.capturarDatos=async()=>{
+      const nom=document.getElementById('inp-nom').value.trim();
+      const wa=document.getElementById('inp-wa').value.trim();
+      if(!nom){toast('⚠ Ingresa tu nombre');return;}
+      if(!wa||wa.replace(/\D/g,'').length<10){toast('⚠ WhatsApp inválido (10 dígitos)');return;}
+      clienteNom=nom;clienteWa=wa;
+      card.remove();userMsg(`${nom} · 📱 ${wa}`);
+      /* ══ BITRIX aquí — al capturar datos ══ */
+      try{
+        const c=new URLSearchParams();
+        c.append('fields[NAME]',nom.split(' ')[0]);c.append('fields[LAST_NAME]',nom.split(' ').slice(1).join(' ')||'');
+        c.append('fields[PHONE][0][VALUE]',`+57${wa.replace(/\D/g,'')}`);c.append('fields[PHONE][0][VALUE_TYPE]','MOBILE');
+        c.append('fields[SOURCE_ID]','WEB');c.append('fields[SOURCE_DESCRIPTION]',`NARA Web · ${resp.lugar||''} · ${resp.tipo||''}`);
+        c.append('fields[COMMENTS]',`Segmento: ${resp.lugar} | Tipo: ${resp.tipo} | Tráfico: ${resp.trafico}`);
+        const rc=await fetch(BITRIX+'crm.contact.add',{method:'POST',body:c});
+        const dc=await rc.json();const cid=dc?.result||null;
+        const n=new URLSearchParams();
+        n.append('fields[TITLE]',`NARA · ${nom} · ${resp.tipo||'acceso'}`);n.append('fields[STAGE_ID]','NEW');n.append('fields[SOURCE_ID]','WEB');
+        if(cid)n.append('fields[CONTACT_ID]',String(cid));
+        n.append('fields[COMMENTS]',`${resp.lugar} · ${resp.tipo} · Tráfico: ${resp.trafico}`);
+        await fetch(BITRIX+'crm.deal.add',{method:'POST',body:n});
+      }catch(e){}
+      res();
+    };
+  });
+
+  /* PROPUESTA TOP 3 */
+  const recs=motorRec(resp);
+  const nombreCorto=clienteNom.split(' ')[0];
+  const segNombre={casa:'tu casa',conjunto:'tu conjunto',negocio:'tu negocio',industria:'tu industria'}[resp.lugar||'casa'];
+
+  await naraMsg(`<strong>${nombreCorto}</strong>, analizé tu caso y creo que ya sé exactamente lo que necesitas. 🎯<br><br>PPA Latam lleva más de 40 años siendo la mayor industria de automatización de América Latina — no por casualidad, sino porque cada recomendación se basa en miles de instalaciones reales.`);
+  await naraMsg(`👇 <strong>Mi Top 3 para ${segNombre}</strong> — los más instalados por la Tribu Naranja de PPA Central:<br><br><em>No son los más caros. Son los que mejor funcionan para tu caso específico.</em>`);
+
+  /* Generar propuesta visual */
+  const propWrap=document.createElement('div');propWrap.className='prop-wrap';
+  const badges=['⭐ El más elegido','✅ También funciona','💎 El que dura siempre'];
+  const recsValidas=recs.filter?recs.filter(r=>r.sku):[];
+  recsValidas.slice(0,3).forEach((rec,i)=>{
+    const eq=findSku(rec.sku)||{n:rec.sku,sku:rec.sku,p:0};
+    const card=document.createElement('div');card.className='prop-card'+(i===0?' top':'');
+    const sp=[];if(eq.tec)sp.push(`<span class="prop-spec tec">${eq.tec}</span>`);if(eq.vel)sp.push(`<span class="prop-spec">⚡ ${eq.vel}</span>`);if(eq.v)sp.push(`<span class="prop-spec">${eq.v}</span>`);if(eq.kg)sp.push(`<span class="prop-spec">${eq.kg}</span>`);
+    card.innerHTML=`<div class="prop-badge${i===0?' rec':''}">${badges[i]||rec.badge}</div>
+      <div class="prop-n">${eq.n}</div>
+      <div class="prop-sku">${eq.sku}</div>
+      <div class="prop-specs">${sp.join('')}</div>
+      <div class="prop-precio">${fmt(eq.p)}</div>
+      <div class="prop-precio-lbl">Precio de referencia · sin instalación</div>
+      <div class="prop-razon">${rec.razon}</div>`;
+    propWrap.appendChild(card);
+  });
+
+  if(recs._cremallera){
+    const crem=CREMS[recs._tipoCrem||'POP'];
+    const n=document.createElement('div');n.className='prop-nota';
+    n.innerHTML=`<span>⚙</span><div><strong style="color:var(--org);font-size:11px">Cremallera adicional</strong><br>${crem.n} · <span style="font-family:var(--mono);font-size:11px;color:var(--org)">${fmt(crem.p)}</span></div>`;
+    propWrap.appendChild(n);
+  }
+
+  const nota=document.createElement('div');nota.className='prop-nota';
+  nota.innerHTML=`<span>💡</span><div style="font-size:11px;color:var(--txt2)">Precios de referencia. El valor final incluye instalación y visita técnica.</div>`;
+  propWrap.appendChild(nota);
+  document.getElementById('chmsgs').appendChild(propWrap);
+  scrollChat();
+
+  await naraMsg(`Cualquiera de estas opciones transforma tu entrada, <strong>${nombreCorto}</strong>.<br><br>No es solo un motor — es <em>seguridad, confort y el primer detalle que tus visitas notan.</em><br><br>La tecnología PPA lleva décadas en más de 50 países porque no falla. Y en Florencia, este mes ya hemos instalado varios sistemas similares al tuyo. <strong>Los resultados hablan solos.</strong>`);
+
+  /* Visita técnica */
+  await naraMsg(`¿Y si un especialista va donde estás, revisa en detalle y perfecciona esta propuesta? <strong>Sin costo. Ese es mi regalo para ti.</strong> 📐<br><br><strong>¿Aceptas la visita?</strong>`);
+  await new Promise(res=>{
+    const si=document.createElement('button');si.className='btn-visita';si.textContent='📍 Sí, acepto la visita';
+    const no=document.createElement('button');no.className='btn-visita-no';no.textContent='Por ahora me quedo con esto';
+    si.onclick=()=>{motivaVisita=true;si.remove();no.remove();userMsg('📍 Sí, acepto la visita');res();};
+    no.onclick=()=>{si.remove();no.remove();userMsg('Por ahora me quedo con esto');res();};
+    const c=document.getElementById('chmsgs');c.appendChild(si);c.appendChild(no);scrollChat();
+  });
+
+  /* Generar botón WhatsApp con propuesta HTML */
+  const equipoTop=findSku(recsValidas[0]?.sku);
+  const fechaId=fechaDoc();
+  const nomArch=`Propuesta_${fechaId}_${clienteNom.replace(/\s+/g,'_')}`;
+  const segCod={casa:'L01',conjunto:'L02',negocio:'L03',industria:'L04'}[resp.lugar||'casa'];
+
+  await naraMsg(motivaVisita
+    ?`Listo, <strong>${nombreCorto}</strong>. Tu propuesta ya viaja por WhatsApp — y la visita está agendada. También podemos escalar con <strong>cámaras, alarmas y control de acceso.</strong> Todo PPA Central.`
+    :`Listo, <strong>${nombreCorto}</strong>. Tu propuesta ya va por WhatsApp. Recuerda que también podemos agregar <strong>cámaras, alarmas y control de acceso</strong> en el mismo proyecto.`);
+
+  const btnWA=document.createElement('button');btnWA.className='btn-wa';
+  btnWA.innerHTML=`<svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Recibir mi propuesta por WhatsApp`;
+
+  btnWA.onclick=()=>{
+    const lineas=[
+      `🔶 *${nomArch.replace(/_/g,' ')}*`,
+      `📋 ${segCod} · PPA Central · Florencia, Caquetá`,
+      ``,
+      `Tu solución de acceso automatizado está lista.`,
+      ``,
+      `⭐ *Equipo recomendado:*`,
+      equipoTop?`${equipoTop.n} · ${fmt(equipoTop.p)}`:'Ver propuesta',
+      equipoTop?.sku?`SKU: ${equipoTop.sku}`:'',
+      ``,
+      recsValidas[1]?`✅ *2ª opción:* ${findSku(recsValidas[1].sku)?.n||''}` :'',
+      recsValidas[2]?`💎 *3ª opción:* ${findSku(recsValidas[2].sku)?.n||''}` :'',
+      ``,
+      motivaVisita?`📍 *Visita solicitada* — un especialista se contactará pronto.`:'',
+      ``,
+      `💡 Precios de referencia. El valor final incluye instalación y visita técnica.`,
+      ``,
+      `_${nomArch}_`,
+      `_Asesora IA NARA · PPA Central · Distribuidor Autorizado PPA Latam · Florencia, Caquetá_`,
+    ].filter(Boolean).join('\n');
+    window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(lineas)}`,'_blank');
+    btnWA.innerHTML='✅ Propuesta enviada por WhatsApp';
+    btnWA.style.background='var(--verde,#22C55E)';
+    btnWA.style.pointerEvents='none';
+  };
+  document.getElementById('chmsgs').appendChild(btnWA);
+  scrollChat();
+
+  /* NARA sigue presente — activa chat libre */
+  modoGuiado=false;
+  const qb=document.getElementById('qbtns');
+  qb.style.display='block';
+  qb.innerHTML=`
+    <button onclick="iniciarCotizacion()" style="width:100%;padding:11px 16px;background:var(--org);border:none;border-radius:var(--r);font-size:13px;font-weight:700;color:#fff;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:7px">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      Nueva cotización
+    </button>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="qb" onclick="inject('¿Qué accesorios necesito además del motor?')">Accesorios</button>
+      <button class="qb" onclick="inject('¿Tienen cámaras y alarmas?')">Seguridad</button>
+      <button class="qb" onclick="inject('¿Qué diferencia hay entre Jetflex y Mono?')">Comparar tecnologías</button>
+    </div>`;
+
+  await naraMsg(`¿Tienes alguna pregunta sobre tu solución o los equipos? <strong>Sigo aquí.</strong> Puedo explicarte tecnologías, accesorios, cámaras, alarmas — lo que necesites.`);
+  hist.push({role:'assistant',content:`Propuesta generada para ${clienteNom}. ${resp.lugar} · ${resp.tipo} · Equipo recomendado: ${equipoTop?.n||''}.`});
+}
+
+/* ══ CHAT LIBRE CON IA ══ */
+const SYS=`Eres NARA, la asesora de inteligencia artificial de PPA Central — Distribuidor Autorizado PPA Latam, Florencia, Caquetá, Colombia.
 Eres la primera asesora IA especializada en automatismos, seguridad y control de acceso de Colombia.
 
-PERSONALIDAD:
-- Cálida, sofisticada, directa. Nunca robótica, nunca genérica.
-- Usas **negritas** para lo importante y *cursivas* para lo aspiracional.
-- Máximo 3-4 párrafos cortos. Nunca listas largas.
-- Describes cualidades y beneficios de los productos, no solo datos técnicos.
-- Si preguntan algo que no puedes saber (hora actual, noticias), redirige amablemente.
+CONTEXTO ACTUAL: ${horaActual()}
+UBICACIÓN: Florencia, Caquetá, Colombia.
 
-ESTRATEGIA COMERCIAL (AIDA + SSG + JOLT):
-- Abre con algo que golpee — un dato, una imagen mental, un contraste.
-- Personaliza siempre. Habla del espacio del cliente, no del producto.
-- Usa prueba social: "En Florencia instalamos varios sistemas similares este mes."
-- Siempre termina con el siguiente paso concreto.
-- Si hay objeción de precio, reencuadra: "Este motor se paga en tranquilidad en los primeros meses."
+PERSONALIDAD: Cálida, sofisticada, directa. **Negritas** para lo importante, *cursivas* para lo aspiracional. Máximo 3-4 párrafos cortos.
+Cuando pregunten qué hora es o qué día es, responde naturalmente con la información que tienes.
+Describes cualidades y beneficios de los productos, no solo datos técnicos.
 
-CATÁLOGO COMPLETO PPA CENTRAL — 269 productos:
+CATÁLOGO PPA CENTRAL — 269 productos:
 Corredizos residenciales: DZ STARK HOME desde $693.000, DZ HUB $750.000, DZ STARK $842.000, DZ RIO $1.076.000, DZ EURUS STEEL $1.671.000.
 Corredizos industriales: DZ INDUSTRIAL desde $1.692.000 hasta DZ BRUTALLE $4.450.000 (3000kg).
 Batientes: PIVO SK desde $1.153.000, PIVO HOME desde $1.683.000 (abre en 2.5 seg), PIVO CONDOMINIUM desde $1.662.000, PIVO LIGER $4.316.000.
-Seccionales / Basculantes: BV HOME desde $1.194.000, BH URUS 24V desde $985.000, BH CADEMEX Jetflex $1.385.000.
-Cortinas: BR1-500 $1.762.000, ROLLER $848.000.
-Puertas sociales / automáticas (vidrio): GIRO desde $2.616.000, SPIN $2.154.000, TELESCÓPICA, CURVA, PLEGABLE.
-Barreras / Talanqueras: KD2 $2.308.000, K1 $3.385.000, K10 24V $4.724.000, BARRIER Brushless $4.538.000, SEM PARAR $10.770.000.
-Accesorios: cremalleras, módulos smart, controles remotos, baterías, reguladores (70 productos).
-Alarmas: Centrales Agility desde $240.000, sensores, teclados, sirenas (25 productos).
-Control de acceso: Controladora IP WIDE $614.000, Facial IP $1.384.000, LPR $2.846.000, lectores RFID/UHF (21 productos).
-CCTV: Cámaras Wi-Fi desde $185.000, grabadores DVR/NVR, accesorios (24 productos).
+Seccionales: BV HOME desde $1.194.000, BH URUS 24V desde $985.000, BH CADEMEX Jetflex $1.385.000.
+Puertas sociales/automáticas (vidrio): GIRO desde $2.616.000, SPIN $2.154.000.
+Barreras/Talanqueras: KD2 $2.308.000, K1 $3.385.000, K10 24V $4.724.000, BARRIER Brushless $4.538.000, SEM PARAR $10.770.000.
+Accesorios: cremalleras, módulos smart, controles, baterías (70 productos).
+Alarmas: Centrales Agility desde $240.000 (25 productos).
+Control de acceso: Controladora IP WIDE $614.000, Facial IP $1.384.000, LPR $2.846.000 (21 productos).
+CCTV: Cámaras Wi-Fi desde $185.000, grabadores, accesorios (24 productos).
 
-REGLAS ABSOLUTAS:
-1. Solo precio PSVP (precio cliente final). NUNCA precio de instalador.
-2. Nunca inventes productos ni SKUs.
-3. Precio incluye visita técnica e instalación cuando se cotiza completo.
-4. WhatsApp PPA Central: ${WA_NUM}
-5. Cuando el cliente pregunta por un producto del catálogo, descríbelo con cualidades y beneficios primero.`;
+REGLAS: Solo precio PSVP. WhatsApp: ${WA_NUM}. Si quieren cotizar formalmente, sugiere la cotización guiada.`;
 
 async function callNara(txt){
   if(busy)return;busy=true;
   hist.push({role:'user',content:txt});showTyp();
   try{
     if(!CK){const r=await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`,{headers:{'X-Master-Key':JB_KEY,'X-Bin-Meta':'false'}});const d=await r.json();CK=d.k||'';}
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':CK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:700,system:SYS,messages:hist})
-    });
+    const sysActual=`Eres NARA, la asesora de inteligencia artificial de PPA Central — Distribuidor Autorizado PPA Latam, Florencia, Caquetá, Colombia.
+La hora y fecha actual es: ${horaActual()}.
+Eres la primera asesora IA especializada en automatismos de Colombia. Cálida, sofisticada, directa. **Negritas** para lo importante. Máximo 3-4 párrafos.
+Catálogo: Corredizos desde $693.000, Batientes desde $1.153.000, Barreras desde $2.308.000, Puertas sociales desde $2.154.000, CCTV desde $185.000, Alarmas desde $240.000, Control acceso desde $614.000. WhatsApp: ${WA_NUM}. Solo precio PSVP.`;
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':CK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:600,system:sysActual,messages:hist})});
     const data=await res.json();
-    const resp=data?.content?.[0]?.text||'Tuve un inconveniente técnico. Escríbeme por WhatsApp.';
-    hist.push({role:'assistant',content:resp});
-    hideTyp();addMsg('nara',resp);
-  }catch(e){hideTyp();addMsg('nara','Tuve un inconveniente técnico. Escríbeme directamente por WhatsApp.');}
+    const resp2=data?.content?.[0]?.text||'Tuve un inconveniente. Escríbeme por WhatsApp.';
+    hist.push({role:'assistant',content:resp2});hideTyp();addMsg('nara',resp2);
+  }catch(e){hideTyp();addMsg('nara','Tuve un inconveniente técnico. Escríbeme por WhatsApp.');}
   busy=false;
 }
-function chatSend(){const i=document.getElementById('chinp'),v=i.value.trim();if(!v||busy)return;i.value='';i.style.height='auto';addMsg('user',v);callNara(v);}
-function inject(t){goTo('nara');setTimeout(()=>{addMsg('user',t);callNara(t);},300);}
-document.getElementById('chinp').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();chatSend();}});
-document.getElementById('chinp').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px';});
+function chatSend(){const i=document.getElementById('chinp'),v=i.value.trim();if(!v||busy||modoGuiado)return;i.value='';i.style.height='auto';addMsg('user',v);callNara(v);}
+function inject(t){if(!naraOpen)toggleNara();setTimeout(()=>{addMsg('user',t);callNara(t);},400);}
+// Event listeners directos (script corre después del HTML)
+(()=>{
+  const ci=document.getElementById('chinp');
+  if(ci){
+    ci.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();chatSend();}});
+    ci.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px';});
+  }
+  const hi=document.getElementById('hInp');
+  if(hi)hi.addEventListener('keydown',e=>{if(e.key==='Enter')heroSend();});
+})();
 
-/* SEGMENTO HERO */
-const SMSG={
-  casa:'Perfecto. <strong>Tu Casa</strong> — donde la automatización se siente más. ¿Es un portón de carro, garaje, o acceso peatonal? <em>Dime cuántos metros tiene y te recomiendo el equipo exacto.</em>',
-  conjunto:'Los conjuntos tienen el reto más exigente. ¿<strong>Cuántos carros entran y salen al día?</strong> Con ese dato te recomiendo entre barrera vehicular o portón de alto ciclo.',
-  negocio:'<strong>Tu negocio no puede esperar.</strong> ¿Es cortina metálica, portón de carro, barrera o puerta social? Cada acceso tiene su solución ideal.',
-  industria:'Industria — motores hasta <strong>3000 kg</strong>, barreras de 1200 ciclos/día, puertas de alto tráfico. ¿Cuánto pesa el portón y cuántos ciclos diarios?'
-};
+/* NAV HERO SEG */
+const SMSG={casa:'<strong>Tu Casa</strong> — donde la automatización se siente más. ¿Es portón de carro, garaje o acceso peatonal? <em>Dime cuántos metros tiene y te recomiendo el equipo exacto.</em>',conjunto:'Los conjuntos tienen el reto más exigente. ¿<strong>Cuántos carros entran y salen al día?</strong> Con ese dato te recomiendo la solución ideal.',negocio:'<strong>Tu negocio no puede esperar.</strong> ¿Es cortina metálica, portón, barrera o puerta social? Cada acceso tiene su solución.',industria:'Industria — motores hasta <strong>3000 kg</strong>, barreras de 1200 ciclos/día. ¿Cuánto pesa el portón y cuántos ciclos diarios?'};
 function selSeg(s){
   document.querySelectorAll('.seg').forEach(c=>c.classList.toggle('sel',c.dataset.s===s));
-  const m=document.getElementById('heroMsg');
-  m.style.opacity='.3';
+  const m=document.getElementById('heroMsg');m.style.opacity='.3';
   setTimeout(()=>{m.innerHTML=SMSG[s]||SMSG.casa;m.style.opacity='1';},250);
-  setTimeout(()=>{goTo('nara');addMsg('user','Me interesa: '+s);callNara('Mi espacio es: '+s+'. ¿Qué soluciones tienen?');},700);
-  trackEvento('segmento_seleccionado',{segmento:s});
+  setTimeout(async()=>{if(!naraOpen)await toggleNara();setTimeout(()=>iniciarCotizacion(),800);},700);
 }
-function heroSend(){const i=document.getElementById('hInp'),v=i.value.trim();if(!v)return;i.value='';goTo('nara');setTimeout(()=>{addMsg('user',v);callNara(v);},350);}
-document.getElementById('hInp').addEventListener('keydown',e=>{if(e.key==='Enter')heroSend();});
+function heroSend(){const i=document.getElementById('hInp'),v=i.value.trim();if(!v)return;i.value='';if(!naraOpen)toggleNara();setTimeout(()=>{addMsg('user',v);callNara(v);},400);}
+document.addEventListener('DOMContentLoaded',()=>{const hi=document.getElementById('hInp');if(hi)hi.addEventListener('keydown',e=>{if(e.key==='Enter')heroSend();});});
 
-/* NAV */
+/* GLOBALS NAV */
 function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
 function goTop(){window.scrollTo({top:0,behavior:'smooth'});return false;}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){clM();clI();}});
+function openInst(){document.getElementById('iov').classList.add('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('mov')?.classList.remove('open');clI();if(naraOpen)toggleNara();}});
 window.addEventListener('scroll',()=>{
   const secs=['soluciones','nara','redes','nosotros'];
   const pills=document.querySelectorAll('.nav-lk');
   let c=0;secs.forEach((id,i)=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-80)c=i;});
   pills.forEach((lk,i)=>lk.classList.toggle('active',i===c));
 });
+
+/* Mostrar badge después de 8s si NARA no se ha abierto */
+setTimeout(()=>{if(!naraGreeted){const b=document.getElementById('naraBadge');if(b)b.classList.add('show');}},8000);
 </script>
 </body>
 </html>

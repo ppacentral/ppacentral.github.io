@@ -560,9 +560,20 @@ footer{padding:44px 52px;border-top:1px solid var(--border);display:grid;grid-te
 
 <script>
 const WA='573177772333';
-const CK='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';
 const BX='https://b24-4kxmmv.bitrix24.co/rest/1/yhxx3e3goq98d4di/';
 const SH='https://docs.google.com/spreadsheets/d/1qyDqL0Nj4K4La5zalvuqQCpM1VL10ecm/gviz/tq?tqx=out:json&sheet=Lista%20de%20Precios%20PPA%202025';
+const JB_BIN='6a0bcb316610dd3ae869ff3d';
+const JB_KEY='$2a$10$rkV.Ayd5id3xCjvCepv58e0k38YKbw4mXls.sFVPrPEIBWXvfdFd2';
+let CK='';
+(async()=>{
+  try{
+    const r=await fetch(`https://api.jsonbin.io/v3/b/${JB_BIN}/latest`,{
+      headers:{'X-Master-Key':JB_KEY,'X-Bin-Meta':'false'}
+    });
+    const d=await r.json();
+    CK=d.k||'';
+  }catch(e){console.warn('Config no disponible');}
+})();
 
 const CL={corredera:'Motor corredizo',batiente:'Motor batiente',seccional:'Puerta seccional',barrera:'Barrera vehicular',cortina:'Cortina enrollable'};
 const CIMG={

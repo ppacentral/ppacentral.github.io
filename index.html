@@ -2,1669 +2,889 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>NARA · Asesora IA PPA Central</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PPA Central · Tu mundo automatizado</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════════════
-   TOKENS — WCAG AA compliant (contraste ≥4.5:1)
-   Fondo: #0A0A0A  Texto: #F5F2EE = 14.2:1 ✓
-   Fondo: #0A0A0A  Naranja: #FF6B1A = 4.8:1 ✓
-══════════════════════════════════════ */
 :root{
-  /* Fondos */
-  --bg:       #0A0A0A;
-  --bg1:      #131313;
-  --bg2:      #1A1A1A;
-  --bg3:      #222222;
-  --bg4:      #2C2C2C;
-  --border:   #333333;
-  --border2:  #444444;
+  --bg:#080808;--bg1:#101010;--bg2:#161616;--bg3:#1f1f1f;
+  --border:#252525;--border2:#333;
+  --txt:#EDE9E3;--txt2:#9D9890;--txt3:#524E4A;
+  --org:#FF5500;--org-lt:#FF7733;--org-dim:rgba(255,85,0,.1);--org-dim2:rgba(255,85,0,.22);
+  --verde:#22C55E;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --r:10px;--r-lg:18px;--r-xl:26px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:15px;line-height:1.65;overflow-x:hidden}
+h1,h2{font-family:var(--serif);font-weight:700;line-height:1.08;letter-spacing:-.01em}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--org)}
+.eline{width:36px;height:1px;background:var(--org);flex-shrink:0}
 
-  /* Texto — todos ≥4.5:1 sobre fondos oscuros */
-  --txt:      #F5F2EE;   /* Principal — 14.2:1 */
-  --txt2:     #C8C4BC;   /* Secundario — 8.1:1 */
-  --txt3:     #8A8680;   /* Muted — 4.6:1 ✓ */
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;border-bottom:1px solid var(--border);background:rgba(8,8,8,.9);backdrop-filter:blur(24px)}
+.nav-brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.nav-lb{width:30px;height:30px;background:var(--org);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.nav-lb svg{width:17px;height:17px;fill:#fff}
+.nav-wm{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--txt)}
+.nav-wm em{font-style:normal;color:var(--org)}
+.nav-tl{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:.1em;margin-top:-2px}
+.nav-links{display:flex;gap:5px}
+.nav-lk{padding:5px 13px;border-radius:20px;border:1px solid transparent;font-size:12px;color:var(--txt2);cursor:pointer;transition:all .2s;background:none;font-family:var(--sans)}
+.nav-lk:hover{border-color:var(--border2);color:var(--txt)}
+.nav-lk.active{border-color:var(--org-dim2);color:var(--org);background:var(--org-dim)}
+.nav-actions{display:flex;align-items:center;gap:10px}
 
-  /* Marca */
-  --naranja:  #FF6B1A;   /* 4.8:1 sobre #0A0A0A ✓ */
-  --naranja2: #E85C00;
-  --naranja3: #FF8C3A;
-  --naranja-bg:#FF6B1A18;
+/* ÍCONO VIVO NARA */
+.nlive{display:flex;align-items:center;gap:8px;padding:5px 14px 5px 7px;border:1px solid var(--org-dim2);border-radius:24px;background:var(--org-dim);cursor:pointer;transition:all .22s}
+.nlive:hover{background:var(--org-dim2)}
+.norb{position:relative;width:26px;height:26px}
+.norb-c{width:26px;height:26px;border-radius:50%;background:var(--org);display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
+.norb-c svg{width:13px;height:13px;fill:#fff}
+.norb-r1{position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--org);opacity:0;animation:op 2.4s ease-out infinite}
+.norb-r2{position:absolute;inset:-9px;border-radius:50%;border:1px solid var(--org);opacity:0;animation:op 2.4s ease-out infinite .55s}
+@keyframes op{0%{transform:scale(.75);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+.nlive-txt{font-family:var(--mono);font-size:11px;color:var(--org);letter-spacing:.06em}
 
-  /* Semánticos */
-  --verde:    #22C55E;
-  --verde-bg: #22C55E15;
-  --azul:     #60A5FA;
+.btn-inst{padding:6px 13px;border:1px solid var(--border2);border-radius:20px;font-size:12px;color:var(--txt2);background:none;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.btn-inst:hover{border-color:var(--org-dim2);color:var(--org);background:var(--org-dim)}
+.btn-cta{padding:9px 22px;background:var(--org);color:#fff;border:none;border-radius:22px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.btn-cta:hover{background:var(--org-lt);transform:translateY(-1px)}
 
-  /* Tipografía */
-  --font-title: 'Montserrat', sans-serif;
-  --font-body:  'Inter', sans-serif;
-  --font-mono:  'JetBrains Mono', monospace;
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:60px;position:relative;overflow:hidden}
+.hero-left{padding:80px 52px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.hero-orb{position:absolute;right:-120px;top:50%;transform:translateY(-50%);width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(255,85,0,.05) 0%,transparent 65%);pointer-events:none}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.hero-h1{font-size:clamp(40px,4.8vw,66px);font-weight:900;margin-bottom:22px}
+.hero-h1 em{font-style:italic;color:var(--org)}
+.hero-sub{font-size:16px;color:var(--txt2);line-height:1.75;max-width:440px;margin-bottom:36px;font-weight:300}
 
-  /* Segmentos Tribu Naranja */
-  --l01: #005293;
-  --l02: #4D4F53;
-  --l03: #F15A22;
-  --l04: #981E32;
-}
+/* NARA BUBBLE */
+.nbub{background:var(--bg1);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;margin-bottom:28px;position:relative;overflow:hidden}
+.nbub::after{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,transparent,var(--org),transparent)}
+.nbub-hd{display:flex;align-items:center;gap:9px;margin-bottom:13px}
+.nbub-orb{position:relative;width:28px;height:28px}
+.nbub-orb-c{width:28px;height:28px;border-radius:50%;background:var(--org);display:flex;align-items:center;justify-content:center;z-index:2;position:relative}
+.nbub-orb-c svg{width:14px;height:14px;fill:#fff}
+.nbub-orb-r{position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--org);opacity:0;animation:op 2.4s ease-out infinite}
+.nbub-msg{font-size:14px;line-height:1.7;margin-bottom:16px;min-height:46px;transition:opacity .3s}
+.nbub-msg strong{color:var(--org);font-weight:600}
+.nbub-msg em{font-style:italic;color:var(--txt2);font-family:var(--serif)}
 
-/* ── RESET ── */
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;background:var(--bg);overflow:hidden;}
-body{
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--txt);
-  display:flex;
-  flex-direction:column;
-  max-width:480px;
-  margin:0 auto;
-  height: 100dvh;
-}
+.segs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.seg{display:flex;align-items:center;gap:7px;padding:9px 15px;border-radius:var(--r);border:1px solid var(--border);background:none;cursor:pointer;transition:all .22s;font-family:var(--sans);font-size:13px;color:var(--txt2)}
+.seg span{font-size:16px}
+.seg:hover,.seg.sel{border-color:var(--org);color:var(--org);background:var(--org-dim);transform:translateY(-2px)}
 
-/* ══════════════════════════════════════
-   TOPBAR NARA
-══════════════════════════════════════ */
-.topbar{
-  background: var(--bg1);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  z-index: 10;
-}
-.tl-left{ display:flex; align-items:center; gap:12px; }
-.tl-right{ display:flex; align-items:center; gap:8px; }
-.tl-name{
-  font-family: var(--font-title);
-  font-weight: 800;
-  font-size: 17px;
-  letter-spacing: .06em;
-  color: var(--naranja);
-}
-.tl-sub{
-  font-family: var(--font-body);
-  font-size: 10px;
-  color: var(--txt3);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  margin-top: 1px;
-}
-.tl-status{
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  color: var(--txt3);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-.status-dot{
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--verde);
-  box-shadow: 0 0 6px var(--verde);
-}
-.cloud-dot{width:6px;height:6px;border-radius:50%;background:var(--txt3);}
-.cloud-dot.ok{background:var(--verde);}
+.nb-inp-row{display:flex;gap:8px}
+.nb-inp{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:11px 15px;font-size:13px;color:var(--txt);font-family:var(--sans);outline:none;transition:border-color .2s}
+.nb-inp:focus{border-color:var(--org)}
+.nb-inp::placeholder{color:var(--txt3)}
+.nb-snd{width:40px;height:40px;background:var(--org);border:none;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.nb-snd:hover{background:var(--org-lt);transform:scale(1.06)}
+.nb-snd svg{width:17px;height:17px;fill:#fff}
 
-/* ══════════════════════════════════════
-   HERO NARA — grande y visual
-══════════════════════════════════════ */
-.nara-hero{
-  background: var(--bg1);
-  padding: 20px 16px 16px;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-}
-.nara-hero::before{
-  content:'';
-  position:absolute;
-  top:-40px; right:-40px;
-  width:180px; height:180px;
-  border-radius:50%;
-  background: radial-gradient(circle, #FF6B1A15 0%, transparent 70%);
-  pointer-events:none;
-}
-.hero-inner{ display:flex; align-items:center; gap:16px; }
-.hero-icon{ flex-shrink:0; position:relative; }
-.hero-text{ flex:1; min-width:0; }
-.hero-greeting{
-  font-family: var(--font-title);
-  font-weight: 800;
-  font-size: 22px;
-  color: var(--naranja);
-  letter-spacing: .03em;
-  line-height: 1.1;
-}
-.hero-tagline{
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--txt2);
-  margin-top: 5px;
-  line-height: 1.5;
-}
+.hstats{display:flex;gap:32px}
+.hs-n{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--org)}
+.hs-l{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.1em;margin-top:2px}
 
-/* ══════════════════════════════════════
-   CHAT CONTAINER
-══════════════════════════════════════ */
-.chat-scroll{
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 16px 14px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+/* HERO RIGHT */
+.hero-right{position:relative;overflow:hidden}
+.himg{position:absolute;inset:0}
+.himg img{width:100%;height:100%;object-fit:cover;opacity:.5;filter:saturate(.7)}
+.himg-g1{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,transparent 40%,transparent 65%,var(--bg) 100%)}
+.himg-g2{position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,var(--bg) 100%)}
+.hfc{position:absolute;bottom:32px;right:32px;background:rgba(16,16,16,.92);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;backdrop-filter:blur(20px)}
+.hfc-tag{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:.14em;margin-bottom:5px;text-transform:uppercase}
+.hfc-val{font-family:var(--serif);font-size:15px;font-weight:700;margin-bottom:6px}
+.hfc-badge{display:inline-block;padding:3px 9px;background:var(--org-dim);border:1px solid var(--org-dim2);border-radius:20px;font-family:var(--mono);font-size:9px;color:var(--org)}
 
-/* ── Burbujas NARA (izquierda) ── */
-.bubble-nara{
-  display: flex;
-  align-items: flex-start;
-  gap: 9px;
-  max-width: 92%;
-  align-self: flex-start;
-}
-.bubble-avatar{
-  flex-shrink:0;
-  width: 30px; height: 30px;
-  margin-top: 2px;
-}
-.bubble-body{ flex:1; min-width:0; }
-.bubble-name{
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 10px;
-  color: var(--naranja);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.bubble-txt{
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 4px 14px 14px 14px;
-  padding: 11px 14px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--txt);
-  line-height: 1.6;
-}
-.bubble-txt strong{
-  color: var(--naranja3);
-  font-weight: 600;
-}
-.bubble-meta{
-  font-size: 10px;
-  color: var(--txt3);
-  margin-top: 4px;
-  margin-left: 2px;
-}
+.scroll-q{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;color:var(--txt3);animation:fl 2.5s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateX(-50%) translateY(0)}55%{transform:translateX(-50%) translateY(-7px)}}
+.scroll-arr{width:16px;height:16px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg)}
+.scroll-q span{font-family:var(--mono);font-size:9px;letter-spacing:.14em}
 
-/* ── Burbujas cliente (derecha) ── */
-.bubble-user{
-  align-self: flex-end;
-  max-width: 78%;
-}
-.bubble-user .bubble-txt{
-  background: var(--naranja2);
-  border-color: var(--naranja);
-  border-radius: 14px 4px 14px 14px;
-  color: #fff;
-  font-size: 13px;
-}
-.bubble-user .bubble-meta{
-  text-align: right;
-}
+/* ASPIR SECTION */
+#aspiraciones{padding:88px 52px}
+.sec-hd{margin-bottom:52px}
+.sec-h2{font-size:clamp(30px,3.2vw,48px);font-weight:700;margin-bottom:10px}
+.sec-h2 em{font-style:italic;color:var(--org)}
+.sec-sub{font-size:15px;color:var(--txt2);max-width:540px;font-weight:300;line-height:1.75;margin-top:10px}
+.sec-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 
-/* ── Opciones de respuesta ── */
-.opciones-grid{
-  display: grid;
-  gap: 8px;
-  margin-top: 4px;
-  align-self: flex-start;
-  width: 100%;
-  max-width: 340px;
-}
-.opciones-grid.col2{ grid-template-columns: 1fr 1fr; }
-.opciones-grid.col1{ grid-template-columns: 1fr; }
-.opcion-btn{
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  padding: 10px 13px;
-  cursor: pointer;
-  transition: all .18s;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.opcion-btn:active{ transform: scale(.97); }
-.opcion-btn:hover{ border-color: var(--naranja); background: var(--naranja-bg); }
-.opcion-btn.sel{
-  border-color: var(--naranja);
-  background: var(--naranja-bg);
-}
-.op-icon{ font-size: 20px; flex-shrink:0; }
-.op-lbl{
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 13px;
-  color: var(--txt);
-  line-height: 1.3;
-}
-.op-sub{
-  font-size: 10px;
-  color: var(--txt3);
-  margin-top: 1px;
-}
+/* CATÁLOGO VISUAL */
+.cvgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:32px}
+.cvc{position:relative;border-radius:var(--r-xl);overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:all .35s}
+.cvc:hover{border-color:rgba(255,85,0,.4);transform:translateY(-5px)}
+.cvc:hover .cvc-bg{filter:brightness(.3) saturate(.4)}
+.cvc:hover .cvc-cta{opacity:1;transform:translateY(0)}
+.cvc.wide{grid-column:span 2}
+.cvc-img{position:relative;aspect-ratio:3/4;overflow:hidden}
+.cvc.wide .cvc-img{aspect-ratio:16/9}
+.cvc-bg{width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(.7);transition:all .45s;background:var(--bg2)}
+.cvc-ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(8,8,8,.97) 100%)}
+.cvc-cnt{position:absolute;bottom:0;left:0;right:0;padding:24px}
+.cvc-tag{font-family:var(--mono);font-size:9px;color:var(--org);letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}
+.cvc-title{font-family:var(--serif);font-size:19px;font-weight:700;line-height:1.2;margin-bottom:5px}
+.cvc-aspir{font-size:12px;color:var(--txt2);line-height:1.55;margin-bottom:14px;font-style:italic;font-family:var(--serif)}
+.cvc-pbox{background:rgba(16,16,16,.88);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;backdrop-filter:blur(8px)}
+.cvc-pn{font-size:12px;font-weight:500;margin-bottom:5px}
+.cvc-specs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px}
+.cvc-spec{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:20px;background:var(--bg3);border:1px solid var(--border);color:var(--txt2)}
+.cvc-spec.tec{background:var(--org-dim);border-color:var(--org-dim2);color:var(--org)}
+.cvc-pfoot{display:flex;align-items:center;justify-content:space-between}
+.cvc-plbl{font-family:var(--mono);font-size:9px;color:var(--txt3);margin-bottom:2px;letter-spacing:.08em}
+.cvc-price{font-family:var(--serif);font-size:16px;font-weight:700}
+.cvc-badge{display:inline-block;padding:2px 8px;background:var(--org);border-radius:20px;font-family:var(--mono);font-size:9px;color:#fff;margin-bottom:7px}
+.cvc-cta{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--org);font-weight:500;margin-top:10px;opacity:0;transform:translateY(6px);transition:all .28s}
+.cvc-cta svg{width:13px;height:13px;fill:var(--org)}
 
-/* ── Typing indicator — ondas NARA ── */
-.typing{
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  align-self: flex-start;
-}
-.typing-nara-wave{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 72px;
-  height: 72px;
-  flex-shrink: 0;
-}
-@keyframes typingBounce{
-  0%,80%,100%{ transform:translateY(0); opacity:.5; }
-  40%{ transform:translateY(-6px); opacity:1; }
-}
+.vermas-row{display:flex;align-items:center;justify-content:space-between;padding:18px 0 0;border-top:1px solid var(--border)}
+.vermas-txt{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--txt2)}
+.vermas-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid var(--border2);border-radius:22px;font-size:13px;color:var(--txt2);background:none;cursor:pointer;transition:all .22s;font-family:var(--sans)}
+.vermas-btn:hover{border-color:var(--org);color:var(--org);background:var(--org-dim)}
+.vermas-btn svg{width:14px;height:14px;fill:currentColor}
 
-/* ── Separador de fecha ── */
-.chat-date{
-  text-align: center;
-  font-size: 10px;
-  color: var(--txt3);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  padding: 4px 0;
-}
+/* CATÁLOGO EXPANDIDO */
+#catexp{display:none;margin-top:32px;animation:fi .4s ease-out}
+.catfs{display:flex;gap:7px;margin-bottom:28px;flex-wrap:wrap}
+.catf{padding:7px 16px;border-radius:20px;border:1px solid var(--border);font-size:12px;color:var(--txt2);cursor:pointer;transition:all .2s;background:none;font-family:var(--sans)}
+.catf:hover,.catf.on{border-color:var(--org);color:var(--org);background:var(--org-dim)}
+.clgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.clc{background:var(--bg1);border:1px solid var(--border);border-radius:var(--r);padding:16px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.clc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:transparent;transition:background .3s}
+.clc:hover{border-color:var(--border2);transform:translateY(-2px)}
+.clc:hover::before{background:linear-gradient(90deg,transparent,var(--org),transparent)}
+.clc-cat{font-family:var(--mono);font-size:9px;color:var(--org);letter-spacing:.14em;margin-bottom:6px}
+.clc-n{font-family:var(--serif);font-size:14px;font-weight:700;margin-bottom:2px;line-height:1.3}
+.clc-sku{font-family:var(--mono);font-size:9px;color:var(--txt3);margin-bottom:9px}
+.clc-specs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.cls{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:20px;background:var(--bg3);border:1px solid var(--border);color:var(--txt2)}
+.cls.tec{background:var(--org-dim);border-color:var(--org-dim2);color:var(--org)}
+.clc-foot{display:flex;align-items:center;justify-content:space-between}
+.clc-p{font-family:var(--serif);font-size:15px;font-weight:700}
+.clc-btn{padding:5px 12px;background:var(--org-dim);border:1px solid var(--org-dim2);border-radius:20px;font-size:11px;color:var(--org);cursor:pointer;transition:all .18s;font-family:var(--sans)}
+.clc-btn:hover{background:var(--org);color:#fff;border-color:var(--org)}
+.clc-badge{display:inline-block;padding:2px 7px;background:var(--org);border-radius:20px;font-family:var(--mono);font-size:9px;color:#fff;margin-bottom:6px}
 
-/* ══════════════════════════════════════
-   INPUT ÁREA — captura de datos
-══════════════════════════════════════ */
-.input-card{
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px;
-  margin-top: 4px;
-  align-self: flex-start;
-  width: 100%;
-  max-width: 340px;
-}
-.input-label{
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 10px;
-  color: var(--naranja);
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-.nara-input{
-  width: 100%;
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 10px 13px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--txt);
-  margin-bottom: 8px;
-  outline: none;
-  transition: border-color .2s;
-}
-.nara-input::placeholder{ color: var(--txt3); }
-.nara-input:focus{ border-color: var(--naranja); }
-.btn-primary{
-  width: 100%;
-  background: var(--naranja2);
-  color: #fff;
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: .04em;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  transition: all .18s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.btn-primary:active{ transform: scale(.98); }
-.btn-primary:hover{ background: var(--naranja); }
+/* NARA PANEL */
+#nara-panel{min-height:85vh;background:var(--bg1);border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 430px}
+.npl{padding:64px 52px;border-right:1px solid var(--border)}
+.np-h{font-family:var(--serif);font-size:clamp(26px,2.8vw,40px);font-weight:700;line-height:1.12;margin-bottom:13px}
+.np-h em{font-style:italic;color:var(--org)}
+.np-d{font-size:15px;color:var(--txt2);line-height:1.75;margin-bottom:36px;max-width:420px;font-weight:300}
+.npfeats{display:flex;flex-direction:column;gap:10px}
+.npf{display:flex;gap:14px;align-items:flex-start;padding:13px;border-radius:var(--r);border:1px solid transparent;transition:all .22s;cursor:pointer}
+.npf:hover{border-color:var(--border);background:var(--bg2)}
+.npf-ico{width:36px;height:36px;border-radius:var(--r);background:var(--org-dim);border:1px solid var(--org-dim2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.npf-ico svg{width:17px;height:17px;fill:var(--org)}
+.npf-t{font-family:var(--serif);font-size:14px;font-weight:700;margin-bottom:2px}
+.npf-d{font-size:12px;color:var(--txt2);line-height:1.5}
 
-/* ══════════════════════════════════════
-   TARJETAS DE PROPUESTA
-══════════════════════════════════════ */
-.propuesta-wrap{
-  align-self: flex-start;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 360px;
-}
-.prop-card{
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: border-color .2s;
-}
-.prop-card.recomendado{ border-color: var(--naranja); }
-.prop-header{
-  padding: 10px 13px 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-}
-.prop-badge{
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 9px;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  padding: 3px 9px;
-  border-radius: 20px;
-  background: var(--naranja-bg);
-  color: var(--naranja3);
-  border: 1px solid var(--naranja)44;
-}
-.prop-badge.rec{ background: var(--naranja2); color:#fff; border-color: var(--naranja2); }
-.prop-body{ padding: 11px 13px 12px; }
-.prop-nombre{
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--txt);
-  line-height: 1.3;
-}
-.prop-sku{
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--txt3);
-  margin-top: 4px;
-}
-.prop-specs{
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-  flex-wrap: wrap;
-}
-.prop-spec{
-  font-size: 10px;
-  color: var(--txt2);
-  background: var(--bg3);
-  padding: 2px 8px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-}
-.prop-precio{
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 18px;
-  color: var(--naranja3);
-  margin-top: 9px;
-}
-.prop-precio-lbl{
-  font-size: 10px;
-  color: var(--txt3);
-  margin-top: 2px;
-}
-.prop-razon{
-  font-size: 12px;
-  color: var(--txt2);
-  margin-top: 8px;
-  line-height: 1.5;
-  border-top: 1px solid var(--border);
-  padding-top: 8px;
-}
+/* CHAT */
+.npr{display:flex;flex-direction:column}
+.chd{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0}
+.chav{position:relative;width:36px;height:36px}
+.chav-c{width:36px;height:36px;border-radius:50%;background:var(--org);display:flex;align-items:center;justify-content:center}
+.chav-c svg{width:18px;height:18px;fill:#fff}
+.chav-r1{position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--org);opacity:0;animation:op 2.4s ease-out infinite}
+.chav-r2{position:absolute;inset:-9px;border-radius:50%;border:1px solid var(--org);opacity:0;animation:op 2.4s ease-out infinite .6s}
+.ch-name{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--org)}
+.ch-stat{font-family:var(--mono);font-size:10px;color:var(--txt3)}
+.chmsgs{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:10px;min-height:370px;max-height:490px}
+.chmsgs::-webkit-scrollbar{width:2px}
+.chmsgs::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.cm{display:flex;flex-direction:column;gap:3px;animation:fi .3s ease-out}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.cm.nara{align-items:flex-start}
+.cm.user{align-items:flex-end}
+.cm-lbl{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:.1em;padding:0 3px}
+.cm-bub{padding:10px 13px;border-radius:var(--r);font-size:13px;line-height:1.65;max-width:90%}
+.cm.nara .cm-bub{background:var(--bg2);border:1px solid var(--border);border-top-left-radius:2px}
+.cm.user .cm-bub{background:var(--org);color:#fff;border-bottom-right-radius:2px}
+.cm.nara .cm-bub strong{color:var(--org)}
+.cm.nara .cm-bub em{font-style:italic;font-family:var(--serif);color:var(--txt2)}
+.chzone{padding:12px 20px 16px;border-top:1px solid var(--border);flex-shrink:0}
+.qbtns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px}
+.qb{padding:4px 10px;border-radius:20px;border:1px solid var(--border2);font-size:11px;color:var(--txt2);cursor:pointer;transition:all .18s;background:none;font-family:var(--sans)}
+.qb:hover{border-color:var(--org-dim2);color:var(--org);background:var(--org-dim)}
+.chrow{display:flex;gap:7px}
+.chinp{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:10px 14px;font-size:13px;color:var(--txt);font-family:var(--sans);outline:none;transition:border-color .2s;resize:none}
+.chinp:focus{border-color:var(--org)}
+.chinp::placeholder{color:var(--txt3)}
+.chsnd{width:38px;height:38px;background:var(--org);border:none;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.chsnd:hover{background:var(--org-lt)}
+.chsnd svg{width:15px;height:15px;fill:#fff}
+.typbub{display:inline-flex;gap:4px;align-items:center;padding:10px 13px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);border-top-left-radius:2px}
+.typbub span{width:5px;height:5px;border-radius:50%;background:var(--org);animation:bl 1.4s ease-in-out infinite}
+.typbub span:nth-child(2){animation-delay:.2s}
+.typbub span:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
 
-/* ── Nota de accesorios y precios ── */
-.prop-nota{
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 11px 13px;
-  font-size: 12px;
-  color: var(--txt2);
-  line-height: 1.6;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-.prop-nota-icon{ font-size: 16px; flex-shrink:0; }
+/* NOSOTROS */
+#nosotros{padding:88px 52px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:14px;margin-top:44px}
+.tc{background:var(--bg1);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;transition:all .25s}
+.tc:hover{border-color:var(--border2);transform:translateY(-3px)}
+.tc-av{width:44px;height:44px;border-radius:50%;background:var(--org-dim);border:2px solid var(--org-dim2);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:15px;font-weight:700;color:var(--org);margin-bottom:12px}
+.tc-n{font-family:var(--serif);font-size:14px;font-weight:700;margin-bottom:3px}
+.tc-r{font-family:var(--mono);font-size:9px;color:var(--org);letter-spacing:.1em;margin-bottom:8px;text-transform:uppercase}
+.tc-d{font-size:12px;color:var(--txt2);line-height:1.55}
+.sbnd{margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:var(--r-lg);overflow:hidden}
+.sbi{background:var(--bg1);padding:28px 24px;text-align:center}
+.sbi-n{font-family:var(--serif);font-size:32px;font-weight:700;color:var(--org)}
+.sbi-l{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:.12em;margin-top:4px;text-transform:uppercase}
 
-/* ── Cremallera extra ── */
-.crem-card{
-  background: var(--naranja-bg);
-  border: 1px solid var(--naranja)44;
-  border-radius: 10px;
-  padding: 10px 13px;
-  font-size: 12px;
-  color: var(--txt);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+/* FOOTER */
+footer{padding:44px 52px;border-top:1px solid var(--border);display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:28px}
+.f-bn{font-family:var(--serif);font-size:20px;font-weight:700;margin-bottom:8px}
+.f-bn em{font-style:normal;color:var(--org)}
+.f-bd{font-size:13px;color:var(--txt2);line-height:1.65;max-width:220px;font-weight:300}
+.fc h4{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:.16em;margin-bottom:14px;text-transform:uppercase}
+.fc a{display:block;font-size:13px;color:var(--txt2);text-decoration:none;margin-bottom:8px;cursor:pointer;transition:color .18s}
+.fc a:hover{color:var(--org)}
+.wapill{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--org-dim);border:1px solid var(--org-dim2);border-radius:var(--r);text-decoration:none;transition:all .22s}
+.wapill:hover{background:var(--org);border-color:var(--org)}
+.wapill:hover .wa-t,.wapill:hover .wa-s{color:#fff}
+.wa-ico{width:32px;height:32px;background:var(--org);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wa-ico svg{width:17px;height:17px;fill:#fff}
+.wa-t{font-size:13px;font-weight:600;color:var(--org);transition:color .2s}
+.wa-s{font-family:var(--mono);font-size:9px;color:var(--txt3);transition:color .2s;letter-spacing:.08em}
+.fbot{padding:16px 52px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.fbot-c{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.06em}
+.fbot-n{font-family:var(--mono);font-size:10px;color:var(--txt3)}
+.fbot-n span{color:var(--org)}
 
-/* ══════════════════════════════════════
-   BOTÓN WHATSAPP FINAL
-══════════════════════════════════════ */
-.btn-wa{
-  background: #25D366;
-  color: #fff;
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: .03em;
-  padding: 14px 20px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  transition: all .18s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  max-width: 340px;
-  align-self: flex-start;
-}
-.btn-wa:active{ transform: scale(.98); }
-.btn-wa svg{ width:20px; height:20px; }
+/* MODAL PRODUCTO */
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .25s}
+.mov.open{opacity:1;pointer-events:all}
+.mbox{background:var(--bg1);border:1px solid var(--border);border-radius:var(--r-xl);padding:28px;max-width:480px;width:100%;position:relative;transform:translateY(18px);transition:transform .28s;max-height:88vh;overflow-y:auto}
+.mov.open .mbox{transform:translateY(0)}
+.mcl{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt2);font-size:16px;line-height:1;transition:all .18s}
+.mcl:hover{color:var(--txt);background:var(--border2)}
+.m-tag{font-family:var(--mono);font-size:9px;color:var(--org);letter-spacing:.16em;margin-bottom:7px;text-transform:uppercase}
+.m-name{font-family:var(--serif);font-size:24px;font-weight:700;margin-bottom:3px;line-height:1.2}
+.m-sku{font-family:var(--mono);font-size:10px;color:var(--txt3);margin-bottom:18px}
+.m-specs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.m-spec{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px}
+.m-sl{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.m-sv{font-size:13px;font-weight:500}
+.m-pbox{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px}
+.m-pl{font-family:var(--mono);font-size:9px;color:var(--txt3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.m-pv{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--org)}
+.m-btns{display:flex;gap:9px}
+.m-bwa{flex:1;padding:12px;background:var(--org);border:none;border-radius:var(--r);font-size:13px;font-weight:600;color:#fff;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.m-bwa:hover{background:var(--org-lt)}
+.m-bnara{flex:1;padding:12px;background:none;border:1px solid var(--border2);border-radius:var(--r);font-size:13px;color:var(--txt2);cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.m-bnara:hover{border-color:var(--org-dim2);color:var(--org);background:var(--org-dim)}
 
-/* ── Botón visita ── */
-.btn-visita{
-  background: var(--bg2);
-  border: 1px solid var(--naranja);
-  color: var(--naranja3);
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 13px;
-  padding: 11px 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all .18s;
-  width: 100%;
-  max-width: 340px;
-  align-self: flex-start;
-}
-.btn-visita-no{
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--txt3);
-  font-family: var(--font-body);
-  font-size: 12px;
-  padding: 9px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  max-width: 340px;
-  align-self: flex-start;
-}
+/* MODAL INSTALADOR */
+.iov{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .25s}
+.iov.open{opacity:1;pointer-events:all}
+.ibox{background:var(--bg1);border:1px solid var(--border);border-radius:var(--r-xl);padding:38px;max-width:460px;width:100%;position:relative;transform:translateY(20px);transition:transform .28s;overflow:hidden}
+.iov.open .ibox{transform:translateY(0)}
+.ibox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--org),transparent)}
+.icl{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt2);font-size:16px;line-height:1;transition:all .18s}
+.icl:hover{color:var(--txt)}
+.i-ico{width:52px;height:52px;border-radius:var(--r-lg);background:var(--org-dim);border:1px solid var(--org-dim2);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.i-ico svg{width:26px;height:26px;fill:var(--org)}
+.i-title{font-family:var(--serif);font-size:26px;font-weight:700;line-height:1.15;margin-bottom:10px}
+.i-title em{font-style:italic;color:var(--org)}
+.i-desc{font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:22px;font-weight:300}
+.i-perks{margin-bottom:24px;display:flex;flex-direction:column;gap:9px}
+.i-perk{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--txt2)}
+.i-perk::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--org);flex-shrink:0}
+.i-form{display:flex;flex-direction:column;gap:10px}
+.i-inp{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:12px 15px;font-size:13px;color:var(--txt);font-family:var(--sans);outline:none;transition:border-color .2s}
+.i-inp:focus{border-color:var(--org)}
+.i-inp::placeholder{color:var(--txt3)}
+.i-btn{padding:13px;background:var(--org);border:none;border-radius:var(--r);font-size:14px;font-weight:600;color:#fff;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.i-btn:hover{background:var(--org-lt);transform:translateY(-1px)}
+.i-note{font-family:var(--mono);font-size:10px;color:var(--txt3);text-align:center;margin-top:10px;letter-spacing:.06em}
 
-/* ══════════════════════════════════════
-   ANIMACIONES
-══════════════════════════════════════ */
-@keyframes ripple1{ 0%{r:0;opacity:.9} 100%{r:14;opacity:0} }
-@keyframes ripple2{ 0%{r:0;opacity:.75} 100%{r:24;opacity:0} }
-@keyframes ripple3{ 0%{r:0;opacity:.5} 100%{r:34;opacity:0} }
-@keyframes ripple4{ 0%{r:0;opacity:.25} 100%{r:40;opacity:0} }
-@keyframes fadeUp{
-  from{ opacity:0; transform:translateY(10px); }
-  to{ opacity:1; transform:translateY(0); }
-}
-.anim{ animation: fadeUp .35s ease forwards; }
-
-/* ══════════════════════════════════════
-   TOAST
-══════════════════════════════════════ */
-.toast{
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  color: var(--txt);
-  font-family: var(--font-body);
-  font-size: 13px;
-  padding: 10px 18px;
-  border-radius: 30px;
-  opacity: 0;
-  pointer-events: none;
-  transition: all .3s;
-  z-index: 100;
-  white-space: nowrap;
-}
-.toast.show{
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr}.hero-right{display:none}.hero-left{padding:40px 24px}
+  nav{padding:0 18px}.nav-links{display:none}
+  #aspiraciones,#nosotros{padding:52px 24px}
+  .cvgrid{grid-template-columns:1fr}.cvc.wide{grid-column:span 1}.cvc.wide .cvc-img{aspect-ratio:3/4}
+  #nara-panel{grid-template-columns:1fr}.npl{padding:40px 24px;border-right:none;border-bottom:1px solid var(--border)}
+  footer{grid-template-columns:1fr;padding:32px 24px;gap:22px}
+  .fbot{padding:14px 24px;flex-direction:column;gap:6px;text-align:center}
+  .sbnd{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
-
-<!-- ══ HERO NARA — grande y visual ══ -->
-<div style="
-  background: linear-gradient(160deg, #1A0A00 0%, #2A1200 40%, #0A0A0A 100%);
-  border-bottom: 1px solid #FF6B1A33;
-  padding: 28px 20px 22px;
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-">
-  <!-- glow de fondo -->
-  <div style="position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,#FF6B1A22 0%,transparent 70%);pointer-events:none"></div>
-  <div style="position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,#FF6B1A11 0%,transparent 70%);pointer-events:none"></div>
-
-  <!-- contenido hero -->
-  <div style="display:flex;align-items:center;gap:20px;position:relative;z-index:1">
-
-    <!-- ícono grande -->
-    <div style="flex-shrink:0">
-      <svg width="110" height="110" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="40" cy="40" r="5" fill="#FF6B1A"/>
-        <circle cx="40" cy="40" r="9" stroke="#FF6B1A" stroke-width="1.5" fill="none" opacity=".35"/>
-        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="3.5" fill="none">
-          <animate attributeName="r" values="0;14" dur="2.4s" repeatCount="indefinite" begin="0s"/>
-          <animate attributeName="opacity" values="1;0" dur="2.4s" repeatCount="indefinite" begin="0s"/>
-        </circle>
-        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.8" fill="none">
-          <animate attributeName="r" values="0;22" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
-          <animate attributeName="opacity" values=".82;0" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
-        </circle>
-        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.2" fill="none">
-          <animate attributeName="r" values="0;30" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
-          <animate attributeName="opacity" values=".58;0" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
-        </circle>
-        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1.6" fill="none">
-          <animate attributeName="r" values="0;38" dur="2.4s" repeatCount="indefinite" begin="1.14s"/>
-          <animate attributeName="opacity" values=".32;0" dur="2.4s" repeatCount="indefinite" begin="1.14s"/>
-        </circle>
-        <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1" fill="none">
-          <animate attributeName="r" values="0;46" dur="2.4s" repeatCount="indefinite" begin="1.52s"/>
-          <animate attributeName="opacity" values=".14;0" dur="2.4s" repeatCount="indefinite" begin="1.52s"/>
-        </circle>
-      </svg>
+<nav>
+  <a class="nav-brand" href="#" onclick="return goTop()">
+    <div class="nav-lb"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+    <div>
+      <div class="nav-wm">PPA <em>Central</em></div>
+      <div class="nav-tl">Distribuidor Autorizado PPA Latam</div>
     </div>
-
-    <!-- texto -->
-    <div style="flex:1;min-width:0">
-      <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:38px;color:#FF6B1A;letter-spacing:.06em;line-height:1">NARA</div>
-      <div style="font-family:'Inter',sans-serif;font-size:12px;color:#C8C4BC;margin-top:5px;line-height:1.5">
-        Asesora de inteligencia artificial<br>
-        <span style="color:#FF6B1A88">PPA Central · Distribuidor Autorizado PPA Latam</span>
+  </a>
+  <div class="nav-links">
+    <button class="nav-lk" onclick="goTo('aspiraciones')">Soluciones</button>
+    <button class="nav-lk" onclick="goTo('nara-panel')">NARA</button>
+    <button class="nav-lk" onclick="goTo('aspiraciones');expCat()">Catálogo</button>
+    <button class="nav-lk" onclick="goTo('nosotros')">Nosotros</button>
+  </div>
+  <div class="nav-actions">
+    <div class="nlive" onclick="goTo('nara-panel')">
+      <div class="norb">
+        <div class="norb-c"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div>
+        <div class="norb-r1"></div><div class="norb-r2"></div>
       </div>
-      <div style="display:flex;align-items:center;gap:6px;margin-top:10px">
-        <div style="width:7px;height:7px;border-radius:50%;background:#22C55E;box-shadow:0 0 8px #22C55E"></div>
-        <span style="font-family:'Inter',sans-serif;font-size:10px;color:#8A8680;letter-spacing:.1em;text-transform:uppercase">En línea · 269 productos</span>
-        <div class="cloud-dot" id="cloudDot" style="margin-left:6px" title="Precios en tiempo real"></div>
+      <span class="nlive-txt">NARA · en línea</span>
+    </div>
+    <button class="btn-inst" onclick="openInst()">¿Eres instalador?</button>
+    <button class="btn-cta" onclick="goTo('nara-panel')">Cotizar ahora</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow"><div class="eline"></div><span class="tag">Automatización · Colombia · PPA Latam</span></div>
+    <h1 class="hero-h1">Tu espacio.<br><em>Tu nivel.</em><br>Automatizado.</h1>
+    <p class="hero-sub">No vendemos motores. Te entregamos la experiencia de llegar y que todo responda a ti — sin tocar nada, sin esperar nada.</p>
+    <div class="nbub">
+      <div class="nbub-hd">
+        <div class="nbub-orb">
+          <div class="nbub-orb-c"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div>
+          <div class="nbub-orb-r"></div>
+        </div>
+        <span class="tag" style="font-size:10px">NARA · Asesora IA · PPA Central</span>
+      </div>
+      <div class="nbub-msg" id="heroMsg">Hola. Soy <strong>NARA</strong>. <em>¿Dónde quieres que tu vida se mueva sola?</em></div>
+      <div class="segs">
+        <button class="seg" onclick="selSeg('casa')" data-s="casa"><span>🏡</span> Mi casa</button>
+        <button class="seg" onclick="selSeg('conjunto')" data-s="conjunto"><span>🏢</span> Mi conjunto</button>
+        <button class="seg" onclick="selSeg('negocio')" data-s="negocio"><span>🏪</span> Mi negocio</button>
+        <button class="seg" onclick="selSeg('industria')" data-s="industria"><span>🏭</span> Mi industria</button>
+      </div>
+      <div class="nb-inp-row">
+        <input class="nb-inp" id="hInp" placeholder="O cuéntame qué tienes en mente...">
+        <button class="nb-snd" onclick="heroSend()" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
       </div>
     </div>
+    <div class="hstats">
+      <div><div class="hs-n">269</div><div class="hs-l">Productos activos</div></div>
+      <div><div class="hs-n">50+</div><div class="hs-l">Países PPA</div></div>
+      <div><div class="hs-n">40</div><div class="hs-l">Años innovando</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="himg">
+      <img src="https://ppalatam.com/wp-content/uploads/elementor/thumbs/entrada-celta-trade-park-cundinamarca-r5il1zekhv6rlfzha0pgyn0ozcmv6iu3sq1kk7duow.webp" alt="PPA Central">
+      <div class="himg-g1"></div><div class="himg-g2"></div>
+    </div>
+    <div class="hfc">
+      <div class="hfc-tag">Caso real · instalado</div>
+      <div class="hfc-val">Celta Trade Park</div>
+      <div class="hfc-badge">Barrera uso intensivo</div>
+    </div>
+  </div>
+  <div class="scroll-q" onclick="goTo('aspiraciones')">
+    <div class="scroll-arr"></div><span>explorar</span>
+  </div>
+</section>
 
+<section id="aspiraciones">
+  <div class="sec-hd">
+    <div class="sec-eyebrow"><div class="eline"></div><span class="tag">Tus soluciones</span></div>
+    <h2 class="sec-h2">No compras un motor.<br>Compras <em>libertad.</em></h2>
+    <p class="sec-sub">Cada espacio tiene su ritmo. NARA entiende el tuyo y te guía hacia la solución exacta — sin adivinanzas, sin sobredimensionar.</p>
+  </div>
+  <div class="cvgrid" id="cvgrid"></div>
+  <div class="vermas-row">
+    <span class="vermas-txt">Y hay 264 productos más esperándote.</span>
+    <button class="vermas-btn" onclick="expCat()" id="vermasBtn">Ver catálogo completo <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  </div>
+  <div id="catexp">
+    <div style="height:28px"></div>
+    <div class="catfs">
+      <button class="catf on" onclick="filtrar('todos',this)">Todos</button>
+      <button class="catf" onclick="filtrar('corredera',this)">Corredizos</button>
+      <button class="catf" onclick="filtrar('batiente',this)">Batientes</button>
+      <button class="catf" onclick="filtrar('seccional',this)">Seccionales</button>
+      <button class="catf" onclick="filtrar('barrera',this)">Barreras</button>
+      <button class="catf" onclick="filtrar('cortina',this)">Cortinas</button>
+    </div>
+    <div class="clgrid" id="clgrid"></div>
+  </div>
+</section>
+
+<section id="nara-panel">
+  <div class="npl">
+    <div class="sec-eyebrow"><div class="eline"></div><span class="tag">NARA · Asesora IA</span></div>
+    <h2 class="np-h">Asesora técnica.<br><em>24 horas.</em><br>Sin esperar.</h2>
+    <p class="np-d">NARA es la primera asesora IA especializada en automatismos de Colombia. Entiende tu caso, recomienda el motor correcto y genera tu propuesta — en minutos.</p>
+    <div class="npfeats">
+      <div class="npf" onclick="inject('¿Cuánto cuesta instalar un portón automático?')">
+        <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+        <div><div class="npf-t">Cotización en 3 minutos</div><div class="npf-d">4 preguntas. Tu propuesta personalizada lista para WhatsApp.</div></div>
+      </div>
+      <div class="npf" onclick="inject('¿Qué motor PPA me recomiendas para mi caso?')">
+        <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div><div class="npf-t">Recomendación técnica exacta</div><div class="npf-d">El motor correcto. Ni más, ni menos. Para tu caso puntual.</div></div>
+      </div>
+      <div class="npf" onclick="inject('¿Qué diferencia hay entre Jetflex y tecnología Mono?')">
+        <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M12 22a10 10 0 110-20 10 10 0 010 20zm0-14v4m0 4v.01"/></svg></div>
+        <div><div class="npf-t">Tecnología PPA explicada</div><div class="npf-d">Jetflex, Brushless, 24V — en lenguaje real, con ejemplos concretos.</div></div>
+      </div>
+      <div class="npf" onclick="inject('Quiero agendar una visita técnica sin costo')">
+        <div class="npf-ico"><svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
+        <div><div class="npf-t">Visita técnica sin costo</div><div class="npf-d">Un especialista PPA Central va hasta ti. Diagnóstico inicial gratis.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="npr">
+    <div class="chd">
+      <div class="chav">
+        <div class="chav-c"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 12c5.33 0 8 2.67 8 4v2H4v-2c0-1.33 2.67-4 8-4z"/></svg></div>
+        <div class="chav-r1"></div><div class="chav-r2"></div>
+      </div>
+      <div><div class="ch-name">NARA</div><div class="ch-stat">● en línea · 269 productos · PPA Central</div></div>
+    </div>
+    <div class="chmsgs" id="chmsgs">
+      <div class="cm nara"><div class="cm-lbl">NARA</div><div class="cm-bub">¡Hola! Soy <strong>NARA</strong>, tu asesora de PPA Central. 🔶<br><br><em>¿Qué espacio quieres automatizar?</em> Me adapto exactamente a tu caso.</div></div>
+    </div>
+    <div class="chzone">
+      <div class="qbtns">
+        <button class="qb" onclick="inject('Quiero cotizar un portón para mi casa')">Portón residencial</button>
+        <button class="qb" onclick="inject('Necesito barrera vehicular para mi negocio')">Barrera vehicular</button>
+        <button class="qb" onclick="inject('¿Cuáles son los precios?')">Ver precios</button>
+        <button class="qb" onclick="inject('Quiero agendar visita técnica')">Agendar visita</button>
+      </div>
+      <div class="chrow">
+        <textarea class="chinp" id="chinp" rows="1" placeholder="Escríbeme aquí..."></textarea>
+        <button class="chsnd" onclick="chatSend()" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="sec-eyebrow"><div class="eline"></div><span class="tag">El equipo</span></div>
+  <h2 class="sec-h2">Familia con<br><em>visión de imperio.</em></h2>
+  <p class="sec-sub" style="margin-top:10px">PPA Central nació en Florencia, Caquetá con una misión: llevar la automatización de clase mundial al sur de Colombia.</p>
+  <div class="tgrid">
+    <div class="tc"><div class="tc-av">DO</div><div class="tc-n">Diego Oliveros</div><div class="tc-r">Cofundador · Arquitecto Estratégico</div><div class="tc-d">Motor del sistema. Capital, estrategia, herramientas técnicas y visión de escala.</div></div>
+    <div class="tc"><div class="tc-av">VO</div><div class="tc-n">Valentina Oliveros</div><div class="tc-r">Cofundadora · Dirección Operativa</div><div class="tc-d">Cara legal de PPA Central. Gestión, acuerdos y dirección operativa.</div></div>
+    <div class="tc"><div class="tc-av">XO</div><div class="tc-n">Ximena Oliveros</div><div class="tc-r">Directora de Marca</div><div class="tc-d">Identidad, creatividad y posicionamiento premium de PPA Central.</div></div>
+    <div class="tc"><div class="tc-av">AO</div><div class="tc-n">Alejandro Oliveros</div><div class="tc-r">Estratega Creativo</div><div class="tc-d">Piensa fuera de la caja. Su juventud es su superpoder.</div></div>
+    <div class="tc"><div class="tc-av">YC</div><div class="tc-n">Yeira</div><div class="tc-r">Asesora Comercial</div><div class="tc-d">Donde el cliente está, Yeira llega.</div></div>
+    <div class="tc"><div class="tc-av">DC</div><div class="tc-n">Duber</div><div class="tc-r">Asesor Comercial</div><div class="tc-d">Técnica + cierre. La combinación perfecta.</div></div>
+  </div>
+  <div class="sbnd">
+    <div class="sbi"><div class="sbi-n">40+</div><div class="sbi-l">Años PPA</div></div>
+    <div class="sbi"><div class="sbi-n">50+</div><div class="sbi-l">Países</div></div>
+    <div class="sbi"><div class="sbi-n">4.000+</div><div class="sbi-l">Productos globales</div></div>
+    <div class="sbi"><div class="sbi-n">269</div><div class="sbi-l">Disponibles hoy</div></div>
+  </div>
+</section>
+
+<footer>
+  <div><div class="f-bn">PPA <em>Central</em></div><p class="f-bd">Distribuidor Autorizado PPA Latam. Florencia, Caquetá, Colombia.</p></div>
+  <div class="fc">
+    <h4>Navegar</h4>
+    <a onclick="goTo('aspiraciones')">Soluciones por segmento</a>
+    <a onclick="goTo('nara-panel')">Hablar con NARA</a>
+    <a onclick="goTo('aspiraciones');expCat()">Catálogo completo</a>
+    <a onclick="goTo('nosotros')">Quiénes somos</a>
+    <a onclick="openInst()">¿Eres instalador?</a>
+  </div>
+  <div class="fc">
+    <h4>Contacto</h4>
+    <a class="wapill" href="https://wa.me/573177772333" target="_blank">
+      <div class="wa-ico"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+      <div><div class="wa-t">WhatsApp directo</div><div class="wa-s">+57 317 777 2333</div></div>
+    </a>
+  </div>
+</footer>
+<div class="fbot">
+  <div class="fbot-c">© 2025 PPA Central · Distribuidor Autorizado PPA Latam · Florencia, Caquetá</div>
+  <div class="fbot-n">Potenciado por <span>NARA</span> · Asesora IA</div>
+</div>
+
+<!-- MODAL PRODUCTO -->
+<div class="mov" id="mov" onclick="clM(event)">
+  <div class="mbox">
+    <button class="mcl" onclick="clM()">&times;</button>
+    <div class="m-tag" id="mTag"></div>
+    <div class="m-name" id="mName"></div>
+    <div class="m-sku" id="mSku"></div>
+    <div class="m-specs" id="mSpecs"></div>
+    <div class="m-pbox"><div><div class="m-pl">Precio de referencia (sin instalación)</div><div class="m-pv" id="mPv"></div></div></div>
+    <div class="m-btns">
+      <button class="m-bwa" id="mBwa">Cotizar por WhatsApp</button>
+      <button class="m-bnara" onclick="clM();goTo('nara-panel')">Preguntar a NARA</button>
+    </div>
   </div>
 </div>
 
-<!-- ══ CHAT ══ -->
-<div class="chat-scroll" id="chat">
-  <div class="chat-date" id="chat-date"></div>
+<!-- MODAL INSTALADOR -->
+<div class="iov" id="iov" onclick="clI(event)">
+  <div class="ibox">
+    <button class="icl" onclick="clI()">&times;</button>
+    <div class="i-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+    <div class="i-title">¿Eres instalador<br>o integrador <em>PPA</em>?</div>
+    <p class="i-desc">Únete a la red certificada de PPA Central. Precios especiales, soporte técnico prioritario y capacitación directa.</p>
+    <div class="i-perks">
+      <div class="i-perk">Precios de distribuidor exclusivos</div>
+      <div class="i-perk">Soporte técnico prioritario PPA Central</div>
+      <div class="i-perk">Capacitación y certificación PPA Latam</div>
+      <div class="i-perk">Material de ventas y cotizaciones profesionales</div>
+    </div>
+    <div class="i-form">
+      <input class="i-inp" id="iNom" placeholder="Tu nombre completo">
+      <input class="i-inp" id="iWa" placeholder="WhatsApp (ej: 3001234567)" type="tel">
+      <input class="i-inp" id="iCiu" placeholder="Ciudad donde operas">
+      <button class="i-btn" onclick="envInst()">Quiero ser instalador PPA Central</button>
+      <div class="i-note">Te contactamos en menos de 24 horas · Florencia, Caquetá</div>
+    </div>
+  </div>
 </div>
 
-<div class="toast" id="toast"></div>
-
 <script>
-// ══════════════════════════════════════
-// CONFIG
-// ══════════════════════════════════════
-const SHEETS_ID  = '1qyDqL0Nj4K4La5zalvuqQCpM1VL10ecm';
-const SHEETS_URL = `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:json&sheet=Lista%20de%20Precios%20PPA%202025`;
-const BITRIX_HOOK = 'https://b24-4kxmmv.bitrix24.co/rest/1/yhxx3e3goq98d4di/';
-const WA_NUM = '573177772333';
-const CLAUDE_API_KEY = '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';
+const WA='573177772333';
+const CK='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';
+const BX='https://b24-4kxmmv.bitrix24.co/rest/1/yhxx3e3goq98d4di/';
+const SH='https://docs.google.com/spreadsheets/d/1qyDqL0Nj4K4La5zalvuqQCpM1VL10ecm/gviz/tq?tqx=out:json&sheet=Lista%20de%20Precios%20PPA%202025';
 
-let preciosSheets = {};
-let sheetsOk = false;
-let respuestas = {};
-let clienteNombre = '';
-let clienteWA = '';
-let motivarVisita = false;
-let chatLibreActivo = false;
-let historialChat = [];
+const CL={corredera:'Motor corredizo',batiente:'Motor batiente',seccional:'Puerta seccional',barrera:'Barrera vehicular',cortina:'Cortina enrollable'};
+const CIMG={
+  corredera:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/porton-corredizo-ppa-r59mhdz6yaf52nxeoetaj1cfolmzvlmz7poyf5hu3k.png',
+  batiente:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/Modulo-Smart-PPA-r58th1elmws9nkwixzhl7kpjet3pq1n6ynxt1lync0.jpeg',
+  seccional:'https://ppalatam.com/wp-content/uploads/2024/07/PPA-Logos-Tecnologias-JETFLEX_1685624921958.webp',
+  barrera:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/barrera-vehicular-ppa-r59mium5l0f74tsy51keeo28y6fjunfy2y85anbsf4.jpg',
+  cortina:'https://ppalatam.com/wp-content/uploads/elementor/thumbs/entrada-celta-trade-park-cundinamarca-r5il1zekhv6rlfzha0pgyn0ozcmv6iu3sq1kk7duow.webp'
+};
+const CASP={
+  corredera:'Tu portón se abre en 5 segundos. Silencioso, preciso. Tú ni bajas el vidrio.',
+  batiente:'2.5 segundos de apertura. La puerta de tu casa, al ritmo de tu vida.',
+  seccional:'Sube vertical, ocupa cero espacio. El garaje de tus sueños, optimizado.',
+  barrera:'1.5 segundos. Control de flujo real. Nadie entra sin autorización.',
+  cortina:'Tu local abre y cierra solo. Seguridad que no interrumpe tu operación.'
+};
+const CTIT={corredera:'Portones corredizos',batiente:'Portones batientes',seccional:'Puertas seccionales',barrera:'Barreras vehiculares',cortina:'Cortinas enrollables'};
 
-// ══════════════════════════════════════
-// CATÁLOGO EQUIPOS
-// ══════════════════════════════════════
-const EQUIPOS = {
-  corredera_res:[
-    {id:'dz-sh-m',  n:'DZ STARK HOME — Mono',        sku:'E02243104', tec:'MONO',              kg:400,  vel:'14 seg', v:'127V',   p:693000},
-    {id:'dz-sh-jf', n:'DZ STARK HOME — Jetflex',     sku:'E02252400', tec:'JETFLEX',           kg:450,  vel:'4 seg',  v:'Bivolt', p:1200000},
-    {id:'dz-hub-m', n:'DZ HUB — Mono',               sku:'E02130103', tec:'MONO',              kg:450,  vel:'13.5s',  v:'127V',   p:750000},
-    {id:'dz-hub-l', n:'DZ HUB — Legero',             sku:'E02213101', tec:'LEGERO',            kg:500,  vel:'6.5 seg',v:'Bivolt', p:800000},
-    {id:'dz-st-m',  n:'DZ STARK — Mono',             sku:'E02244102', tec:'MONO',              kg:600,  vel:'13.5s',  v:'127V',   p:842000},
-    {id:'dz-st-jf', n:'DZ STARK — Jetflex',          sku:'E02253400', tec:'JETFLEX',           kg:650,  vel:'5.5 seg',v:'Bivolt', p:1402000},
-    {id:'dz-rio-m', n:'DZ RIO — Mono',               sku:'E02481005', tec:'MONO',              kg:700,  vel:'13.5s',  v:'127V',   p:1076000},
-    {id:'dz-rio-jf',n:'DZ RIO — Jetflex',            sku:'E02514006', tec:'JETFLEX',           kg:800,  vel:'4.5 seg',v:'Bivolt', p:1655000},
-    {id:'dz-eu',    n:'DZ EURUS STEEL — Jetflex',    sku:'E02834001', tec:'JETFLEX',           kg:800,  vel:'4.5 seg',v:'Bivolt', p:1671000},
-  ],
-  corredera_ind:[
-    {id:'dz-ind-m', n:'DZ INDUSTRIAL — Mono 1000kg', sku:'E06281000', tec:'MONO',              kg:1000, vel:'13 seg', v:'127V',   p:1692000},
-    {id:'dz-ind-jf',n:'DZ INDUSTRIAL — Jetflex',     sku:'E06184003', tec:'JETFLEX',           kg:1000, vel:'5.5 seg',v:'Bivolt', p:2230000},
-    {id:'dz-ind-j2',n:'DZ INDUSTRIAL — Jetflex 1300',sku:'E06684000', tec:'JETFLEX',           kg:1300, vel:'4.5 seg',v:'Bivolt', p:2384000},
-    {id:'dz-ind-j3',n:'DZ INDUSTRIAL — Jetflex 1500',sku:'E06264001', tec:'JETFLEX',           kg:1500, vel:'4 seg',  v:'Bivolt', p:2616000},
-    {id:'dz-ind-br',n:'DZ INDUSTRIAL — Brushless',   sku:'E06614002', tec:'JETFLEX BRUSHLESS', kg:2200, vel:'5 seg',  v:'Bivolt', p:2692000},
-    {id:'dz-bru',   n:'DZ BRUTALLE — Jetflex 3000kg',sku:'E06704002', tec:'JETFLEX',           kg:3000, vel:'7 seg',  v:'Bivolt', p:4450000},
+const EQ={
+  corredera:[
+    {cat:'corredera',n:'DZ STARK HOME — Mono',sku:'E02243104',tec:'MONO',kg:400,vel:'14 seg',v:'127V',p:693000},
+    {cat:'corredera',n:'DZ STARK HOME — Jetflex',sku:'E02252400',tec:'JETFLEX',kg:450,vel:'4 seg',v:'Bivolt',p:1200000},
+    {cat:'corredera',n:'DZ HUB — Mono',sku:'E02130103',tec:'MONO',kg:450,vel:'13.5 seg',v:'127V',p:750000},
+    {cat:'corredera',n:'DZ HUB — Legero',sku:'E02213101',tec:'LEGERO',kg:500,vel:'6.5 seg',v:'Bivolt',p:800000},
+    {cat:'corredera',n:'DZ STARK — Mono',sku:'E02244102',tec:'MONO',kg:600,vel:'13.5 seg',v:'127V',p:842000},
+    {cat:'corredera',n:'DZ STARK — Jetflex',sku:'E02253400',tec:'JETFLEX',kg:650,vel:'5.5 seg',v:'Bivolt',p:1402000,badge:'Más vendido'},
+    {cat:'corredera',n:'DZ RIO — Mono',sku:'E02481005',tec:'MONO',kg:700,vel:'13.5 seg',v:'127V',p:1076000},
+    {cat:'corredera',n:'DZ RIO — Jetflex',sku:'E02514006',tec:'JETFLEX',kg:800,vel:'4.5 seg',v:'Bivolt',p:1655000},
+    {cat:'corredera',n:'DZ EURUS STEEL — Jetflex',sku:'E02834001',tec:'JETFLEX',kg:800,vel:'4.5 seg',v:'Bivolt',p:1671000,badge:'Premium'},
+    {cat:'corredera',n:'DZ INDUSTRIAL — Mono 1000kg',sku:'E06281000',tec:'MONO',kg:1000,vel:'13 seg',v:'127V',p:1692000},
+    {cat:'corredera',n:'DZ INDUSTRIAL — Jetflex',sku:'E06184003',tec:'JETFLEX',kg:1000,vel:'5.5 seg',v:'Bivolt',p:2230000},
+    {cat:'corredera',n:'DZ INDUSTRIAL — Jetflex 1300',sku:'E06684000',tec:'JETFLEX',kg:1300,vel:'4.5 seg',v:'Bivolt',p:2384000},
+    {cat:'corredera',n:'DZ INDUSTRIAL — Jetflex 1500',sku:'E06264001',tec:'JETFLEX',kg:1500,vel:'4 seg',v:'Bivolt',p:2616000},
+    {cat:'corredera',n:'DZ INDUSTRIAL — Brushless',sku:'E06614002',tec:'BRUSHLESS',kg:2200,vel:'5 seg',v:'Bivolt',p:2692000,badge:'Sin mantenimiento'},
+    {cat:'corredera',n:'DZ BRUTALLE — Jetflex 3000kg',sku:'E06704002',tec:'JETFLEX',kg:3000,vel:'7 seg',v:'Bivolt',p:4450000,badge:'Industrial máximo'},
   ],
   batiente:[
-    {id:'pivo-sk-s1',n:'PIVO SK Mono 1H Standar (2m)',  sku:'E03481004',           tec:'MONO',    kg:125,vel:'9.5s',v:'127V',  p:1153000},
-    {id:'pivo-sk-s2',n:'PIVO SK Mono 1H Super (3m)',    sku:'E03481005',           tec:'MONO',    kg:125,vel:'16.5s',v:'127V', p:1216000},
-    {id:'pivo-hm-s1',n:'PIVO HOME 1H Standar (2m)',     sku:'E03414004 + A17818',  tec:'JETFLEX', kg:125,vel:'2.5s',v:'Bivolt',p:1683000},
-    {id:'pivo-hm-s2',n:'PIVO HOME 1H Super (3m)',       sku:'E03414004 + A17819',  tec:'JETFLEX', kg:125,vel:'4.5s',v:'Bivolt',p:1771000},
-    {id:'pivo-sk-d1',n:'PIVO SK Mono Doble Standar',    sku:'E03481000',           tec:'MONO',    kg:125,vel:'9.5s',v:'127V',  p:1676000},
-    {id:'pivo-sk-d2',n:'PIVO SK Mono Doble Super',      sku:'E03481001',           tec:'MONO',    kg:125,vel:'16.5s',v:'127V', p:1800000},
-    {id:'pivo-hm-d1',n:'PIVO HOME Doble Standar',       sku:'E03414005 + A17818',  tec:'JETFLEX', kg:125,vel:'2.5s',v:'Bivolt',p:2495000},
-    {id:'pivo-hm-d2',n:'PIVO HOME Doble Super',         sku:'E03414005 + A17819',  tec:'JETFLEX', kg:125,vel:'4.5s',v:'Bivolt',p:2671000},
-    {id:'pivo-cd-s', n:'PIVO CONDOMINIUM 1H Standar',   sku:'E07154004',           tec:'JETFLEX', kg:300,vel:'6s',  v:'Bivolt',p:1662000},
-    {id:'pivo-cd-m', n:'PIVO CONDOMINIUM 1H Super',     sku:'E07124014',           tec:'JETFLEX', kg:300,vel:'12s', v:'Bivolt',p:1800000},
-    {id:'pivo-cd-g', n:'PIVO CONDOMINIUM 1H Mega',      sku:'E07194005',           tec:'JETFLEX', kg:300,vel:'16s', v:'Bivolt',p:2048000},
-    {id:'pivo-cd-ds',n:'PIVO CONDOMINIUM Doble Standar',sku:'E07154003',           tec:'JETFLEX', kg:300,vel:'6s',  v:'Bivolt',p:3062000},
-    {id:'pivo-cd-dm',n:'PIVO CONDOMINIUM Doble Super',  sku:'E07124011',           tec:'JETFLEX', kg:300,vel:'12s', v:'Bivolt',p:3383000},
-    {id:'pivo-cd-dg',n:'PIVO CONDOMINIUM Doble Mega',   sku:'E07194003',           tec:'JETFLEX', kg:300,vel:'16s', v:'Bivolt',p:3670000},
-    {id:'pivo-lig',  n:'PIVO LIGER UNIVERSAL 9m',       sku:'E07042001',           tec:'MONO',    kg:500,vel:'5s',  v:'220V',  p:4316000},
+    {cat:'batiente',n:'PIVO SK Mono 1H Standar',sku:'E03481004',tec:'MONO',kg:125,vel:'9.5 seg',v:'127V',p:1153000},
+    {cat:'batiente',n:'PIVO SK Mono 1H Super 3m',sku:'E03481005',tec:'MONO',kg:125,vel:'16.5 seg',v:'127V',p:1216000},
+    {cat:'batiente',n:'PIVO HOME 1H Standar',sku:'E03414004',tec:'JETFLEX',kg:125,vel:'2.5 seg',v:'Bivolt',p:1683000,badge:'Más rápido'},
+    {cat:'batiente',n:'PIVO HOME 1H Super 3m',sku:'E03414004B',tec:'JETFLEX',kg:125,vel:'4.5 seg',v:'Bivolt',p:1771000},
+    {cat:'batiente',n:'PIVO SK Mono Doble Standar',sku:'E03481000',tec:'MONO',kg:125,vel:'9.5 seg',v:'127V',p:1676000},
+    {cat:'batiente',n:'PIVO SK Mono Doble Super',sku:'E03481001',tec:'MONO',kg:125,vel:'16.5 seg',v:'127V',p:1800000},
+    {cat:'batiente',n:'PIVO HOME Doble Standar',sku:'E03414005',tec:'JETFLEX',kg:125,vel:'2.5 seg',v:'Bivolt',p:2495000},
+    {cat:'batiente',n:'PIVO HOME Doble Super',sku:'E03414005B',tec:'JETFLEX',kg:125,vel:'4.5 seg',v:'Bivolt',p:2671000},
+    {cat:'batiente',n:'PIVO CONDOMINIUM 1H Standar',sku:'E07154004',tec:'JETFLEX',kg:300,vel:'6 seg',v:'Bivolt',p:1662000},
+    {cat:'batiente',n:'PIVO CONDOMINIUM 1H Super',sku:'E07124014',tec:'JETFLEX',kg:300,vel:'12 seg',v:'Bivolt',p:1800000},
+    {cat:'batiente',n:'PIVO CONDOMINIUM 1H Mega',sku:'E07194005',tec:'JETFLEX',kg:300,vel:'16 seg',v:'Bivolt',p:2048000},
+    {cat:'batiente',n:'PIVO CONDOMINIUM Doble Standar',sku:'E07154003',tec:'JETFLEX',kg:300,vel:'6 seg',v:'Bivolt',p:3062000},
+    {cat:'batiente',n:'PIVO CONDOMINIUM Doble Super',sku:'E07124011',tec:'JETFLEX',kg:300,vel:'12 seg',v:'Bivolt',p:3383000},
+    {cat:'batiente',n:'PIVO CONDOMINIUM Doble Mega',sku:'E07194003',tec:'JETFLEX',kg:300,vel:'16 seg',v:'Bivolt',p:3670000},
+    {cat:'batiente',n:'PIVO LIGER UNIVERSAL 9m',sku:'E07042001',tec:'MONO',kg:500,vel:'5 seg',v:'220V',p:4316000,badge:'Hojas grandes'},
   ],
   seccional:[
-    {id:'bh-w',    n:'BH-W STEEL con WiFi',   sku:'E04661000',        tec:'MONO',    kg:100,vel:'20s', v:'127V',  p:1030000},
-    {id:'bh-ur2',  n:'BH URUS 24V — 1000N',   sku:'E04671004',        tec:'24V',     kg:150,vel:'16s', v:'127V',  p:985000},
-    {id:'bh-ur3',  n:'BH URUS 24V — 1200N',   sku:'E04671005',        tec:'24V',     kg:200,vel:'8s',  v:'Bivolt',p:1062000},
-    {id:'bh-cd-jf',n:'BH CADEMEX — Jetflex',  sku:'E04474004',        tec:'JETFLEX', kg:450,vel:'5.5s',v:'Bivolt',p:1385000},
-    {id:'bh-cd-m', n:'BH CADEMEX — Mono',     sku:'E04441006',        tec:'MONO',    kg:350,vel:'19s', v:'127V',  p:1000000},
+    {cat:'seccional',n:'BH-W STEEL con WiFi',sku:'E04661000',tec:'MONO',kg:100,vel:'20 seg',v:'127V',p:1030000},
+    {cat:'seccional',n:'BH URUS 24V — 1000N',sku:'E04671004',tec:'24V',kg:150,vel:'16 seg',v:'127V',p:985000},
+    {cat:'seccional',n:'BH URUS 24V — 1200N',sku:'E04671005',tec:'24V',kg:200,vel:'8 seg',v:'Bivolt',p:1062000},
+    {cat:'seccional',n:'BH CADEMEX — Jetflex',sku:'E04474004',tec:'JETFLEX',kg:450,vel:'5.5 seg',v:'Bivolt',p:1385000,badge:'Premium'},
+    {cat:'seccional',n:'BH CADEMEX — Mono',sku:'E04441006',tec:'MONO',kg:350,vel:'19 seg',v:'127V',p:1000000},
   ],
   barrera:[
-    {id:'kd2',   n:'KD2',          sku:'E08163000', tec:'LEGERO',            vel:'4s',   v:'220V',   p:2308000, brazo:'Hasta 3m'},
-    {id:'k1',    n:'K1',           sku:'F08184001', tec:'JETFLEX',           vel:'1.5s', v:'Bivolt', p:3385000, brazo:'2 a 4m'},
-    {id:'k10',   n:'K10 24V',      sku:'F08154005', tec:'JETFLEX 24V',       vel:'2-4s', v:'Bivolt', p:4724000, brazo:'2 a 4.5m'},
-    {id:'bar',   n:'BARRIER',      sku:'F08104073', tec:'JETFLEX BRUSHLESS', vel:'1.5s', v:'Bivolt', p:4538000, brazo:'2 a 5m'},
-    {id:'sempar',n:'SEM PARAR',    sku:'F08032000', tec:'JETFLEX BRUSHLESS', vel:'1.5s', v:'Bivolt', p:10770000,brazo:'3m (incluido)'},
+    {cat:'barrera',n:'KD2',sku:'E08163000',tec:'LEGERO',vel:'4 seg',v:'220V',p:2308000,brazo:'Hasta 3m'},
+    {cat:'barrera',n:'K1 Jetflex',sku:'F08184001',tec:'JETFLEX',vel:'1.5 seg',v:'Bivolt',p:3385000,brazo:'2 a 4m'},
+    {cat:'barrera',n:'K10 24V',sku:'F08154005',tec:'JETFLEX 24V',vel:'2-4 seg',v:'Bivolt',p:4724000,brazo:'2 a 4.5m'},
+    {cat:'barrera',n:'BARRIER Brushless',sku:'F08104073',tec:'BRUSHLESS',vel:'1.5 seg',v:'Bivolt',p:4538000,brazo:'2 a 5m',badge:'Sin mantenimiento'},
+    {cat:'barrera',n:'SEM PARAR',sku:'F08032000',tec:'BRUSHLESS',vel:'1.5 seg',v:'Bivolt',p:10770000,brazo:'3m incluido',badge:'1200 ciclos/día'},
   ],
   cortina:[
-    {id:'br1',   n:'BR1-500',      sku:'E05132002', tec:'MONO',    kg:500,vel:'6m/min',v:'220V',  p:1762000},
-    {id:'roller',n:'ROLLER',       sku:'E09331001', tec:'MONO',    kg:300,vel:'5.3m/m',v:'127V',  p:848000},
+    {cat:'cortina',n:'BR1-500',sku:'E05132002',tec:'MONO',kg:500,vel:'6m/min',v:'220V',p:1762000},
+    {cat:'cortina',n:'ROLLER',sku:'E09331001',tec:'MONO',kg:300,vel:'5.3m/min',v:'127V',p:848000},
   ],
 };
 
-// Astas por modelo de barrera
-const ASTAS = {
-  kd2:   [{sku:'A19906',n:'Asta Slim 3m Natural',p:354000},{sku:'A19601',n:'Asta Slim 3m Blanco',p:430000},{sku:'A19417',n:'Asta Slim 3m LED',p:992000}],
-  k1:    [{sku:'A19906',n:'Asta Slim 3m Natural',p:354000},{sku:'A19601',n:'Asta Slim 3m Blanco',p:430000},{sku:'A19604',n:'Asta Slim 4m Blanco',p:662000},{sku:'A19420',n:'Asta Slim 4m LED',p:1247000}],
-  k10:   [{sku:'A19906',n:'Asta Slim 3m Natural',p:354000},{sku:'A19601',n:'Asta Slim 3m Blanco',p:430000},{sku:'A19604',n:'Asta Slim 4.5m Blanco',p:662000},{sku:'A19420',n:'Asta Slim 4.5m LED',p:1247000}],
-  bar:   [{sku:'A17068',n:'Asta Rect. 3m',p:431000},{sku:'A170744M',n:'Asta Rect. 4m',p:738000},{sku:'A170745M',n:'Asta Rect. 5m',p:754000},{sku:'A17074',n:'Asta Rect. 6m',p:846000},{sku:'F05234',n:'Asta Articulada 6m',p:985000}],
-  sempar:[],
+const EJEM={
+  corredera:EQ.corredera.find(e=>e.sku==='E02253400'),
+  batiente:EQ.batiente.find(e=>e.sku==='E03414004'),
+  seccional:EQ.seccional.find(e=>e.sku==='E04474004'),
+  barrera:EQ.barrera.find(e=>e.sku==='F08184001'),
+  cortina:EQ.cortina.find(e=>e.sku==='E05132002'),
 };
 
-// Cremalleras
-const CREMALLERAS = {
-  POP:  {sku:'A16768',n:'Cremallera Residencial POP',p:40000},
-  GOLD: {sku:'A16771',n:'Cremallera Residencial GOLD',p:60000},
-  IND:  {sku:'A16811',n:'Cremallera Industrial GOLD',p:102000},
-};
+function fmt(n){return '$'+n.toLocaleString('es-CO')}
 
-function getCatalogoFlat(){ return Object.values(EQUIPOS).flat(); }
-function findBySku(sku){
-  const flat = getCatalogoFlat();
-  return flat.find(e=>e.sku===sku)||flat.find(e=>e.sku.replace(/\s/g,'')===sku.replace(/\s/g,''));
-}
-
-// Segmentos Tribu Naranja
-const SEG = {
-  casa:     {code:'L01',n:'Tu Casa, Tu Ritmo',      color:'#005293'},
-  conjunto: {code:'L02',n:'Tu Conjunto',             color:'#4D4F53'},
-  negocio:  {code:'L03',n:'Tu Negocio',              color:'#F15A22'},
-  industria:{code:'L04',n:'Tu Industria / Bodega',   color:'#981E32'},
-};
-
-// ══════════════════════════════════════
-// GOOGLE SHEETS
-// ══════════════════════════════════════
-async function cargarSheets(){
-  try{
-    const res = await Promise.race([
-      fetch(SHEETS_URL),
-      new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),4000))
-    ]);
-    const txt = await res.text();
-    const m = txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
-    if(!m) throw new Error('formato');
-    const rows = JSON.parse(m[1])?.table?.rows||[];
-    rows.forEach(row=>{
-      const sku=row.c?.[4]?.v, psvp=row.c?.[10]?.v;
-      if(sku&&psvp&&typeof psvp==='number'&&psvp>0) preciosSheets[String(sku).trim()]=psvp;
-    });
-    sheetsOk = Object.keys(preciosSheets).length>0;
-    if(sheetsOk){
-      getCatalogoFlat().forEach(e=>{ if(preciosSheets[e.sku]) e.p=preciosSheets[e.sku]; });
-      const dot=document.getElementById('cloudDot');
-      if(dot){ dot.classList.add('ok'); dot.title='✅ Precios actualizados'; }
-    }
-  }catch(e){ console.warn('Sheets:', e.message); }
-}
-
-// ══════════════════════════════════════
-// BITRIX24
-// ══════════════════════════════════════
-async function enviarBitrix(nombre, wa, datos, recomendaciones){
-  if(location.protocol==='file:') return;
-  try{
-    const tel = wa.replace(/\D/g,'');
-    const seg = SEG[datos.lugar]||SEG.casa;
-    const equipo = recomendaciones[0]?.nombre||'—';
-    const contacto = new URLSearchParams();
-    contacto.append('fields[NAME]', nombre.split(' ')[0]||nombre);
-    contacto.append('fields[LAST_NAME]', nombre.split(' ').slice(1).join(' ')||'');
-    if(tel) contacto.append('fields[PHONE][0][VALUE]',`+57${tel}`);
-    contacto.append('fields[PHONE][0][VALUE_TYPE]','MOBILE');
-    contacto.append('fields[SOURCE_ID]','WEB');
-    contacto.append('fields[SOURCE_DESCRIPTION]','NARA · Asesora IA PPA Central');
-    contacto.append('fields[COMMENTS]',
-      `Segmento: ${seg.n} | Tipo: ${datos.tipo} | Trafico: ${datos.trafico} | Visita: ${motivarVisita?'SÍ':'No solicitada'} | Equipo recomendado: ${equipo}`
-    );
-    const rc = await fetch(`${BITRIX_HOOK}crm.contact.add`,{method:'POST',body:contacto});
-    const dc = await rc.json();
-    const cid = dc?.result||null;
-    const neg = new URLSearchParams();
-    neg.append('fields[TITLE]',`NARA · ${nombre} | ${equipo}`);
-    neg.append('fields[STAGE_ID]','NEW');
-    neg.append('fields[SOURCE_ID]','WEB');
-    neg.append('fields[CURRENCY_ID]','COP');
-    if(cid) neg.append('fields[CONTACT_ID]',String(cid));
-    neg.append('fields[COMMENTS]',`Captado por NARA · PPA Central | ${seg.n} | ${datos.tipo} | Visita: ${motivarVisita?'SÍ':'No'}`);
-    await fetch(`${BITRIX_HOOK}crm.deal.add`,{method:'POST',body:neg});
-    toast('✅ Tu información fue recibida');
-  }catch(e){ console.warn('Bitrix:',e.message); }
-}
-
-// ══════════════════════════════════════
-// MOTOR DE RECOMENDACIÓN
-// ══════════════════════════════════════
-function motorRecomendacion(r){
-  const tipo    = r.tipo||'';
-  const lugar   = r.lugar||'';
-  const hojas   = r.hojas||'1';
-  const medida  = parseFloat(r.medida)||0;
-  const carril  = r.carril||'3';
-  const trafico = r.trafico||'bajo';
-  let recs = [];
-
-  if(tipo==='corredera'){
-    const ind = lugar==='industria'||trafico==='muy_intenso';
-    const com = lugar==='negocio'||trafico==='intenso';
-    if(ind){
-      recs=[
-        {sku:'E06184003',badge:'⭐ Recomendado',razon:'Motor industrial — torque extra, ciclos intensivos, durabilidad garantizada.'},
-        {sku:'E06264001',badge:'Alta capacidad',razon:'Para portones de hasta 1500 kg o tráfico muy intenso.'},
-        {sku:'E06614002',badge:'Sin mantenimiento',razon:'Brushless — el de menor mantenimiento del mercado. Ideal 24/7.'},
-      ];
-    } else if(com){
-      recs=[
-        {sku:'E02514006',badge:'⭐ Recomendado',razon:'DZ RIO Jetflex — velocidad y durabilidad para uso comercial.'},
-        {sku:'E02253400',badge:'2ª opción',razon:'DZ STARK Jetflex — confiable y económico para uso moderado.'},
-        {sku:'E06184003',badge:'Con margen',razon:'Industrial como garantía. Diego recomienda sobredimensionar.'},
-      ];
-    } else {
-      recs=[
-        {sku:'E02253400',badge:'⭐ Recomendado',razon:'DZ STARK Jetflex — velocidad y precisión residencial.'},
-        {sku:'E02514006',badge:'Mayor durabilidad',razon:'DZ RIO Jetflex — si quieres que dure décadas.'},
-        {sku:'E02244102',badge:'Económico',razon:'DZ STARK Mono — confiable para uso bajo, inversión menor.'},
-      ];
-    }
-    recs._cremallera = medida>4;
-    recs._tipoCrem = ind?'IND':com?'GOLD':'POP';
-  }
-
-  if(tipo==='batiente'){
-    const d = hojas==='2';
-    const m = medida||2;
-    if(m<=2){
-      recs = d
-        ?[{sku:'E03481000',badge:'⭐ Recomendado',razon:'PIVO SK Mono Doble Standar — confiable y económico para 2 hojas.'},
-          {sku:'E03414005 + A17818',badge:'Más velocidad',razon:'PIVO HOME Jetflex — apertura más rápida.'},
-          {sku:'E07154003',badge:'Conjuntos',razon:'PIVO SK CONDOMINIUM — para mayor tráfico.'}]
-        :[{sku:'E03481004',badge:'⭐ Recomendado',razon:'PIVO SK Mono 1 hoja Standar — solución residencial confiable.'},
-          {sku:'E03414004 + A17818',badge:'Más velocidad',razon:'PIVO HOME Jetflex — apertura en 2.5 seg.'},
-          {sku:'E07154004',badge:'Conjuntos',razon:'PIVO SK CONDOMINIUM 1 hoja — para uso más intensivo.'}];
-    } else if(m<=3.5){
-      recs = d
-        ?[{sku:'E03481001',badge:'⭐ Recomendado',razon:'PIVO SK Mono Doble Super — para hojas hasta 3.5m.'},
-          {sku:'E03414005 + A17819',badge:'Más velocidad',razon:'PIVO HOME Jetflex Super.'},
-          {sku:'E07124011',badge:'Alta exigencia',razon:'PIVO SK CONDOMINIUM Doble Super.'}]
-        :[{sku:'E03481005',badge:'⭐ Recomendado',razon:'PIVO SK Mono 1H Super — para hojas hasta 3.5m.'},
-          {sku:'E03414004 + A17819',badge:'Más velocidad',razon:'PIVO HOME Jetflex Super.'},
-          {sku:'E07124014',badge:'Alta exigencia',razon:'PIVO SK CONDOMINIUM 1H Super.'}];
-    } else if(m<=4.5){
-      recs = d
-        ?[{sku:'E07154003',badge:'⭐ Recomendado',razon:'PIVO SK CONDOMINIUM Doble Mega — para hojas hasta 4.5m.'},
-          {sku:'E07194003',badge:'Más velocidad',razon:'PIVO CONDOMINIUM Jetflex Doble Mega.'},
-          {sku:'E07124011',badge:'3ª opción',razon:'PIVO SK CONDOMINIUM Doble Super.'}]
-        :[{sku:'E07194005',badge:'⭐ Recomendado',razon:'PIVO SK CONDOMINIUM 1H Mega — hasta 4.5m.'},
-          {sku:'E07194001+A16510',badge:'Más velocidad',razon:'PIVO CONDOMINIUM Jetflex 1H.'},
-          {sku:'E07154004',badge:'Económico',razon:'PIVO SK CONDOMINIUM 1H Standar.'}];
-    } else {
-      recs=[
-        {sku:'E07042001',badge:'⭐ Caso especial',razon:`PIVO LIGER UNIVERSAL — para hojas mayores a 4.5m.${d?' ⚠ Requiere DOS motores (uno por hoja).':''}`},
-        {sku:'E07231000',badge:'2ª opción',razon:'PIVO LIGER 6m — si la hoja es hasta 6m.'},
-      ];
-    }
-  }
-
-  if(tipo==='barrera'){
-    const c = carril;
-    if(trafico==='muy_intenso'){
-      recs=[
-        {sku:'F08032000',badge:'⭐ Alta exigencia',razon:'SEM PARAR — 1200 ciclos/día. Para peajes, plantas, flujo máximo.'},
-        {sku:'F08104073',badge:'600 ciclos',razon:'BARRIER Brushless — el de menor mantenimiento.'},
-        {sku:'F08154005',badge:'K10 24V',razon:'Para accesos intensivos con carril hasta 4.5m.'},
-      ];
-    } else if(trafico==='intenso'){
-      recs=[
-        {sku:'F08154005',badge:'⭐ Recomendado',razon:'K10 24V — bielas, brazo hasta 4.5m. Ideal uso intensivo.'},
-        {sku:'F08104073',badge:'Alta durabilidad',razon:'BARRIER Brushless — hasta 600 ciclos, mínimo mantenimiento.'},
-        {sku:'F08184001',badge:'Económico',razon:'K1 Jetflex — rápido y confiable hasta 4m.'},
-      ];
-    } else {
-      // Según ancho de carril
-      if(c==='3'){
-        recs=[
-          {sku:'E08163000',badge:'⭐ Recomendado',razon:'KD2 — confiable para uso normal, brazo hasta 3m.'},
-          {sku:'F08184001',badge:'2ª opción',razon:'K1 Jetflex — más velocidad, hasta 4m.'},
-          {sku:'F08154005',badge:'Con margen',razon:'K10 24V si anticipa mayor tráfico en el futuro.'},
-        ];
-      } else if(c==='4'){
-        recs=[
-          {sku:'F08184001',badge:'⭐ Recomendado',razon:'K1 Jetflex — exacto para carriles de 3 a 4m.'},
-          {sku:'F08154005',badge:'Con margen',razon:'K10 24V — si quiere brazo hasta 4.5m.'},
-          {sku:'E08163000',badge:'Económico',razon:'KD2 solo si el carril es exactamente 3m.'},
-        ];
-      } else if(c==='4.5'){
-        recs=[
-          {sku:'F08154005',badge:'⭐ Recomendado',razon:'K10 24V — diseñado para carriles hasta 4.5m.'},
-          {sku:'F08104073',badge:'Mayor capacidad',razon:'BARRIER — si el tráfico puede crecer.'},
-          {sku:'F08184001',badge:'Alternativa',razon:'K1 hasta 4m si el carril real es menor.'},
-        ];
-      } else { // 5-6m+
-        recs=[
-          {sku:'F08104073',badge:'⭐ Recomendado',razon:'BARRIER Brushless — para carriles de 4.5m a 6m. Compatible con asta articulada.'},
-          {sku:'F08032000',badge:'Máximo tráfico',razon:'SEM PARAR si el flujo vehicular es muy alto.'},
-          {sku:'F08154005',badge:'K10',razon:'Solo si el carril definitivo queda en 4.5m.'},
-        ];
-      }
-    }
-    recs._esBarrera = true;
-    recs._carril = c;
-  }
-
-  if(tipo==='seccional'){
-    recs=[
-      {sku:'E04474004',badge:'⭐ Recomendado',razon:'BH CADEMEX Jetflex — sube vertical, ideal techo bajo.'},
-      {sku:'E04671004',badge:'Con batería',razon:'BH URUS 24V — autonomía en cortes de energía.'},
-      {sku:'E04441006',badge:'Económico',razon:'BH CADEMEX Mono — para uso bajo con menor inversión.'},
-    ];
-  }
-
-  if(tipo==='cortina'){
-    recs=[
-      {sku:'E05132002',badge:'⭐ Recomendado',razon:'BR1-500 — motor cortina comercial. Incluye téstera.'},
-      {sku:'E09331001',badge:'Pequeño',razon:'ROLLER Mono — para cortinas hasta 16m².'},
-    ];
-  }
-
-  return recs;
-}
-
-// ══════════════════════════════════════
-// UTILIDADES
-// ══════════════════════════════════════
-function fmtCOP(n){
-  return '$'+Math.round(n).toLocaleString('es-CO');
-}
-
-function toast(msg, dur=3000){
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), dur);
-}
-
-function hora(){
-  const d = new Date();
-  return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
-}
-
-function setFecha(){
-  const d = new Date();
-  const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  document.getElementById('chat-date').textContent =
-    `${dias[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]}`;
-}
-
-// ══════════════════════════════════════
-// MOTOR DE CHAT — scroll inteligente
-// ══════════════════════════════════════
-const chat = document.getElementById('chat');
-
-// Scroll suave al elemento recién agregado — no al fondo absoluto
-function scrollToEl(el){
-  setTimeout(()=>{
-    el.scrollIntoView({ behavior:'smooth', block:'nearest' });
-    actualizarFlecha();
-  }, 60);
-}
-
-// Solo cuando necesitamos ir al fondo (input, botones de acción)
-function scrollBottom(){
-  setTimeout(()=>{
-    chat.scrollTop = chat.scrollHeight;
-    actualizarFlecha();
-  }, 60);
-}
-
-// ── Flecha ↓ flotante ──────────────────
-function actualizarFlecha(){
-  const flecha = document.getElementById('flecha-abajo');
-  if(!flecha) return;
-  const hayMasAbajo = chat.scrollHeight - chat.scrollTop - chat.clientHeight > 20;
-  flecha.style.opacity = hayMasAbajo ? '1' : '0';
-  flecha.style.pointerEvents = hayMasAbajo ? 'auto' : 'none';
-}
-
-chat.addEventListener('scroll', actualizarFlecha);
-
-// Actualizar flecha cada vez que aparece contenido nuevo en el chat
-const _observer = new MutationObserver(actualizarFlecha);
-_observer.observe(chat, { childList: true, subtree: false });
-
-// Crear flecha flotante en el DOM
-(function crearFlecha(){
-  const f = document.createElement('button');
-  f.id = 'flecha-abajo';
-  f.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="6 9 12 15 18 9" transform="rotate(180 12 12)"/></svg>`;
-  f.style.cssText = `
-    position:fixed;
-    bottom:80px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#E85C00;
-    color:#fff;
-    border:none;
-    border-radius:50%;
-    width:40px; height:40px;
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
-    box-shadow:0 4px 16px #E85C0066;
-    opacity:0;
-    pointer-events:none;
-    transition:opacity .25s;
-    z-index:100;
-  `;
-  f.onclick = ()=>{
-    chat.scrollTo({ top: chat.scrollHeight, behavior:'smooth' });
-  };
-  document.body.appendChild(f);
-})();
-
-function avatarSVG(size=24){
-  return `<svg width="${size}" height="${size}" viewBox="0 0 80 80" fill="none">
-    <circle cx="40" cy="40" r="4" fill="#FF6B1A"/>
-    <circle cx="40" cy="40" r="7" stroke="#FF6B1A" stroke-width="1.2" fill="none" opacity=".3"/>
-    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.5" fill="none">
-      <animate attributeName="r" values="0;14" dur="2.4s" repeatCount="indefinite" begin="0s"/>
-      <animate attributeName="opacity" values="1;0" dur="2.4s" repeatCount="indefinite" begin="0s"/>
-    </circle>
-    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2" fill="none">
-      <animate attributeName="r" values="0;24" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
-      <animate attributeName="opacity" values=".75;0" dur="2.4s" repeatCount="indefinite" begin="0.38s"/>
-    </circle>
-    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1.4" fill="none">
-      <animate attributeName="r" values="0;34" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
-      <animate attributeName="opacity" values=".45;0" dur="2.4s" repeatCount="indefinite" begin="0.76s"/>
-    </circle>
-  </svg>`;
-}
-
-// Agrega burbuja de NARA con typing de 1 segundo y onda grande
-function naraMsg(html, delay=0){
-  const ondaTyping = `<svg width="72" height="72" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="40" cy="40" r="6" fill="#FF6B1A"/>
-    <circle cx="40" cy="40" r="11" stroke="#FF6B1A" stroke-width="1.8" fill="none" opacity=".45"/>
-    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="3.5" fill="none">
-      <animate attributeName="r" values="0;18" dur="1.4s" repeatCount="indefinite" begin="0s"/>
-      <animate attributeName="opacity" values="1;0" dur="1.4s" repeatCount="indefinite" begin="0s"/>
-    </circle>
-    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.8" fill="none">
-      <animate attributeName="r" values="0;27" dur="1.4s" repeatCount="indefinite" begin="0.28s"/>
-      <animate attributeName="opacity" values=".8;0" dur="1.4s" repeatCount="indefinite" begin="0.28s"/>
-    </circle>
-    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2" fill="none">
-      <animate attributeName="r" values="0;36" dur="1.4s" repeatCount="indefinite" begin="0.56s"/>
-      <animate attributeName="opacity" values=".5;0" dur="1.4s" repeatCount="indefinite" begin="0.56s"/>
-    </circle>
-    <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1.2" fill="none">
-      <animate attributeName="r" values="0;44" dur="1.4s" repeatCount="indefinite" begin="0.84s"/>
-      <animate attributeName="opacity" values=".25;0" dur="1.4s" repeatCount="indefinite" begin="0.84s"/>
-    </circle>
-  </svg>`;
-
-  return new Promise(res=>{
-    setTimeout(()=>{
-      const typing = document.createElement('div');
-      typing.className='typing anim';
-      typing.innerHTML=`<div class="typing-nara-wave">${ondaTyping}</div>`;
-      chat.appendChild(typing);
-      actualizarFlecha();
-
-      setTimeout(()=>{
-        typing.remove();
-        const wrap = document.createElement('div');
-        wrap.className='bubble-nara anim';
-        wrap.innerHTML=`
-          <div class="bubble-avatar">${avatarSVG(28)}</div>
-          <div class="bubble-body">
-            <div class="bubble-name">NARA</div>
-            <div class="bubble-txt">${html}</div>
-            <div class="bubble-meta">${hora()} ✓✓</div>
-          </div>`;
-        chat.appendChild(wrap);
-        actualizarFlecha();
-        res();
-      }, 1000);
-    }, delay);
-  });
-}
-
-// Agrega burbuja de usuario
-function userMsg(texto){
-  const wrap = document.createElement('div');
-  wrap.className='bubble-user anim';
-  wrap.innerHTML=`
-    <div class="bubble-txt">${texto}</div>
-    <div class="bubble-meta">${hora()}</div>`;
-  chat.appendChild(wrap);
-  actualizarFlecha();
-}
-
-// Agrega opciones
-function agregarOpciones(opciones, cols, onSel){
-  const grid = document.createElement('div');
-  grid.className=`opciones-grid ${cols===2?'col2':'col1'} anim`;
-  grid.id='opciones-activas';
-  opciones.forEach(op=>{
-    const btn = document.createElement('div');
-    btn.className='opcion-btn';
-    btn.innerHTML=`<div class="op-icon">${op.icon}</div>
-      <div><div class="op-lbl">${op.lbl}</div>${op.sub?`<div class="op-sub">${op.sub}</div>`:''}</div>`;
-    btn.onclick=()=>{
-      document.querySelectorAll('#opciones-activas .opcion-btn').forEach(b=>b.classList.remove('sel'));
-      btn.classList.add('sel');
-      setTimeout(()=>{ grid.remove(); onSel(op); }, 300);
-    };
-    grid.appendChild(btn);
-  });
-  chat.appendChild(grid);
-  actualizarFlecha();
-}
-
-// ══════════════════════════════════════
-// FLUJO NARA — máximo 1 minuto
-// ══════════════════════════════════════
-async function iniciarNara(){
-  setFecha();
-  await cargarSheets();
-
-  // MSG 1 — Apertura aspiracional
-  await naraMsg(`Hola, soy <strong>NARA</strong> 🔶<br><br>¿Sabes qué tienen en común las casas, conjuntos y negocios que más admiras?<br><br><strong>Sus puertas se abren solas.</strong><br><br>Dame 30 segundos — te muestro cómo tu espacio da ese salto hoy.`, 900);
-
-  // MSG 2 — Segmento
-  await naraMsg(`¿Dónde está el acceso que quieres transformar?`);
-  await new Promise(res=>{
-    agregarOpciones([
-      {icon:'🏠', lbl:'Mi casa',             sub:'Casa, finca o apartamento'},
-      {icon:'🏘', lbl:'Mi conjunto',         sub:'Condominio o unidad residencial'},
-      {icon:'🏪', lbl:'Mi negocio',          sub:'Local, oficina o comercio'},
-      {icon:'🏭', lbl:'Mi industria/bodega', sub:'Planta, bodega o sector industrial'},
-    ], 2, op=>{
-      const lbl = op.lbl.toLowerCase().replace('mi ','');
-      respuestas.lugar = lbl==='casa'?'casa':lbl.includes('conjunto')?'conjunto':lbl.includes('negocio')?'negocio':'industria';
-      // Tráfico por defecto según segmento
-      respuestas.trafico = {casa:'bajo',conjunto:'intenso',negocio:'moderado',industria:'muy_intenso'}[respuestas.lugar];
-      userMsg(op.icon+' '+op.lbl);
-      res();
-    });
-  });
-
-  // MSG 3 — Tipo de acceso
-  await naraMsg(`¿Y qué va a <strong>abrirse solo</strong> desde hoy?`);
-  await new Promise(res=>{
-    agregarOpciones([
-      {icon:'🚗', lbl:'Portón corredera',  sub:'Se desliza a un lado'},
-      {icon:'🚪', lbl:'Portón batiente',   sub:'Abre hacia adentro o afuera'},
-      {icon:'🚧', lbl:'Barrera vehicular', sub:'Control de parqueadero'},
-      {icon:'🏪', lbl:'Cortina metálica',  sub:'Local comercial'},
-      {icon:'🏠', lbl:'Garaje seccional',  sub:'Sube verticalmente'},
-    ], 2, op=>{
-      const t = op.lbl.toLowerCase();
-      respuestas.tipo = t.includes('corredera')?'corredera':t.includes('batiente')?'batiente':t.includes('barrera')?'barrera':t.includes('cortina')?'cortina':'seccional';
-      // Medidas y carril por defecto — el especialista afina en visita
-      respuestas.medida = 3;
-      respuestas.hojas = '1';
-      respuestas.carril = '4';
-      userMsg(op.icon+' '+op.lbl);
-      res();
-    });
-  });
-
-  // MSG 4 — Datos del cliente
-  await naraMsg(`Ya tengo lo que necesito 🎯<br>¿Me das tu nombre y WhatsApp para enviarte la propuesta?`);
-  await new Promise(res=>{
-    const card = document.createElement('div');
-    card.className='input-card anim';
-    card.innerHTML=`
-      <div class="input-label">Tus datos</div>
-      <input class="nara-input" id="inp-nombre" type="text" placeholder="Tu nombre completo" autocomplete="name">
-      <input class="nara-input" id="inp-wa" type="tel" placeholder="WhatsApp (sin +57)" autocomplete="tel" inputmode="numeric">
-      <button class="btn-primary" onclick="capturarDatos()">
-        Ver mi propuesta 🔶
-      </button>`;
-    chat.appendChild(card);
-    actualizarFlecha();
-
-    window.capturarDatos = ()=>{
-      const nom = document.getElementById('inp-nombre').value.trim();
-      const wa  = document.getElementById('inp-wa').value.trim();
-      if(!nom){ toast('⚠ Ingresa tu nombre'); return; }
-      if(!wa||wa.replace(/\D/g,'').length<10){ toast('⚠ Ingresa tu WhatsApp (10 dígitos)'); return; }
-      clienteNombre = nom;
-      clienteWA = wa;
-      card.remove();
-      userMsg(`${nom} · 📱 ${wa}`);
-      res();
-    };
-  });
-
-  // MSG 7 — Propuesta JOLT
-  const recs = motorRecomendacion(respuestas);
-  const nombreCorto = clienteNombre.split(' ')[0];
-
-  const fraseDinamica = getFraseDinamica(clienteNombre, respuestas.lugar, respuestas.tipo);
-  await naraMsg(fraseDinamica);
-
-  await naraMsg(`👇 <strong>Mi top 3 para tu caso</strong> — los más instalados por la Tribu Naranja:`);
-
-  const propWrap = document.createElement('div');
-  propWrap.className='propuesta-wrap anim';
-  const badges = ['⭐ El más elegido','✅ También funciona','💎 El que dura siempre'];
-
-  recs.slice(0,3).forEach((rec,i)=>{
-    const eq = findBySku(rec.sku)||{n:rec.sku,sku:rec.sku,tec:'—',p:0,vel:'—',v:'—'};
-    const card = document.createElement('div');
-    card.className=`prop-card${i===0?' recomendado':''}`;
-    card.innerHTML=`
-      <div class="prop-header">
-        <span class="prop-badge${i===0?' rec':''}">${badges[i]||rec.badge}</span>
-      </div>
-      <div class="prop-body">
-        <div class="prop-nombre">${eq.n}</div>
-        <div class="prop-sku">${eq.sku}</div>
-        <div class="prop-specs">
-          ${eq.tec?`<span class="prop-spec">${eq.tec}</span>`:''}
-          ${eq.vel?`<span class="prop-spec">⚡ ${eq.vel}</span>`:''}
-          ${eq.v?`<span class="prop-spec">${eq.v}</span>`:''}
-          ${eq.kg?`<span class="prop-spec">${eq.kg} kg</span>`:''}
-          ${eq.brazo?`<span class="prop-spec">🚧 ${eq.brazo}</span>`:''}
+/* VISUAL GRID */
+function renderVisual(){
+  const g=document.getElementById('cvgrid'); g.innerHTML='';
+  ['corredera','batiente','seccional','barrera','cortina'].forEach((cat,i)=>{
+    const eq=EJEM[cat];
+    const wide=i===0||i===4;
+    const d=document.createElement('div');
+    d.className='cvc'+(wide?' wide':'');
+    const sp=[];
+    if(eq.tec) sp.push(`<span class="cvc-spec tec">${eq.tec}</span>`);
+    if(eq.kg)  sp.push(`<span class="cvc-spec">${eq.kg} kg</span>`);
+    if(eq.vel) sp.push(`<span class="cvc-spec">${eq.vel}</span>`);
+    if(eq.brazo) sp.push(`<span class="cvc-spec">${eq.brazo}</span>`);
+    d.innerHTML=`<div class="cvc-img">
+      <img class="cvc-bg" src="${CIMG[cat]}" alt="${CTIT[cat]}" onerror="this.style.display='none'">
+      <div class="cvc-ov"></div>
+      <div class="cvc-cnt">
+        <div class="cvc-tag">${CL[cat]}</div>
+        <div class="cvc-title">${CTIT[cat]}</div>
+        <div class="cvc-aspir">${CASP[cat]}</div>
+        <div class="cvc-pbox">
+          ${eq.badge?`<div style="margin-bottom:6px"><span class="cvc-badge">${eq.badge}</span></div>`:''}
+          <div class="cvc-pn">${eq.n}</div>
+          <div class="cvc-specs">${sp.join('')}</div>
+          <div class="cvc-pfoot">
+            <div><div class="cvc-plbl">PSVP referencia</div><div class="cvc-price">${fmt(eq.p)}</div></div>
+            <button class="clc-btn" onclick="event.stopPropagation();openModal(EQ['${cat}'].find(e=>e.sku==='${eq.sku}'))">Ver</button>
+          </div>
         </div>
-        <div class="prop-precio">${fmtCOP(eq.p)}</div>
-        <div class="prop-precio-lbl">Precio de referencia · no incluye instalación</div>
-        <div class="prop-razon">${rec.razon}</div>
-      </div>`;
-    propWrap.appendChild(card);
-  });
-
-  // Cremallera extra si aplica
-  if(recs._cremallera){
-    const tipoCrem = recs._tipoCrem||'POP';
-    const crem = CREMALLERAS[tipoCrem];
-    const nota = document.createElement('div');
-    nota.className='crem-card';
-    nota.innerHTML=`<span>⚙</span>
-      <div>
-        <div style="font-family:var(--font-title);font-weight:700;font-size:12px;color:var(--naranja3)">Cremallera adicional obligatoria</div>
-        <div style="font-size:11px;color:var(--txt2);margin-top:2px">${crem.n} · <span style="font-family:var(--font-mono)">${crem.sku}</span></div>
-        <div style="font-family:var(--font-mono);font-size:13px;color:var(--naranja3);margin-top:4px">${fmtCOP(crem.p)}</div>
-        <div style="font-size:10px;color:var(--txt3);margin-top:2px">Portón mayor a 4m requiere una cremallera adicional</div>
-      </div>`;
-    propWrap.appendChild(nota);
-  }
-
-  // Asta si es barrera
-  if(recs._esBarrera){
-    const recEq = findBySku(recs[0]?.sku);
-    const eqId = recEq?.id||'k1';
-    const astasDisp = ASTAS[eqId]||ASTAS.k1;
-    if(astasDisp.length){
-      const notaAsta = document.createElement('div');
-      notaAsta.className='prop-nota';
-      notaAsta.innerHTML=`<div class="prop-nota-icon">🚧</div>
-        <div>
-          <div style="font-family:var(--font-title);font-weight:700;font-size:12px;color:var(--naranja3);margin-bottom:4px">Asta recomendada para tu barrera</div>
-          ${astasDisp.slice(0,2).map(a=>`
-            <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)">
-              <div>
-                <div style="font-size:12px;color:var(--txt)">${a.n}</div>
-                <div style="font-family:var(--font-mono);font-size:10px;color:var(--txt3)">${a.sku}</div>
-              </div>
-              <div style="font-family:var(--font-mono);font-size:13px;color:var(--naranja3)">${fmtCOP(a.p)}</div>
-            </div>`).join('')}
-        </div>`;
-      propWrap.appendChild(notaAsta);
-    }
-  }
-
-  // Notas
-  const notaAcc = document.createElement('div');
-  notaAcc.className='prop-nota';
-  notaAcc.innerHTML=`<div class="prop-nota-icon">🔧</div>
-    <div style="font-size:12px;color:var(--txt2);line-height:1.6">
-      Los <strong style="color:var(--txt)">accesorios perimetrales</strong> — fotoceldas, semáforos y protecciones — los cotizamos en sitio. Cada acceso es diferente.
+        <div class="cvc-cta">Explorar ${CL[cat].toLowerCase()} <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
     </div>`;
-  propWrap.appendChild(notaAcc);
-
-  const notaPrecio = document.createElement('div');
-  notaPrecio.className='prop-nota';
-  notaPrecio.innerHTML=`<div class="prop-nota-icon">💡</div>
-    <div style="font-size:12px;color:var(--txt2);line-height:1.6">
-      Precios de referencia sugeridos al público. El valor final depende de tu instalación. No se totalizan.
-    </div>`;
-  propWrap.appendChild(notaPrecio);
-
-  chat.appendChild(propWrap);
-  actualizarFlecha();
-
-  // MSG 7b — frase de estatus
-  await naraMsg(`Cualquiera de estas opciones transforma tu entrada, ${nombreCorto}.<br><br>No es solo un motor — es <strong>seguridad, confort y el primer detalle que las visitas notan.</strong><br><br>La tecnología PPA lleva más de 40 años haciendo exactamente eso.`);
-
-  // MSG 8 — Visita + regalo sutil
-  const fraseDiseno = {
-    casa:     'el plano de tu portón — el diseño real de tu acceso',
-    conjunto: 'el diseño técnico del sistema de acceso del conjunto',
-    negocio:  'el plano eléctrico y de acceso de tu local',
-    industria:'el diseño de ingeniería de tu acceso industrial',
-  }[respuestas.lugar||'casa'];
-
-  await naraMsg(`Una cosa más, <strong>${nombreCorto}</strong> —<br><br>Si nos das el espacio para visitarte, un especialista va donde estás y perfecciona esta propuesta en sitio. <strong>Sin costo. Ese es mi regalo.</strong> 📐<br><br>Y cuando tu proyecto tome forma, te entregamos <em>${fraseDiseno}</em>. El que pocos tienen.<br><br><strong>¿Aceptas la visita?</strong>`);
-
-  await new Promise(res=>{
-    const btnSi = document.createElement('button');
-    const btnNo = document.createElement('button');
-    btnSi.className='btn-visita anim';
-    btnSi.textContent='📍 Sí, acepto la visita';
-    btnSi.onclick=()=>{ motivarVisita=true; btnSi.remove(); btnNo.remove(); userMsg('📍 Sí, acepto la visita'); res(); };
-    btnNo.className='btn-visita-no anim';
-    btnNo.textContent='Por ahora me quedo con esto';
-    btnNo.onclick=()=>{ btnSi.remove(); btnNo.remove(); userMsg('Por ahora me quedo con esto'); res(); };
-    chat.appendChild(btnSi);
-    chat.appendChild(btnNo);
-    actualizarFlecha();
+    d.onclick=()=>openModal(eq);
+    g.appendChild(d);
   });
+}
+renderVisual();
 
-  // Registrar en Bitrix
-  const recsData = recs.slice(0,3).map(r=>{ const eq=findBySku(r.sku)||{n:r.sku}; return {nombre:eq.n,sku:r.sku}; });
-  await enviarBitrix(clienteNombre, clienteWA, respuestas, recsData);
+/* CATÁLOGO EXPANDIDO */
+let catExp=false, filtAct='todos';
+function expCat(){
+  if(catExp)return; catExp=true;
+  const s=document.getElementById('catexp');
+  s.style.display='block';
+  document.getElementById('vermasBtn').style.display='none';
+  renderList();
+  setTimeout(()=>s.scrollIntoView({behavior:'smooth',block:'start'}),200);
+}
+function filtrar(cat,btn){
+  filtAct=cat;
+  document.querySelectorAll('.catf').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); renderList();
+}
+function renderList(){
+  const g=document.getElementById('clgrid'); g.innerHTML='';
+  const list=filtAct==='todos'?Object.values(EQ).flat():(EQ[filtAct]||[]);
+  list.forEach(eq=>{
+    const d=document.createElement('div'); d.className='clc'; d.onclick=()=>openModal(eq);
+    const sp=[];
+    if(eq.tec) sp.push(`<span class="cls tec">${eq.tec}</span>`);
+    if(eq.kg)  sp.push(`<span class="cls">${eq.kg} kg</span>`);
+    if(eq.vel) sp.push(`<span class="cls">${eq.vel}</span>`);
+    if(eq.brazo) sp.push(`<span class="cls">${eq.brazo}</span>`);
+    d.innerHTML=`${eq.badge?`<div class="clc-badge">${eq.badge}</div>`:''}
+      <div class="clc-cat">${CL[eq.cat]||eq.cat}</div>
+      <div class="clc-n">${eq.n}</div>
+      <div class="clc-sku">SKU · ${eq.sku}</div>
+      <div class="clc-specs">${sp.join('')}</div>
+      <div class="clc-foot"><div class="clc-p">${fmt(eq.p)}</div><button class="clc-btn">Ver</button></div>`;
+    g.appendChild(d);
+  });
+}
 
-  // MSG 9 — Cierre + WhatsApp
-  await naraMsg(motivarVisita
-    ? `Listo, <strong>${nombreCorto}</strong> 🔶 Tu propuesta viaja por WhatsApp y la visita queda en agenda.<br><br>Y recuerda — también podemos escalar con <strong>cámaras, alarmas y domótica.</strong> Todo un universo que PPA Central sabe controlar.<br><br><em>Soy NARA — aquí seguiré cuando me necesites.</em>`
-    : `Listo, <strong>${nombreCorto}</strong> 🔶 Tu propuesta ya viaja por WhatsApp.<br><br>Y recuerda — también podemos escalar con <strong>cámaras, alarmas y domótica.</strong> Todo un universo que PPA Central sabe controlar.<br><br><em>Soy NARA — aquí seguiré cuando me necesites.</em>`
-  );
-
-  // Generar ID de proyecto
-  const proyectoID = `NARA-${Date.now().toString().slice(-6)}`;
-  const segCodigo = {casa:'L01',conjunto:'L02',negocio:'L03',industria:'L04'}[respuestas.lugar||'casa'];
-  const segNombre = {casa:'Tu Casa · Tu Ritmo',conjunto:'Tu Conjunto',negocio:'Tu Negocio',industria:'Tu Industria'}[respuestas.lugar||'casa'];
-
-  // Botón WhatsApp — envía propuesta
-  const btnWA = document.createElement('button');
-  btnWA.className='btn-wa anim';
-  btnWA.innerHTML=`<svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Recibir mi propuesta por WhatsApp`;
-  btnWA.onclick=()=>{
-    const equipoTop = findBySku(recs[0]?.sku);
-    const lineas = [
-      `🔶 *Propuesta PPA Central · ${clienteNombre}*`,
-      `📋 Proyecto #${proyectoID} · ${segCodigo} ${segNombre}`,
-      ``,
-      `Tu solución de acceso automatizado está lista.`,
-      ``,
-      `⭐ *Equipo recomendado:*`,
-      `${equipoTop?.n||'Ver propuesta'} · ${fmtCOP(equipoTop?.p||0)}`,
-      equipoTop?.sku ? `SKU: ${equipoTop.sku}` : '',
-      ``,
-      recs[1] ? `✅ *2ª opción:* ${findBySku(recs[1].sku)?.n||recs[1].sku}` : '',
-      recs[2] ? `💎 *3ª opción:* ${findBySku(recs[2].sku)?.n||recs[2].sku}` : '',
-      ``,
-      motivarVisita ? `📍 *Visita solicitada* — un especialista se contactará contigo pronto.` : '',
-      respuestas.sistemaCompleto ? `🔐 *Sistema completo solicitado* — cámaras, alarmas y control de acceso incluidos en el diseño.` : '',
-      ``,
-      `💡 Precios de referencia. El valor final incluye instalación y visita técnica.`,
-      ``,
-      `_Propuesta generada por NARA · Asesora IA PPA Central_`,
-      `_Distribuidor Autorizado PPA Latam · Florencia, Caquetá_`,
-    ].filter(Boolean).join('\n');
-
-    window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(lineas)}`,'_blank');
+/* MODAL PRODUCTO */
+function openModal(eq){
+  document.getElementById('mTag').textContent=CL[eq.cat]||eq.cat;
+  document.getElementById('mName').textContent=eq.n;
+  document.getElementById('mSku').textContent='SKU: '+eq.sku;
+  const sp=[{l:'Tecnología',v:eq.tec||'—'},{l:'Capacidad',v:eq.kg?(eq.kg+' kg'):(eq.brazo||'—')},{l:'Velocidad',v:eq.vel||'—'},{l:'Voltaje',v:eq.v||'—'}];
+  document.getElementById('mSpecs').innerHTML=sp.map(s=>`<div class="m-spec"><div class="m-sl">${s.l}</div><div class="m-sv">${s.v}</div></div>`).join('');
+  document.getElementById('mPv').textContent=fmt(eq.p);
+  document.getElementById('mBwa').onclick=()=>{
+    window.open(`https://wa.me/${WA}?text=${encodeURIComponent('Hola PPA Central! Me interesa el '+eq.n+' ('+eq.sku+'). ¿Me asesoran?')}`,'_blank');
   };
-  chat.appendChild(btnWA);
-  actualizarFlecha();
-
-  // Chat libre con IA
-  await new Promise(res => setTimeout(res, 1200));
-  await naraMsg(`¿Tienes alguna pregunta sobre tu solución, los equipos o cualquier cosa de PPA Central? <strong>Pregúntame con confianza</strong> — ya tengo todo tu caso. 🔶`);
-  activarChatLibre();
+  document.getElementById('mov').classList.add('open');
+  bx('Interés producto: '+eq.n, eq.sku);
 }
+function clM(e){ if(!e||e.target===document.getElementById('mov')||e.currentTarget.tagName==='BUTTON') document.getElementById('mov').classList.remove('open'); }
 
-// ══════════════════════════════════════
-// CHAT LIBRE — NARA responde con Claude API
-// ══════════════════════════════════════
-function activarChatLibre(){
-  chatLibreActivo = true;
-
-  // Construir contexto del cliente para el system prompt
-  const segNombre = respuestas.lugar ? {casa:'Tu Casa Tu Ritmo',conjunto:'Tu Conjunto',negocio:'Tu Negocio',industria:'Tu Industria'}[respuestas.lugar]||'Residencial' : 'No definido';
-  const catalogoResumen = `
-Portones correderos residenciales: DZ STARK HOME (desde $693.000), DZ HUB, DZ STARK, DZ RIO, DZ EURUS STEEL (hasta $1.671.000).
-Portones correderos industriales: DZ INDUSTRIAL 1000kg ($1.692.000), 1500kg, 2000kg, DZ INDUSTRY BRUSHLESS.
-Portones batientes: PIVO SK (desde $726.000), PIVO HOME, PIVO SK CONDOMINIUM, PIVO LIGER (hasta $4.316.000).
-Puertas seccionales: BH-W STEEL WiFi ($1.030.000), BH URUS 24V, BH CADEMEX Jetflex ($1.385.000).
-Barreras vehiculares: KD2 ($2.308.000), K1 ($3.385.000), K10 24V ($4.724.000), BARRIER Brushless ($4.538.000), SEM PARAR ($10.770.000).
-Cortinas: BR1-500 ($1.762.000), ROLLER ($848.000).
-Cremalleras: Residencial POP ($40.000), GOLD ($60.000), Industrial GOLD ($102.000).
-Astas para barreras: Slim 3m ($354.000-$992.000), Slim 4m ($662.000-$1.247.000), Rect 3m-6m ($431.000-$985.000).`;
-
-  const systemPrompt = `Eres NARA, la asesora de inteligencia artificial de PPA Central, distribuidor autorizado de PPA Latam en Colombia, con sede en Florencia, Caquetá. 
-
-IDENTIDAD:
-- Tu nombre NARA viene de Naranja — la tribu y filosofía de PPA Central.
-- Eres la primera asesora IA especializada en automatismos y seguridad electrónica de Colombia.
-- Hablas con calidez, precisión técnica y seguridad. Nunca eres genérica.
-- Usas emojis con moderación: 🔶 para momentos clave, otros cuando refuerzan el mensaje.
-- Siempre ofreces soluciones premium e integrales, nunca genéricas.
-
-CLIENTE EN CONVERSACIÓN:
-- Nombre: ${clienteNombre || 'el cliente'}
-- Segmento: ${segNombre}
-- Tipo de acceso: ${respuestas.tipo || 'no definido'}
-- Tráfico: ${respuestas.trafico || 'no definido'}
-- Visita solicitada: ${motivarVisita ? 'SÍ' : 'No por ahora'}
-
-CATÁLOGO PPA CENTRAL (precios de referencia sin instalación):
-${catalogoResumen}
-
-REGLAS DE RESPUESTA:
-1. Responde SIEMPRE en español colombiano natural, cálido y profesional.
-2. Sé conciso — máximo 3-4 párrafos cortos o una lista breve.
-3. Si preguntan por precios, da rangos del catálogo y aclara que el precio final depende de la instalación.
-4. Si preguntan algo fuera de tu área (legal, médico, etc.), redirige amablemente hacia temas de automatización y seguridad.
-5. Siempre ofrece el siguiente paso: visita en sitio, WhatsApp, o más información.
-6. Nunca inventes productos, SKUs o precios que no estén en el catálogo.
-7. El número de WhatsApp de PPA Central es ${WA_NUM} — menciónalo cuando sea relevante.
-8. Cierra mensajes importantes con: "Recuerda que eres Libre y Digital. 🔶"`;
-
-  // Crear input flotante
-  const inputZone = document.createElement('div');
-  inputZone.id = 'chat-libre-input';
-  inputZone.style.cssText = `
-    position: sticky;
-    bottom: 0;
-    background: #131313;
-    border-top: 1px solid #333;
-    padding: 12px 14px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-end;
-    z-index: 20;
-    flex-shrink: 0;
-  `;
-  inputZone.innerHTML = `
-    <textarea id="nara-libre-input" placeholder="Pregúntale algo a NARA..." rows="1"
-      style="flex:1;background:#222;border:1px solid #444;border-radius:12px;padding:11px 14px;
-      font-family:'Inter',sans-serif;font-size:14px;color:#F5F2EE;resize:none;outline:none;
-      line-height:1.5;max-height:100px;overflow-y:auto;transition:border-color .2s;"
-      onfocus="this.style.borderColor='#FF6B1A'" onblur="this.style.borderColor='#444'"
-    ></textarea>
-    <button id="nara-libre-send" style="
-      background:#E85C00;border:none;border-radius:10px;padding:11px 16px;
-      cursor:pointer;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;
-      font-size:13px;white-space:nowrap;transition:all .18s;flex-shrink:0;
-    ">Enviar</button>
-  `;
-
-  // Insertar después del chat-scroll
-  const chatScroll = document.getElementById('chat');
-  chatScroll.parentNode.insertBefore(inputZone, chatScroll.nextSibling);
-
-  // Auto-resize textarea
-  const textarea = document.getElementById('nara-libre-input');
-  textarea.addEventListener('input', () => {
-    textarea.style.height = 'auto';
-    textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
-  });
-
-  // Enter para enviar (Shift+Enter para nueva línea)
-  textarea.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter' && !e.shiftKey){
-      e.preventDefault();
-      enviarMensajeLibre();
-    }
-  });
-
-  document.getElementById('nara-libre-send').onclick = enviarMensajeLibre;
-
-  // Scroll al input para que el usuario lo vea
-  setTimeout(()=>{
-    inputZone.scrollIntoView({behavior:'smooth', block:'end'});
-    document.getElementById('nara-libre-input').focus();
-  }, 400);
-}
-
-async function enviarMensajeLibre(){
-  const textarea = document.getElementById('nara-libre-input');
-  const texto = textarea.value.trim();
-  if(!texto) return;
-
-  textarea.value = '';
-  textarea.style.height = 'auto';
-
-  // Mostrar mensaje del usuario
-  userMsg(texto);
-
-  // Agregar al historial
-  historialChat.push({role:'user', content: texto});
-
-  // Typing indicator
-  const chat = document.getElementById('chat');
-  const typing = document.createElement('div');
-  typing.className = 'typing';
-  typing.innerHTML = `<div class="typing-nara-wave">
-    <svg width="48" height="48" viewBox="0 0 80 80" fill="none">
-      <circle cx="40" cy="40" r="5" fill="#FF6B1A"/>
-      <circle cx="40" cy="40" r="9" stroke="#FF6B1A" stroke-width="1.5" fill="none" opacity=".4"/>
-      <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="3" fill="none">
-        <animate attributeName="r" values="0;16" dur="1.6s" repeatCount="indefinite" begin="0s"/>
-        <animate attributeName="opacity" values="1;0" dur="1.6s" repeatCount="indefinite" begin="0s"/>
-      </circle>
-      <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="2.4" fill="none">
-        <animate attributeName="r" values="0;24" dur="1.6s" repeatCount="indefinite" begin="0.3s"/>
-        <animate attributeName="opacity" values=".8;0" dur="1.6s" repeatCount="indefinite" begin="0.3s"/>
-      </circle>
-      <circle cx="40" cy="40" r="0" stroke="#FF6B1A" stroke-width="1.8" fill="none">
-        <animate attributeName="r" values="0;32" dur="1.6s" repeatCount="indefinite" begin="0.6s"/>
-        <animate attributeName="opacity" values=".5;0" dur="1.6s" repeatCount="indefinite" begin="0.6s"/>
-      </circle>
-    </svg>
-  </div>`;
-  chat.appendChild(typing);
-  actualizarFlecha();
-
-  // Deshabilitar input mientras espera
-  const sendBtn = document.getElementById('nara-libre-send');
-  const inputEl = document.getElementById('nara-libre-input');
-  if(sendBtn) sendBtn.disabled = true;
-  if(inputEl) inputEl.disabled = true;
-
+/* MODAL INSTALADOR */
+function openInst(){ document.getElementById('iov').classList.add('open'); }
+function clI(e){ if(!e||e.target===document.getElementById('iov')||e.currentTarget.tagName==='BUTTON') document.getElementById('iov').classList.remove('open'); }
+async function envInst(){
+  const nom=document.getElementById('iNom').value.trim();
+  const wa=document.getElementById('iWa').value.trim();
+  const ciu=document.getElementById('iCiu').value.trim();
+  if(!nom||!wa){alert('Completa nombre y WhatsApp.');return;}
   try{
-    // Construir contexto del cliente
-    const segNombre = respuestas.lugar ? {casa:'Tu Casa Tu Ritmo',conjunto:'Tu Conjunto',negocio:'Tu Negocio',industria:'Tu Industria'}[respuestas.lugar]||'Residencial' : 'No definido';
-    const catalogoResumen = `Portones correderos residenciales: DZ STARK HOME (desde $693.000), DZ HUB, DZ STARK, DZ RIO, DZ EURUS STEEL (hasta $1.671.000). Portones correderos industriales: DZ INDUSTRIAL 1000kg ($1.692.000), 1500kg, 2000kg, DZ INDUSTRY BRUSHLESS. Portones batientes: PIVO SK (desde $726.000), PIVO HOME, PIVO SK CONDOMINIUM, PIVO LIGER (hasta $4.316.000). Puertas seccionales: BH-W STEEL WiFi ($1.030.000), BH URUS 24V, BH CADEMEX Jetflex ($1.385.000). Barreras vehiculares: KD2 ($2.308.000), K1 ($3.385.000), K10 24V ($4.724.000), BARRIER Brushless ($4.538.000), SEM PARAR ($10.770.000). Cortinas: BR1-500 ($1.762.000), ROLLER ($848.000).`;
-    const systemPrompt = `Eres NARA, la asesora de inteligencia artificial de PPA Central, distribuidor autorizado de PPA Latam en Colombia, con sede en Florencia, Caquetá. Tu nombre viene de Naranja — la tribu y filosofía de PPA Central. Eres la primera asesora IA especializada en automatismos y seguridad electrónica de Colombia. Hablas con calidez, precisión técnica y seguridad. Usas emojis con moderación: 🔶 para momentos clave. Siempre ofreces soluciones premium e integrales.
-
-Cliente: ${clienteNombre||'el cliente'} | Segmento: ${segNombre} | Tipo: ${respuestas.tipo||'no definido'} | Tráfico: ${respuestas.trafico||'no definido'} | Visita: ${motivarVisita?'SÍ':'No por ahora'}
-
-Catálogo: ${catalogoResumen}
-
-Reglas: Responde en español colombiano natural, conciso (máximo 3-4 párrafos). Da precios de referencia del catálogo y aclara que el precio final depende de la instalación. Nunca inventes productos. WhatsApp PPA Central: ${WA_NUM}. Cierra mensajes importantes con: "Recuerda que eres Libre y Digital. 🔶"`;
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': CLAUDE_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: historialChat
-      })
-    });
-
-    const data = await response.json();
-    const respuestaTexto = data?.content?.[0]?.text || 'Hubo un problema al procesar tu pregunta. Escríbeme por WhatsApp y te respondo de inmediato. 🔶';
-
-    // Agregar respuesta al historial
-    historialChat.push({role:'assistant', content: respuestaTexto});
-
-    // Remover typing y mostrar respuesta
-    typing.remove();
-    await naraMsg(respuestaTexto.replace(/\n/g, '<br>'));
-
-  } catch(err){
-    typing.remove();
-    await naraMsg('Tuve un pequeño inconveniente técnico. Escríbeme directamente por WhatsApp y te atiendo de inmediato. 🔶');
-    console.warn('Claude API:', err);
-  } finally {
-    if(sendBtn) sendBtn.disabled = false;
-    if(inputEl) inputEl.disabled = false;
-    if(inputEl) inputEl.focus();
-  }
+    const c=new URLSearchParams();
+    c.append('fields[NAME]',nom.split(' ')[0]);
+    c.append('fields[LAST_NAME]',nom.split(' ').slice(1).join(' '));
+    c.append('fields[PHONE][0][VALUE]','+57'+wa.replace(/\D/g,''));
+    c.append('fields[PHONE][0][VALUE_TYPE]','MOBILE');
+    c.append('fields[SOURCE_ID]','WEB');
+    c.append('fields[SOURCE_DESCRIPTION]','INSTALADOR · PPA Central · '+ciu);
+    await fetch(BX+'crm.contact.add',{method:'POST',body:c});
+    const n=new URLSearchParams();
+    n.append('fields[TITLE]','INSTALADOR · '+nom+' · '+ciu);
+    n.append('fields[STAGE_ID]','NEW');
+    n.append('fields[SOURCE_ID]','WEB');
+    n.append('fields[COMMENTS]','Quiere ser instalador PPA Central. Ciudad: '+ciu);
+    await fetch(BX+'crm.deal.add',{method:'POST',body:n});
+  }catch(e){}
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent('Hola PPA Central! Soy '+nom+' de '+ciu+' y me interesa ser instalador certificado.')}`,'_blank');
+  clI();
 }
 
-// ══════════════════════════════════════
-// FRASES DINÁMICAS — personalizadas por segmento y tipo
-// Cada visita diferente. Preparado para IA cuando conectemos API.
-// ══════════════════════════════════════
-const FRASES = {
-  casa: {
-    corredera:[
-      n=>`${n}, se acabó llegar a casa con lluvia esperando que alguien abra. Tu portón va a reconocerte solo. 🏠`,
-      n=>`${n}, tu casa merece que todo funcione sin que tengas que pensar en ello. Esto es exactamente eso.`,
-      n=>`${n}, cada llegada a casa debería ser fácil. Mira lo que encontré para ti:`,
-    ],
-    batiente:[
-      n=>`${n}, nada de forcejear con llaves ni esperar que alguien abra. Tu portón va a abrirse solo cuando llegues. 🏠`,
-      n=>`${n}, la comodidad empieza desde que doblas la esquina. Esto lo cambia todo:`,
-    ],
-    seccional:[
-      n=>`${n}, entrar al garaje debería ser lo más fácil del día. Con esto, lo será. 🏠`,
-      n=>`${n}, el garaje automático no es un lujo — es lo que ya tiene el vecino que va un paso adelante.`,
-    ],
-    default:[
-      n=>`${n}, tu casa tiene que funcionar para ti, no al revés. Mira lo que encontré:`,
-    ],
-  },
-  conjunto: {
-    barrera:[
-      n=>`${n}, los conjuntos que automatizan su acceso reducen incidentes en un 60%. El tuyo va a ser uno de ellos. 🏘`,
-      n=>`${n}, control de acceso real significa saber quién entra y cuándo. Esto lo resuelve:`,
-    ],
-    default:[
-      n=>`${n}, un conjunto bien automatizado vale más y da más tranquilidad. Mira lo que encontré:`,
-      n=>`${n}, la seguridad del conjunto empieza en el acceso. Esto es lo que te recomiendo:`,
-    ],
-  },
-  negocio: {
-    cortina:[
-      n=>`${n}, cada minuto que pierdes abriendo la cortina a mano es un cliente que no entra. Eso termina hoy. 🏪`,
-      n=>`${n}, tu local abierto en segundos. Sin llaves, sin esperas, sin complicaciones:`,
-    ],
-    corredera:[
-      n=>`${n}, en un negocio el tiempo es dinero. Un acceso automático lo devuelve con creces. Mira esto:`,
-    ],
-    default:[
-      n=>`${n}, automatizar tu negocio no es un gasto — es lo primero que notan tus clientes. Esto es lo que encontré:`,
-      n=>`${n}, los negocios que automatizan trabajan mejor, punto. Aquí está tu solución:`,
-    ],
-  },
-  industria: {
-    corredera:[
-      n=>`${n}, en operaciones industriales el tiempo de acceso impacta directamente la producción. Esto lo resuelve. 🏭`,
-      n=>`${n}, una bodega sin acceso automático pierde minutos que se convierten en costos. Esto cambia eso:`,
-    ],
-    barrera:[
-      n=>`${n}, control de acceso industrial significa trazabilidad y seguridad en cada movimiento. Aquí está:`,
-    ],
-    default:[
-      n=>`${n}, tu operación merece un acceso a la altura. Esto es lo que encontré para tu caso:`,
-      n=>`${n}, en industria la confiabilidad no es negociable. Por eso te recomiendo esto:`,
-    ],
-  },
+/* BITRIX evento */
+async function bx(titulo,comentario){
+  if(location.protocol==='file:')return;
+  try{
+    const n=new URLSearchParams();
+    n.append('fields[TITLE]',titulo);
+    n.append('fields[STAGE_ID]','NEW');
+    n.append('fields[SOURCE_ID]','WEB');
+    n.append('fields[COMMENTS]','Web PPA Central · '+(comentario||''));
+    await fetch(BX+'crm.deal.add',{method:'POST',body:n});
+  }catch(e){}
+}
+
+/* SEGMENTO */
+const SMSG={
+  casa:'Perfecto, <strong>Tu Casa</strong> es el segmento donde más libertad se siente. ¿Es portón de carro, puerta de garaje, o acceso peatonal? <em>Dime cuántos metros tiene y te recomiendo el motor exacto.</em> 🔶',
+  conjunto:'Los conjuntos tienen el reto más exigente: muchos carros, muchas exigencias. Para acceso en conjuntos necesito saber — <strong>¿cuántos carros entran y salen al día?</strong> Eso define si vamos con barrera o portón industrial.',
+  negocio:'<strong>Tu negocio no puede esperar.</strong> Cada segundo de puerta cerrada es un cliente que duda. Cuéntame: <em>¿es cortina metálica, portón de carro o barrera vehicular?</em> 🔶',
+  industria:'Industria — aquí no hay margen de error. PPA tiene motores hasta <strong>3000 kg de portón</strong>. ¿Cuánto pesa tu portón aproximadamente? ¿Y cuántos ciclos de apertura maneja al día?'
 };
-
-function getFraseDinamica(nombre, lugar, tipo){
-  const nombreCorto = nombre.split(' ')[0]||nombre;
-  const segFrases = FRASES[lugar]||FRASES.casa;
-  const tipoFrases = segFrases[tipo]||segFrases.default||FRASES.casa.default;
-  const pool = tipoFrases;
-  const idx = Math.floor(Math.random()*pool.length);
-  return pool[idx](nombreCorto);
+function selSeg(s){
+  document.querySelectorAll('.seg').forEach(c=>c.classList.toggle('sel',c.dataset.s===s));
+  const m=document.getElementById('heroMsg');
+  m.style.opacity='.3';
+  setTimeout(()=>{m.innerHTML=SMSG[s];m.style.opacity='1';},250);
+  setTimeout(()=>{goTo('nara-panel');addMsg('user','Me interesa automatizar: '+s);callNara('Mi espacio es: '+s+'. ¿Qué soluciones tienen?');},700);
 }
+function heroSend(){
+  const i=document.getElementById('hInp'),v=i.value.trim();if(!v)return;
+  i.value='';goTo('nara-panel');
+  setTimeout(()=>{addMsg('user',v);callNara(v);},350);
+}
+document.getElementById('hInp').addEventListener('keydown',e=>{if(e.key==='Enter')heroSend();});
 
-// ══════════════════════════════════════
-// ARRANCAR
-// ══════════════════════════════════════
-iniciarNara();
+/* CHAT */
+const hist=[];let busy=false;
+function addMsg(r,t){
+  const c=document.getElementById('chmsgs');
+  const d=document.createElement('div');d.className='cm '+r;
+  d.innerHTML=`<div class="cm-lbl">${r==='nara'?'NARA':'Tú'}</div><div class="cm-bub">${t.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>')}</div>`;
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function showTyp(){
+  const c=document.getElementById('chmsgs');
+  const d=document.createElement('div');d.className='cm nara';d.id='typ';
+  d.innerHTML=`<div class="cm-lbl">NARA</div><div class="typbub"><span></span><span></span><span></span></div>`;
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+function hideTyp(){const t=document.getElementById('typ');if(t)t.remove();}
+
+const SYS=`Eres NARA, la asesora de inteligencia artificial de PPA Central — Distribuidor Autorizado PPA Latam en Colombia, sede Florencia, Caquetá.
+
+PERSONALIDAD: Cálida, sofisticada, directa. Usas **negritas** para lo importante y *cursivas* para lo aspiracional. Máximo 3-4 párrafos cortos.
+
+ESTRATEGIA AIDA + SSG + JOLT:
+- ATTENTION: abre con un dato que golpee o una imagen mental.
+- INTEREST: personaliza. Habla del espacio del cliente, no del producto.
+- DESIRE: prueba social. "En este momento hay proyectos similares en tu ciudad."
+- ACTION: siempre el siguiente paso concreto. Nunca termines sin CTA.
+- SSG: si hay indecisión, comparte caso real. "La semana pasada instalamos un motor así en un conjunto de Florencia — el administrador quedó encantado."
+- JOLT: si hay objeción de precio, reencuadra. "Este motor se paga solo en tranquilidad en los primeros 6 meses."
+
+CATÁLOGO (precios referencia sin instalación):
+Corredizos residenciales: DZ STARK HOME desde $693.000, DZ HUB $750.000, DZ STARK $842.000, DZ RIO $1.076.000, DZ EURUS STEEL $1.671.000.
+Corredizos industriales: DZ INDUSTRIAL desde $1.692.000 (1000kg) hasta DZ BRUTALLE $4.450.000 (3000kg).
+Batientes: PIVO SK desde $1.153.000, PIVO HOME desde $1.683.000 (abre en 2.5 seg), PIVO CONDOMINIUM desde $1.662.000, PIVO LIGER $4.316.000.
+Seccionales: BH-W STEEL WiFi $1.030.000, BH URUS 24V desde $985.000, BH CADEMEX Jetflex $1.385.000.
+Barreras: KD2 $2.308.000, K1 $3.385.000, K10 24V $4.724.000, BARRIER Brushless $4.538.000, SEM PARAR $10.770.000.
+Cortinas: BR1-500 $1.762.000, ROLLER $848.000.
+
+REGLAS ABSOLUTAS:
+1. Solo precio cliente final (PSVP). NUNCA precio de instalador.
+2. Nunca inventes productos ni SKUs.
+3. Precio incluye visita técnica e instalación.
+4. WhatsApp: ${WA}
+5. Cierra mensajes importantes con: "Recuerda que eres Libre y Digital. 🔶"`;
+
+async function callNara(txt){
+  if(busy)return;busy=true;
+  hist.push({role:'user',content:txt});showTyp();
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':CK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:700,system:SYS,messages:hist})
+    });
+    const data=await r.json();
+    const resp=data?.content?.[0]?.text||'Hubo un inconveniente. Escríbeme por WhatsApp. 🔶';
+    hist.push({role:'assistant',content:resp});
+    hideTyp();addMsg('nara',resp);
+    if(hist.filter(m=>m.role==='user').length===1) bx('Chat NARA: '+txt.substring(0,60),txt);
+  }catch(e){hideTyp();addMsg('nara','Tuve un inconveniente técnico. Escríbeme por WhatsApp. 🔶');}
+  busy=false;
+}
+function chatSend(){
+  const i=document.getElementById('chinp'),v=i.value.trim();if(!v||busy)return;
+  i.value='';i.style.height='auto';addMsg('user',v);callNara(v);
+}
+function inject(t){goTo('nara-panel');setTimeout(()=>{addMsg('user',t);callNara(t);},300);}
+document.getElementById('chinp').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();chatSend();}});
+document.getElementById('chinp').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px';});
+
+/* NAV */
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
+function goTop(){window.scrollTo({top:0,behavior:'smooth'});return false;}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){clM();clI();}});
+window.addEventListener('scroll',()=>{
+  const s=['aspiraciones','nara-panel','nosotros'];
+  const p=document.querySelectorAll('.nav-lk');
+  let c=0;s.forEach((id,i)=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-80)c=i;});
+  p.forEach((lk,i)=>lk.classList.toggle('active',i===c));
+});
+
+/* SHEETS precios */
+(async()=>{
+  try{
+    const r=await Promise.race([fetch(SH),new Promise((_,rej)=>setTimeout(()=>rej(),4000))]);
+    const txt=await r.text();
+    const m=txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+    if(!m)return;
+    const rows=JSON.parse(m[1])?.table?.rows||[];
+    const mp={};
+    rows.forEach(row=>{const sku=row.c?.[4]?.v,p=row.c?.[10]?.v;if(sku&&p&&typeof p==='number'&&p>0)mp[String(sku).trim()]=p;});
+    if(Object.keys(mp).length>0){
+      Object.values(EQ).flat().forEach(eq=>{if(mp[eq.sku])eq.p=mp[eq.sku];});
+      renderVisual();
+    }
+  }catch(e){}
+})();
 </script>
 </body>
 </html>

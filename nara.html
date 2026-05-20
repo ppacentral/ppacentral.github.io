@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NARA · Asesora IA · PPA Central</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --org:#F47920;
+  --org2:#E8650A;
+  --azul:#005293;
+  --azul2:#003D6E;
+  --gris:#4D4F53;
+  --rojo:#C8102E;
+  --negro:#1A1A1A;
+  --bg:#0D0D0D;
+  --bg2:#141414;
+  --bg3:#1C1C1C;
+  --brd:#2A2A2A;
+  --txt:#F0EDE8;
+  --txt2:#A0998E;
+  --txt3:#6A6360;
+  --sidebar:240px;
+  --font:'Sora',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;background:var(--bg);color:var(--txt);font-family:var(--font);overflow:hidden;}
+
+/* ── LAYOUT ── */
+.shell{display:flex;height:100vh;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar);
+  min-width:var(--sidebar);
+  background:var(--bg2);
+  border-right:1px solid var(--brd);
+  display:flex;
+  flex-direction:column;
+  transition:width .3s;
+  overflow:hidden;
+  position:relative;
+  z-index:10;
+}
+.sidebar.collapsed{width:56px;min-width:56px;}
+
+.sb-logo{
+  padding:20px 16px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid var(--brd);
+  cursor:pointer;
+}
+.sb-logo-icon{
+  width:36px;height:36px;min-width:36px;
+  background:linear-gradient(135deg,var(--org),var(--org2));
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;color:#fff;
+  font-family:var(--font);
+}
+.sb-logo-text{
+  display:flex;flex-direction:column;
+  transition:opacity .2s;
+}
+.sb-logo-text .name{font-size:15px;font-weight:700;color:var(--txt);letter-spacing:-.01em;}
+.sb-logo-text .sub{font-size:10px;color:var(--org);font-weight:500;letter-spacing:.06em;text-transform:uppercase;}
+.sidebar.collapsed .sb-logo-text{opacity:0;pointer-events:none;width:0;overflow:hidden;}
+
+/* nav items */
+.sb-nav{flex:1;padding:12px 8px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;overflow-x:hidden;}
+.sb-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 10px;border-radius:10px;
+  cursor:pointer;
+  text-decoration:none;
+  color:var(--txt2);
+  font-size:13px;font-weight:500;
+  transition:all .15s;
+  white-space:nowrap;
+  position:relative;
+}
+.sb-item:hover{background:var(--bg3);color:var(--txt);}
+.sb-item.active{background:rgba(244,121,32,.12);color:var(--org);}
+.sb-item svg{width:18px;height:18px;min-width:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.sb-item .label{transition:opacity .2s;font-size:13px;}
+.sidebar.collapsed .sb-item .label{opacity:0;width:0;overflow:hidden;}
+.sb-item .dot{
+  width:7px;height:7px;border-radius:50%;
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  display:none;
+}
+.sb-item.active .dot{display:block;}
+
+/* color dots per section */
+.sb-item[data-color="org"] .dot{background:var(--org);}
+.sb-item[data-color="azul"] .dot{background:var(--azul);}
+.sb-item[data-color="gris"] .dot{background:var(--gris);}
+.sb-item[data-color="rojo"] .dot{background:var(--rojo);}
+.sb-item[data-color="neg"] .dot{background:#666;}
+
+.sb-sep{height:1px;background:var(--brd);margin:8px 4px;}
+.sb-section-label{
+  font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--txt3);padding:8px 12px 4px;
+  transition:opacity .2s;
+}
+.sidebar.collapsed .sb-section-label{opacity:0;height:0;overflow:hidden;padding:0;}
+
+/* color bar per nav item */
+.sb-item::before{
+  content:'';width:3px;height:0;border-radius:2px;
+  background:transparent;transition:all .2s;
+  position:absolute;left:0;top:50%;transform:translateY(-50%);
+}
+.sb-item.active::before{height:60%;}
+.sb-item[data-color="org"].active::before{background:var(--org);}
+.sb-item[data-color="azul"].active::before{background:var(--azul);}
+.sb-item[data-color="gris"].active::before{background:var(--gris);}
+.sb-item[data-color="rojo"].active::before{background:var(--rojo);}
+
+/* toggle */
+.sb-toggle{
+  padding:12px 8px;border-top:1px solid var(--brd);
+  display:flex;justify-content:flex-end;
+}
+.sb-toggle button{
+  background:none;border:1px solid var(--brd);color:var(--txt3);
+  width:32px;height:32px;border-radius:8px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.sb-toggle button:hover{background:var(--bg3);color:var(--txt);}
+.sb-toggle svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+
+/* panels */
+.panel{display:none;flex-direction:column;height:100%;overflow:hidden;}
+.panel.active{display:flex;}
+
+/* ── PANEL INICIO (NEUROLINGÜÍSTICO) ── */
+#p-inicio{
+  align-items:center;justify-content:center;
+  background:var(--bg);
+  position:relative;overflow:hidden;
+}
+.inicio-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 50%, rgba(244,121,32,.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 75% 40%, rgba(0,82,147,.05) 0%, transparent 60%);
+  pointer-events:none;
+}
+.inicio-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+}
+.inicio-content{
+  position:relative;z-index:1;
+  max-width:640px;
+  text-align:center;
+  padding:40px 24px;
+  animation:fadeUp .8s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+.inicio-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(244,121,32,.1);border:1px solid rgba(244,121,32,.25);
+  padding:6px 16px;border-radius:100px;
+  font-size:11px;font-weight:600;color:var(--org);letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:28px;
+}
+.inicio-badge span{width:7px;height:7px;background:var(--org);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}  }
+
+.inicio-h1{
+  font-size:clamp(36px,6vw,68px);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-.03em;
+  margin-bottom:20px;
+  color:var(--txt);
+}
+.inicio-h1 em{font-style:normal;color:var(--org);}
+
+.inicio-sub{
+  font-size:17px;line-height:1.65;
+  color:var(--txt2);
+  margin-bottom:40px;
+  font-weight:300;
+}
+.inicio-sub strong{color:var(--txt);font-weight:600;}
+
+.inicio-cta{
+  display:inline-flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,var(--org),var(--org2));
+  color:#fff;
+  border:none;border-radius:14px;
+  padding:16px 32px;
+  font-size:16px;font-weight:700;font-family:var(--font);
+  cursor:pointer;
+  transition:all .2s;
+  box-shadow:0 8px 32px rgba(244,121,32,.3);
+}
+.inicio-cta:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(244,121,32,.4);}
+.inicio-cta svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+.inicio-stats{
+  display:flex;gap:32px;justify-content:center;
+  margin-top:48px;padding-top:40px;
+  border-top:1px solid var(--brd);
+}
+.inicio-stat .num{font-size:28px;font-weight:800;color:var(--org);}
+.inicio-stat .lbl{font-size:11px;color:var(--txt3);font-weight:500;letter-spacing:.04em;margin-top:2px;}
+
+/* ── PANEL NARA CHAT ── */
+#p-nara{background:var(--bg);}
+
+.chat-header{
+  padding:16px 24px;
+  border-bottom:1px solid var(--brd);
+  display:flex;align-items:center;gap:14px;
+  background:var(--bg2);
+}
+.chat-avatar{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--org),var(--org2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;color:#fff;
+  position:relative;
+}
+.chat-avatar::after{
+  content:'';width:10px;height:10px;
+  background:#22C55E;border:2px solid var(--bg2);
+  border-radius:50%;position:absolute;bottom:-2px;right:-2px;
+}
+.chat-info .name{font-size:15px;font-weight:700;}
+.chat-info .status{font-size:12px;color:var(--txt3);}
+.chat-tools{margin-left:auto;display:flex;gap:8px;}
+.chat-tools button{
+  background:none;border:1px solid var(--brd);color:var(--txt3);
+  width:36px;height:36px;border-radius:9px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;font-size:15px;
+}
+.chat-tools button:hover{background:var(--bg3);color:var(--txt);}
+.chat-tools button.active{background:rgba(244,121,32,.15);border-color:rgba(244,121,32,.3);color:var(--org);}
+
+/* messages */
+.chat-msgs{
+  flex:1;overflow-y:auto;
+  padding:24px;
+  display:flex;flex-direction:column;gap:16px;
+  scroll-behavior:smooth;
+}
+.chat-msgs::-webkit-scrollbar{width:4px;}
+.chat-msgs::-webkit-scrollbar-track{background:transparent;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--brd);border-radius:2px;}
+
+.msg{display:flex;gap:12px;max-width:88%;}
+.msg.user{flex-direction:row-reverse;margin-left:auto;}
+.msg-avatar{
+  width:34px;height:34px;min-width:34px;
+  border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;
+}
+.msg.nara .msg-avatar{background:linear-gradient(135deg,var(--org),var(--org2));color:#fff;}
+.msg.user .msg-avatar{background:var(--azul);color:#fff;}
+
+.msg-bubble{
+  background:var(--bg3);
+  border:1px solid var(--brd);
+  border-radius:var(--radius);
+  padding:13px 16px;
+  font-size:14px;line-height:1.7;
+  color:var(--txt);
+}
+.msg.user .msg-bubble{
+  background:rgba(0,82,147,.2);
+  border-color:rgba(0,82,147,.3);
+}
+.msg-bubble p+p{margin-top:8px;}
+.msg-bubble strong{color:var(--org);font-weight:600;}
+.msg-bubble ul{margin:8px 0 4px 16px;}
+.msg-bubble li{margin:4px 0;}
+.msg-bubble code{
+  font-family:var(--mono);font-size:12px;
+  background:rgba(244,121,32,.1);padding:2px 6px;border-radius:4px;color:var(--org);
+}
+
+.msg-time{font-size:10px;color:var(--txt3);margin-top:6px;text-align:right;}
+.msg.nara .msg-time{text-align:left;}
+
+/* typing indicator */
+.typing-dots{display:flex;gap:4px;align-items:center;padding:4px 0;}
+.typing-dots span{
+  width:7px;height:7px;background:var(--org);border-radius:50%;
+  animation:bounce .9s infinite;
+}
+.typing-dots span:nth-child(2){animation-delay:.15s;}
+.typing-dots span:nth-child(3){animation-delay:.3s;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+
+/* input area */
+.chat-input-area{
+  padding:16px 24px 20px;
+  border-top:1px solid var(--brd);
+  background:var(--bg2);
+}
+.chat-input-wrap{
+  display:flex;align-items:flex-end;gap:10px;
+  background:var(--bg3);
+  border:1px solid var(--brd);
+  border-radius:16px;
+  padding:10px 10px 10px 16px;
+  transition:border-color .2s;
+  position:relative;
+}
+.chat-input-wrap:focus-within{border-color:rgba(244,121,32,.4);}
+
+#chat-input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--txt);font-family:var(--font);font-size:14px;
+  resize:none;min-height:22px;max-height:180px;
+  line-height:1.55;
+  scrollbar-width:none;
+}
+#chat-input::placeholder{color:var(--txt3);}
+
+.input-btns{display:flex;gap:6px;align-items:flex-end;}
+.input-btn{
+  width:36px;height:36px;border-radius:10px;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;font-size:16px;
+}
+.input-btn.mic{background:var(--bg2);color:var(--txt3);}
+.input-btn.mic:hover,.input-btn.mic.recording{background:rgba(244,121,32,.15);color:var(--org);}
+.input-btn.mic.recording{animation:micPulse 1s infinite;}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(244,121,32,.4);}50%{box-shadow:0 0 0 8px rgba(244,121,32,0);}}
+.input-btn.send{background:var(--org);color:#fff;}
+.input-btn.send:hover{background:var(--org2);}
+.input-btn.send:disabled{background:var(--bg3);color:var(--txt3);cursor:default;}
+.input-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+.chat-hint{
+  font-size:11px;color:var(--txt3);text-align:center;margin-top:10px;letter-spacing:.02em;
+}
+
+/* voice status bar */
+.voice-bar{
+  background:rgba(244,121,32,.08);border:1px solid rgba(244,121,32,.2);
+  border-radius:10px;padding:8px 14px;margin-bottom:10px;
+  font-size:12px;color:var(--org);
+  display:flex;align-items:center;gap:8px;
+  display:none;
+}
+.voice-bar.visible{display:flex;}
+.voice-bar svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+/* ── INFO PANELS ── */
+.info-panel{flex:1;overflow-y:auto;padding:32px;}
+.info-panel::-webkit-scrollbar{width:4px;}
+.info-panel::-webkit-scrollbar-thumb{background:var(--brd);border-radius:2px;}
+.info-h{
+  font-size:28px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;
+}
+.info-sub{font-size:14px;color:var(--txt2);margin-bottom:32px;line-height:1.6;}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.info-card{
+  background:var(--bg2);border:1px solid var(--brd);border-radius:14px;
+  padding:20px;transition:border-color .2s;
+}
+.info-card:hover{border-color:var(--org);}
+.info-card .ic-icon{font-size:28px;margin-bottom:12px;}
+.info-card .ic-title{font-size:15px;font-weight:700;margin-bottom:6px;}
+.info-card .ic-body{font-size:13px;color:var(--txt2);line-height:1.6;}
+.info-card .ic-price{
+  font-size:20px;font-weight:800;color:var(--org);
+  font-family:var(--mono);margin-top:10px;
+}
+.info-card .ic-sku{font-size:10px;color:var(--txt3);font-family:var(--mono);margin-top:2px;}
+
+/* ── CAT FILTER ── */
+.cat-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.cat-btn{
+  padding:7px 14px;border-radius:100px;border:1px solid var(--brd);
+  background:none;color:var(--txt2);font-size:12px;font-weight:500;font-family:var(--font);
+  cursor:pointer;transition:all .15s;
+}
+.cat-btn:hover{background:var(--bg3);color:var(--txt);}
+.cat-btn.active{background:rgba(244,121,32,.15);border-color:rgba(244,121,32,.35);color:var(--org);}
+
+/* ── CAPACITACION ── */
+.cap-item{
+  background:var(--bg2);border:1px solid var(--brd);border-radius:14px;
+  padding:24px;margin-bottom:14px;
+}
+.cap-item .ci-num{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--org);margin-bottom:8px;
+}
+.cap-item .ci-title{font-size:17px;font-weight:700;margin-bottom:8px;}
+.cap-item .ci-body{font-size:13px;color:var(--txt2);line-height:1.7;}
+.cap-item .ci-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+.cap-item .ci-tag{
+  font-size:11px;padding:4px 10px;border-radius:6px;
+  background:rgba(244,121,32,.1);color:var(--org);font-weight:500;
+}
+.cap-item .ci-tag.azul{background:rgba(0,82,147,.15);color:#60A0D4;}
+.cap-item .ci-tag.verde{background:rgba(34,197,94,.1);color:#4ADE80;}
+
+/* ── COMO LLEGAR ── */
+.llegar-section{margin-bottom:28px;}
+.llegar-section h3{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--org);}
+.llegar-step{
+  display:flex;gap:14px;margin-bottom:12px;align-items:flex-start;
+}
+.llegar-step .step-n{
+  width:28px;height:28px;min-width:28px;
+  background:rgba(244,121,32,.15);border:1px solid rgba(244,121,32,.3);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--org);
+}
+.llegar-step .step-body{font-size:13px;color:var(--txt2);line-height:1.6;padding-top:4px;}
+.llegar-step .step-body strong{color:var(--txt);}
+
+.contact-card{
+  background:linear-gradient(135deg,rgba(244,121,32,.1),rgba(0,82,147,.08));
+  border:1px solid rgba(244,121,32,.2);border-radius:14px;
+  padding:24px;margin-top:24px;
+}
+.contact-card h3{font-size:18px;font-weight:700;margin-bottom:16px;}
+.contact-item{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:12px;font-size:14px;color:var(--txt2);
+}
+.contact-item .ci-icon{font-size:18px;width:32px;text-align:center;}
+.contact-item strong{color:var(--txt);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;transform:translateX(-100%);}
+  .sidebar.mobile-open{transform:translateX(0);}
+  .main{width:100%;}
+  .inicio-stats{flex-wrap:wrap;gap:20px;}
+}
+
+/* ── SCROLLBAR global ── */
+*{scrollbar-width:thin;scrollbar-color:var(--brd) transparent;}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ══ SIDEBAR ══ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sb-logo" onclick="toggleSidebar()">
+    <div class="sb-logo-icon">N</div>
+    <div class="sb-logo-text">
+      <span class="name">NARA</span>
+      <span class="sub">PPA Central · IA</span>
+    </div>
+  </div>
+
+  <div class="sb-nav">
+    <div class="sb-section-label">Principal</div>
+    <a class="sb-item active" data-color="org" data-panel="p-inicio" onclick="goPanel('p-inicio',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="label">Inicio</span>
+      <span class="dot"></span>
+    </a>
+    <a class="sb-item" data-color="org" data-panel="p-nara" onclick="goPanel('p-nara',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg>
+      <span class="label">Hablar con NARA</span>
+      <span class="dot"></span>
+    </a>
+
+    <div class="sb-sep"></div>
+    <div class="sb-section-label">Información</div>
+
+    <a class="sb-item" data-color="azul" data-panel="p-catalogo" onclick="goPanel('p-catalogo',this)">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <span class="label">Catálogo PPA</span>
+      <span class="dot"></span>
+    </a>
+    <a class="sb-item" data-color="azul" href="index.html" target="_blank">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <span class="label">Página Web PPA</span>
+      <span class="dot"></span>
+    </a>
+    <a class="sb-item" data-color="azul" href="CotizadorPPA_v95_Central.html" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <span class="label">Cotizador</span>
+      <span class="dot"></span>
+    </a>
+
+    <div class="sb-sep"></div>
+    <div class="sb-section-label">Capacitación</div>
+
+    <a class="sb-item" data-color="gris" data-panel="p-edu" onclick="goPanel('p-edu',this)">
+      <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      <span class="label">Educación</span>
+      <span class="dot"></span>
+    </a>
+    <a class="sb-item" data-color="gris" data-panel="p-comercial" onclick="goPanel('p-comercial',this)">
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="label">Cap. Comercial</span>
+      <span class="dot"></span>
+    </a>
+    <a class="sb-item" data-color="rojo" data-panel="p-tecnica" onclick="goPanel('p-tecnica',this)">
+      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      <span class="label">Cap. Técnica</span>
+      <span class="dot"></span>
+    </a>
+    <a class="sb-item" data-color="rojo" data-panel="p-llegar" onclick="goPanel('p-llegar',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="label">¿Cómo llego?</span>
+      <span class="dot"></span>
+    </a>
+  </div>
+
+  <div class="sb-toggle">
+    <button onclick="toggleSidebar()">
+      <svg id="toggle-icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+  <!-- INICIO -->
+  <div class="panel active" id="p-inicio">
+    <div class="inicio-bg"></div>
+    <div class="inicio-grid"></div>
+    <div class="inicio-content">
+      <div class="inicio-badge">
+        <span></span>
+        IA Activa · PPA Central
+      </div>
+      <h1 class="inicio-h1">
+        La única asesora<br>que <em>sabe todo</em><br>de PPA.
+      </h1>
+      <p class="inicio-sub">
+        Soy <strong>NARA</strong> — la primera asesora de inteligencia artificial especializada en automatismos y seguridad de Colombia. Conozco <strong>255 productos</strong>, precios actualizados, aplicaciones técnicas y cada detalle de PPA Central.<br><br>
+        Pregúntame lo que necesites. Estoy disponible <strong>24/7</strong>, nunca me canso, nunca me equivoco en precios.
+      </p>
+      <button class="inicio-cta" onclick="goPanel('p-nara',document.querySelector('[data-panel=p-nara]'))">
+        Hablar con NARA ahora
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <div class="inicio-stats">
+        <div class="inicio-stat"><div class="num">255</div><div class="lbl">Productos</div></div>
+        <div class="inicio-stat"><div class="num">20+</div><div class="lbl">Categorías</div></div>
+        <div class="inicio-stat"><div class="num">24/7</div><div class="lbl">Disponible</div></div>
+        <div class="inicio-stat"><div class="num">40+</div><div class="lbl">Años PPA</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NARA CHAT -->
+  <div class="panel" id="p-nara">
+    <div class="chat-header">
+      <div class="chat-avatar">N</div>
+      <div class="chat-info">
+        <div class="name">NARA · Asesora IA PPA Central</div>
+        <div class="status" id="chat-status">Lista para ayudarte · 255 productos disponibles</div>
+      </div>
+      <div class="chat-tools">
+        <button title="Limpiar chat" onclick="clearChat()">🗑</button>
+        <button id="btn-voz" title="Activar/desactivar voz" onclick="toggleVoz()">🔊</button>
+      </div>
+    </div>
+
+    <div class="chat-msgs" id="chat-msgs">
+      <!-- mensajes dinámicos -->
+    </div>
+
+    <div class="chat-input-area">
+      <div class="voice-bar" id="voice-bar">
+        <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        <span id="voice-text">Escuchando...</span>
+      </div>
+      <div class="chat-input-wrap">
+        <textarea id="chat-input" placeholder="Pregúntame sobre productos, precios, instalaciones..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <div class="input-btns">
+          <button class="input-btn mic" id="btn-mic" title="Hablar" onclick="toggleMic()">
+            <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
+          </button>
+          <button class="input-btn send" id="btn-send" onclick="sendMsg()">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="chat-hint">NARA conoce los 255 productos PPA · Precios PSVP e Integrador · Potenciada por Anthropic</div>
+    </div>
+  </div>
+
+  <!-- CATÁLOGO -->
+  <div class="panel" id="p-catalogo">
+    <div class="info-panel">
+      <h1 class="info-h">Catálogo PPA Central</h1>
+      <p class="info-sub">255 productos · Lista de Precios Oficial 2025 · Rev. 1025</p>
+      <div class="cat-filter" id="cat-filter"></div>
+      <div class="info-grid" id="cat-grid"></div>
+    </div>
+  </div>
+
+  <!-- EDUCACIÓN -->
+  <div class="panel" id="p-edu">
+    <div class="info-panel">
+      <h1 class="info-h">Educación PPA</h1>
+      <p class="info-sub">Todo lo que necesitas saber sobre automatismos, seguridad y domótica PPA.</p>
+      <div class="cap-item">
+        <div class="ci-num">Módulo 01 · Fundamentos</div>
+        <div class="ci-title">¿Qué es PPA y por qué es la marca líder?</div>
+        <div class="ci-body">PPA es una empresa brasileña fundada hace más de 40 años, líder en América Latina en automatismos para portones, puertas, barreras y seguridad. Con presencia en más de 50 países y más de 4.000 productos globales. En Colombia opera como importador directo de fábrica con sedes en Bogotá y Medellín. <strong>PPA Central</strong> es el Distribuidor Autorizado en el sur del país, con sede en Florencia, Caquetá.</div>
+        <div class="ci-tags"><span class="ci-tag">Marca</span><span class="ci-tag azul">Historia</span><span class="ci-tag verde">Colombia</span></div>
+      </div>
+      <div class="cap-item">
+        <div class="ci-num">Módulo 02 · Tecnologías</div>
+        <div class="ci-title">Tecnologías PPA: MONO, LEGERO, JETFLEX, BRUSHLESS, 24V</div>
+        <div class="ci-body"><strong>MONO:</strong> Motor de inducción estándar. Económico, confiable. Ideal para uso residencial bajo ciclos.<br><br><strong>LEGERO:</strong> Motor de corriente contínua. Más silencioso y eficiente que MONO.<br><br><strong>JETFLEX:</strong> Motor DC de alta velocidad. Ciclos intensivos, rápido (desde 1.5 seg de apertura), el más vendido en aplicaciones comerciales.<br><br><strong>BRUSHLESS:</strong> Sin escobillas. Cero mantenimiento mecánico, vida útil extremadamente larga, para instalaciones de altísimo tráfico.<br><br><strong>24V:</strong> Funciona con batería integrada. El portón sigue abriendo aunque se vaya la luz.</div>
+        <div class="ci-tags"><span class="ci-tag">Técnico</span><span class="ci-tag azul">Motores</span></div>
+      </div>
+      <div class="cap-item">
+        <div class="ci-num">Módulo 03 · Ecosistema</div>
+        <div class="ci-title">PPA ON · Domótica y App</div>
+        <div class="ci-body">El ecosistema <strong>PPA ON</strong> conecta tus dispositivos al celular via Wi-Fi. Compatible con Alexa y Google Home. Incluye: bombillos LED RGB, tomas inteligentes, módulo Connect, interruptores TOUCH, cámaras Smart y alarmas. Todo controlable desde la app PPA ON sin necesidad de HUB central.</div>
+        <div class="ci-tags"><span class="ci-tag">Smart Home</span><span class="ci-tag verde">Alexa</span><span class="ci-tag verde">Google Home</span></div>
+      </div>
+      <div class="cap-item">
+        <div class="ci-num">Módulo 04 · Garantía y Soporte</div>
+        <div class="ci-title">Red de soporte PPA Central</div>
+        <div class="ci-body">PPA Central como Distribuidor Autorizado PPA Latam garantiza acceso a repuestos originales, soporte técnico especializado y capacitación certificada. La cadena de respaldo: <strong>PPA Brasil</strong> (fabricante) → <strong>PPA Latam / Colombia</strong> (importador) → <strong>PPA Central</strong> (distribuidor) → Cliente. Todos en la cadena cuidamos al usuario final.</div>
+        <div class="ci-tags"><span class="ci-tag">Garantía</span><span class="ci-tag azul">Soporte</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAPACITACIÓN COMERCIAL -->
+  <div class="panel" id="p-comercial">
+    <div class="info-panel">
+      <h1 class="info-h">Capacitación Comercial</h1>
+      <p class="info-sub">Herramientas, técnicas y conocimiento para cerrar más ventas con PPA.</p>
+      <div class="cap-item">
+        <div class="ci-num">Comercial 01</div>
+        <div class="ci-title">Los 4 segmentos de la Tribu Naranja</div>
+        <div class="ci-body"><strong>Tu Casa:</strong> Hogares, casas y fincas. Motor batiente, corredizo y seccional. Énfasis en comodidad, seguridad y valor estético.<br><br><strong>Tu Conjunto:</strong> Conjuntos residenciales y edificios. Barreras, puertas automáticas, motores condominium. Énfasis en tráfico intenso y control de acceso.<br><br><strong>Tu Negocio:</strong> Comercios, locales y pequeñas empresas. Cortinas enrollables, motores industriales, cámaras. Énfasis en seguridad y operación continua.<br><br><strong>Tu Empresa:</strong> Industrias y grandes proyectos. Barreras de alto ciclo, puertas automáticas WIND/TORE, control de acceso LPR. Énfasis en eficiencia y escala.</div>
+        <div class="ci-tags"><span class="ci-tag">Segmentación</span><span class="ci-tag azul">Tribu Naranja</span></div>
+      </div>
+      <div class="cap-item">
+        <div class="ci-num">Comercial 02</div>
+        <div class="ci-title">Modelo de precios: PSVP, Integrador, Distribuidor</div>
+        <div class="ci-body"><strong>PSVP</strong> (Precio Sugerido al Público Final): El precio que ve el cliente. Lista oficial 2025.<br><br><strong>Integrador</strong> = PSVP ÷ 1.35: Para instaladores certificados PPA. Incluye margen de instalación.<br><br><strong>Distribuidor</strong> = Integrador ÷ 1.15: Tu costo real como PPA Central.<br><br>Nunca rompas el PSVP hacia arriba sin justificación. Tu margen entre Distribuidor y PSVP es tu utilidad.</div>
+        <div class="ci-tags"><span class="ci-tag">Precios</span><span class="ci-tag verde">Márgenes</span></div>
+      </div>
+      <div class="cap-item">
+        <div class="ci-num">Comercial 03</div>
+        <div class="ci-title">Técnica de cierre: AIDA + SSG + JOLT</div>
+        <div class="ci-body"><strong>AIDA:</strong> Atención → Interés → Deseo → Acción.<br><strong>SSG:</strong> Situación → Solución → Garantía.<br><strong>JOLT:</strong> Judge the indecision → Offer recommendation → Limit exploration → Take the risk away.<br><br>Ejemplo práctico: "Entiendo que todavía lo está pensando. Déjeme recomendarle directamente el DZ STARK HOME Jetflex — en casas como la suya es el que mejor funciona. Si en 30 días no está satisfecho, lo resolvemos. ¿Cuándo hacemos la visita técnica?"</div>
+        <div class="ci-tags"><span class="ci-tag">Técnica</span><span class="ci-tag azul">Cierre</span><span class="ci-tag verde">AIDA</span></div>
+      </div>
+      <div class="cap-item">
+        <div class="ci-num">Comercial 04</div>
+        <div class="ci-title">Objeciones frecuentes y cómo manejarlas</div>
+        <div class="ci-body"><strong>"Es muy caro"</strong> → "Entiendo. ¿Cuánto vale para usted que su portón no falle nunca? PPA tiene 40 años de respaldo. Este motor le va a durar más que el portón."<br><br><strong>"Lo veo en internet más barato"</strong> → "Posiblemente. ¿Ese precio incluye instalación certificada, garantía en Florencia y soporte técnico directo? Aquí sí."<br><br><strong>"Lo tengo que consultar"</strong> → "¿Con quién lo consulta? Si quiere, le preparo una propuesta personalizada ahora mismo para que tenga todos los datos."</div>
+        <div class="ci-tags"><span class="ci-tag">Objeciones</span><span class="ci-tag azul">Manejo</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAPACITACIÓN TÉCNICA -->
+  <div class="panel" id="p-tecnica">
+    <div class="info-panel">
+      <h1 class="info-h">Capacitación Técnica</h1>
+      <p class="info-sub">Guía técnica de instalación, selección y configuración de productos PPA.</p>
+      <div class="cap-item">
+        <div class="ci-num">Técnico 01</div>
+        <div class="ci-title">Selección correcta de motor corredizo</div>
+        <div class="ci-body">El factor clave es el <strong>peso del portón en kg</strong> y los <strong>ciclos diarios</strong>.<br><br>• Hasta 400kg / 20 ciclos: DZ STARK HOME<br>• 400-650kg / 25-30 ciclos: DZ HUB o DZ STARK<br>• 650-850kg / 40-60 ciclos: DZ CUBE o DZ RIO<br>• Más de 1000kg / 50+ ciclos: DZ INDUSTRIAL<br>• 3000kg / uso intensivo: DZ BRUTALLE<br><br>Si el cliente quiere app y Alexa: agregar módulo PPA ON Connect (A408115, $185.000).</div>
+        <div class="ci-tags"><span class="ci-tag">Corredizo</span><span class="ci-tag azul">Selección</span></div>
+      </div>
+      <div class="cap-item">
+        <div class="ci-num">Técnico 02</div>
+        <div class="ci-title">Selección de motor batiente</div>
+        <div class="ci-body">Definir <strong>número de hojas</strong> (1 o 2) y <strong>largo de hoja en metros</strong>.<br><br>• 1 hoja hasta 2m / 20 ciclos: PIVO SK Mono Standar<br>• 1 hoja hasta 2m / 40 ciclos: PIVO HOME Jetflex<br>• 2 hojas / conjunto: PIVO CONDOMINIUM (1 hoja = $1.662.000 Jetflex Standar)<br>• Hojas grandes +6m: PIVO LIGER UNIVERSAL<br><br>Variantes: Standar (hasta 2.5m), Super (hasta 3.5m), Mega (hasta 4.5m).</div>
+        <div class="ci-tags"><span class="ci-tag">Batiente</span><span class="ci-tag azul">Selección</span></div>
+      </div>
+      <div class="cap-item">
+        <div class="ci-num">Técnico 03</div>
+        <div class="ci-title">Barreras vehiculares: ¿cuál elegir?</div>
+        <div class="ci-body">• <strong>KD2</strong>: 120 ciclos/día. Brazos hasta 3m. Pequeños parqueaderos. $2.308.000<br>• <strong>K1 Jetflex</strong>: 120-80 ciclos. Brazos 2-4m. Más rápida (1.5 seg). $3.385.000<br>• <strong>K10 24V</strong>: Brazos hasta 4.5m. Intensivo. $4.724.000<br>• <strong>BARRIER JF Brushless</strong>: 600 ciclos/día. Sin mantenimiento. $4.538.000<br>• <strong>SEM PARAR</strong>: 1200 ciclos/día. Peajes y tráfico muy intenso. $10.770.000<br><br>Agregar asta según largo requerido (Slim 3m Natural: A19906, $354.000).</div>
+        <div class="ci-tags"><span class="ci-tag">Barreras</span><span class="ci-tag rojo">Intensivo</span></div>
+      </div>
+      <div class="cap-item">
+        <div class="ci-num">Técnico 04</div>
+        <div class="ci-title">Sistemas de CCTV y Seguridad PPA</div>
+        <div class="ci-body"><strong>Cámaras Wi-Fi PPA ON:</strong> 360° interior ($185.000), Bullet externa ($200.000), PTZ exterior ($232.000). App PPA ON integrada.<br><br><strong>Cámaras IP Onvif:</strong> Domo/Bullet RTMP 4MPX PoE ($154.000), FullTime IA 4MPX ($216.000). Compatibles con cualquier NVR del mercado.<br><br><strong>Grabadores XVR:</strong> 4ch ($176.000), 8ch ($225.000), 16ch ($362.000). Detección facial incluida.<br><br><strong>Alarmas:</strong> Comunitaria HOOK Smart ($2.000.000), Central C36 ($340.000), C40 ($400.000).</div>
+        <div class="ci-tags"><span class="ci-tag">CCTV</span><span class="ci-tag azul">Alarmas</span><span class="ci-tag verde">PPA ON</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CÓMO LLEGAR -->
+  <div class="panel" id="p-llegar">
+    <div class="info-panel">
+      <h1 class="info-h">¿Cómo llegar a PPA Central?</h1>
+      <p class="info-sub">Todo lo que necesitas para empezar a trabajar con nosotros.</p>
+
+      <div class="llegar-section">
+        <h3>Para comprar como cliente final</h3>
+        <div class="llegar-step">
+          <div class="step-n">1</div>
+          <div class="step-body"><strong>Habla con NARA ahora mismo</strong> — cuéntale qué necesitas: tipo de portón, tamaño, uso. NARA te recomienda el producto exacto con precio.</div>
+        </div>
+        <div class="llegar-step">
+          <div class="step-n">2</div>
+          <div class="step-body"><strong>Solicita una visita técnica gratuita</strong> — un asesor de PPA Central va a tu ubicación, evalúa y te da la cotización formal.</div>
+        </div>
+        <div class="llegar-step">
+          <div class="step-n">3</div>
+          <div class="step-body"><strong>Instalación certificada</strong> — nuestro equipo técnico instala con estándares PPA Latam. Garantía incluida.</div>
+        </div>
+      </div>
+
+      <div class="llegar-section">
+        <h3>Para ser instalador / integrador PPA</h3>
+        <div class="llegar-step">
+          <div class="step-n">1</div>
+          <div class="step-body"><strong>Contáctanos por WhatsApp</strong> indicando que quieres unirte a la red de instaladores PPA Central.</div>
+        </div>
+        <div class="llegar-step">
+          <div class="step-n">2</div>
+          <div class="step-body"><strong>Capacitación y certificación</strong> — accedes a precios de integrador (PSVP ÷ 1.35), soporte técnico prioritario y materiales de venta.</div>
+        </div>
+        <div class="llegar-step">
+          <div class="step-n">3</div>
+          <div class="step-body"><strong>Escala tu negocio</strong> con el respaldo de PPA Latam y 40+ años de la marca más reconocida en automatismos de América Latina.</div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <h3>Contacto directo PPA Central</h3>
+        <div class="contact-item"><div class="ci-icon">📍</div><div>Calle 6 # 10 – 40 B. Las Avenidas, <strong>Florencia, Caquetá</strong></div></div>
+        <div class="contact-item"><div class="ci-icon">📱</div><div>WhatsApp: <strong>+57 317 777 2333</strong></div></div>
+        <div class="contact-item"><div class="ci-icon">🌐</div><div>Web: <strong>www.ppacentral.com</strong></div></div>
+        <div class="contact-item"><div class="ci-icon">📸</div><div>Instagram: <strong>@ppacentral</strong></div></div>
+        <div class="contact-item"><div class="ci-icon">🕐</div><div>Horario: Lunes a viernes 8am–6pm · Sábados 8am–2pm</div></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// DATOS: 255 PRODUCTOS PPA CENTRAL 2025
+// ══════════════════════════════════════════
+const PRODUCTOS=[{"num":"1","cat":"Motor Corredizo","familia":"DZ STARK HOME","variante":"Mono","sku":"E02243104","kg":"400 kg","vel":"14 seg","voltaje":"127V","ciclos":"20/día","aplicacion":"Residencial (Casa/Finca)","psvp":693000,"integrador":513333,"tecnologia":"MONO","incluye":"X4 Crem. Res. POP + x2 Controles"},{"num":"2","cat":"Motor Corredizo","familia":"DZ STARK HOME","variante":"Jetflex","sku":"E02252400","kg":"450 kg","vel":"4 seg","voltaje":"Bivolt","ciclos":"20/día","aplicacion":"Residencial (Casa/Finca)","psvp":1200000,"integrador":888889,"tecnologia":"JETFLEX","incluye":"X4 Crem. Res. POP + x2 Controles"},{"num":"3","cat":"Motor Corredizo","familia":"DZ HUB","variante":"Mono","sku":"E02130103","kg":"450 kg","vel":"13.5 seg","voltaje":"127V","ciclos":"30/día","aplicacion":"Residencial (Casa/Finca)","psvp":750000,"integrador":555556,"tecnologia":"MONO","incluye":"X4 Crem. Res. POP + x2 Controles"},{"num":"4","cat":"Motor Corredizo","familia":"DZ HUB","variante":"Legero","sku":"E02213101","kg":"500 kg","vel":"6.5 seg","voltaje":"Bivolt","ciclos":"30/día","aplicacion":"Residencial (Casa/Finca)","psvp":800000,"integrador":592593,"tecnologia":"LEGERO","incluye":"X4 Crem. Res. POP + x2 Controles"},{"num":"5","cat":"Motor Corredizo","familia":"DZ STARK","variante":"Mono","sku":"E02244102","kg":"600 kg","vel":"13.5 seg","voltaje":"127V","ciclos":"20/día","aplicacion":"Residencial (Casa/Finca)","psvp":842000,"integrador":623704,"tecnologia":"MONO","incluye":"X4 Crem. Res. POP + x2 Controles"},{"num":"6","cat":"Motor Corredizo","familia":"DZ STARK","variante":"Legero","sku":"E02249102","kg":"500 kg","vel":"8.5 seg","voltaje":"127V","ciclos":"20/día","aplicacion":"Residencial (Casa/Finca)","psvp":922000,"integrador":682963,"tecnologia":"LEGERO","incluye":"X4 Crem. Res. POP + x2 Controles"},{"num":"7","cat":"Motor Corredizo","familia":"DZ STARK","variante":"Jetflex","sku":"E02253400","kg":"650 kg","vel":"5.5 seg","voltaje":"Bivolt","ciclos":"25/día","aplicacion":"Residencial (Casa/Finca)","psvp":1402000,"integrador":1038519,"tecnologia":"JETFLEX","incluye":"X4 Crem. Res. POP + x2 Controles"},{"num":"8","cat":"Motor Corredizo","familia":"DZ CUBE (Eng. Acero)","variante":"Mono","sku":"E02147104","kg":"800 kg","vel":"13.5 seg","voltaje":"127V","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1080000,"integrador":800000,"tecnologia":"MONO","incluye":"X4 Crem. Metálica + x2 Controles"},{"num":"9","cat":"Motor Corredizo","familia":"DZ CUBE (Eng. Acero)","variante":"Jetflex Brushless","sku":"E02128403","kg":"850 kg","vel":"4.5 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1660000,"integrador":1229630,"tecnologia":"JETFLEX BRUSHLESS","incluye":"X4 Crem. Metálica + x2 Controles"},{"num":"10","cat":"Motor Corredizo","familia":"DZ CUBE","variante":"Jetflex 24V","sku":"E02271400","kg":"500 kg","vel":"5.5 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1925000,"integrador":1425926,"tecnologia":"JETFLEX 24V","incluye":"X4 Crem. Res. GOLD + x2 Controles"},{"num":"11","cat":"Motor Corredizo","familia":"DZ CUBE","variante":"Jetflex","sku":"E02127403","kg":"650 kg","vel":"4 seg","voltaje":"Bivolt","ciclos":"50/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1480000,"integrador":1096296,"tecnologia":"JETFLEX","incluye":"X4 Crem. Res. GOLD + x2 Controles"},{"num":"12","cat":"Motor Corredizo","familia":"DZ CUBE","variante":"Mono","sku":"E02147103","kg":"800 kg","vel":"13.5 seg","voltaje":"127V","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1076000,"integrador":797037,"tecnologia":"MONO","incluye":"X4 Crem. Res. GOLD + x2 Controles"},{"num":"13","cat":"Motor Corredizo","familia":"DZ CUBE","variante":"Jetflex Brushless","sku":"E02128401","kg":"850 kg","vel":"5.5 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1690000,"integrador":1251852,"tecnologia":"JETFLEX BRUSHLESS","incluye":"X4 Crem. Res. GOLD + x2 Controles"},{"num":"14","cat":"Motor Corredizo","familia":"DZ RIO (Eng. Acero)","variante":"Mono","sku":"E02481007","kg":"700 kg","vel":"13.5 seg","voltaje":"127V","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1082000,"integrador":801481,"tecnologia":"MONO","incluye":"X4 Crem. Metálica + x2 Controles"},{"num":"15","cat":"Motor Corredizo","familia":"DZ RIO","variante":"Mono","sku":"E02481005","kg":"700 kg","vel":"13.5 seg","voltaje":"127V","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1076000,"integrador":797037,"tecnologia":"MONO","incluye":"X4 Crem. Res. GOLD + x2 Controles"},{"num":"16","cat":"Motor Corredizo","familia":"DZ RIO","variante":"Jetflex","sku":"E02514006","kg":"800 kg","vel":"4.5 seg","voltaje":"Bivolt","ciclos":"70/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1655000,"integrador":1225926,"tecnologia":"JETFLEX","incluye":"X4 Crem. Res. GOLD + x2 Controles"},{"num":"17","cat":"Motor Corredizo","familia":"DZ RIO","variante":"Jetflex Brushless","sku":"E02111504","kg":"800 kg","vel":"5.5 seg","voltaje":"Bivolt","ciclos":"80/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1655000,"integrador":1225926,"tecnologia":"JETFLEX BRUSHLESS","incluye":"X4 Crem. Res. GOLD + x2 Controles"},{"num":"18","cat":"Motor Corredizo","familia":"DZ EURUS STEEL","variante":"Jetflex","sku":"E02834001","kg":"800 kg","vel":"4.5 seg","voltaje":"Bivolt","ciclos":"70/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1671000,"integrador":1237778,"tecnologia":"JETFLEX","incluye":"X4 Crem. Res. GOLD + x2 Controles"},{"num":"19","cat":"Motor Corredizo Ind.","familia":"DZ INDUSTRIAL (Eng. Acero)","variante":"Mono 1000kg","sku":"E06281002","kg":"1000 kg","vel":"18.5 seg","voltaje":"127V","ciclos":"50/día","aplicacion":"Industrial/Residencial","psvp":1692000,"integrador":1253333,"tecnologia":"MONO","incluye":"X4 Crem. Metálica + x2 Controles"},{"num":"20","cat":"Motor Corredizo Ind.","familia":"DZ INDUSTRIAL (Eng. Acero)","variante":"Jetflex 1500kg","sku":"E06264002","kg":"1500 kg","vel":"5.5 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":2616000,"integrador":1937778,"tecnologia":"JETFLEX","incluye":"X4 Crem. Metálica + x2 Controles"},{"num":"21","cat":"Motor Corredizo Ind.","familia":"DZ INDUSTRIAL (Eng. Acero)","variante":"Mono 2000kg","sku":"E06272002","kg":"2000 kg","vel":"18.5 seg","voltaje":"220V","ciclos":"40/día","aplicacion":"Industrial/Residencial","psvp":1846000,"integrador":1367407,"tecnologia":"MONO","incluye":"X4 Crem. Metálica + x2 Controles"},{"num":"22","cat":"Motor Corredizo Ind.","familia":"DZ INDUSTRIAL","variante":"Mono Fort 1000kg","sku":"E06281000","kg":"1000 kg","vel":"13 seg","voltaje":"127V","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":1692000,"integrador":1253333,"tecnologia":"MONO","incluye":"X4 Crem. Ind. GOLD + x2 Controles"},{"num":"23","cat":"Motor Corredizo Ind.","familia":"DZ INDUSTRIAL","variante":"Jetflex 1000kg","sku":"E06184003","kg":"1000 kg","vel":"5.5 seg","voltaje":"Bivolt","ciclos":"80/día","aplicacion":"Industrial/Residencial","psvp":2230000,"integrador":1651852,"tecnologia":"JETFLEX","incluye":"X4 Crem. Ind. GOLD + x2 Controles"},{"num":"24","cat":"Motor Corredizo Ind.","familia":"DZ INDUSTRIAL","variante":"Jetflex 1300kg","sku":"E06684000","kg":"1300 kg","vel":"4.5 seg","voltaje":"Bivolt","ciclos":"80/día","aplicacion":"Industrial/Residencial","psvp":2384000,"integrador":1765926,"tecnologia":"JETFLEX","incluye":"X4 Crem. Ind. GOLD + x2 Controles"},{"num":"25","cat":"Motor Corredizo Ind.","familia":"DZ INDUSTRIAL","variante":"Jetflex 1500kg","sku":"E06264001","kg":"1500 kg","vel":"4 seg","voltaje":"Bivolt","ciclos":"100/día","aplicacion":"Industrial/Residencial","psvp":2616000,"integrador":1937778,"tecnologia":"JETFLEX","incluye":"X4 Crem. Ind. GOLD + x2 Controles"},{"num":"26","cat":"Motor Corredizo Ind.","familia":"DZ INDUSTRIAL","variante":"Mono Eurus 2000kg","sku":"E06272000","kg":"2000 kg","vel":"13 seg","voltaje":"220V","ciclos":"80/día","aplicacion":"Industrial/Residencial","psvp":1846000,"integrador":1367407,"tecnologia":"MONO","incluye":"X4 Crem. Ind. GOLD + x2 Controles"},{"num":"27","cat":"Motor Corredizo Ind.","familia":"DZ INDUSTRIAL","variante":"Jetflex Brushless 2200kg","sku":"E06614002","kg":"2200 kg","vel":"5 seg","voltaje":"Bivolt","ciclos":"120 Intensivo","aplicacion":"Industrial/Residencial","psvp":2692000,"integrador":1994074,"tecnologia":"JETFLEX BRUSHLESS","incluye":"X4 Crem. Ind. GOLD + x2 Controles"},{"num":"28","cat":"Motor Corredizo Ind.","familia":"DZ BRUTALLE (Eng. Acero)","variante":"Jetflex 3000kg","sku":"E06704002","kg":"3000 kg","vel":"7 seg","voltaje":"Bivolt","ciclos":"150 Intensivo","aplicacion":"Industrial/Residencial","psvp":4450000,"integrador":3296296,"tecnologia":"JETFLEX","incluye":"X4 Crem. Ind. GOLD + x2 Controles"},{"num":"29","cat":"Motor Corredizo Ind.","familia":"DZ VANTAGGIO IND (Cadena Acero)","variante":"Jetflex 2000kg","sku":"E06875000","kg":"2000 kg","vel":"6.5 seg","voltaje":"Bivolt","ciclos":"70/día","aplicacion":"Industrial/Residencial","psvp":4221000,"integrador":3126667,"tecnologia":"JETFLEX","incluye":"X5 mts Cadena ASA 40 + x2 Controles"},{"num":"30","cat":"Motor Corredizo Ind.","familia":"DF PREDIAL (Tornillo Sin Fin)","variante":"Mono 400kg","sku":"E04161001","kg":"400 kg","vel":"11 seg","voltaje":"127V","ciclos":"50/día","aplicacion":"Industrial/Residencial","psvp":1900000,"integrador":1407407,"tecnologia":"MONO","incluye":"Riel 3 mts + x2 Controles"},{"num":"31","cat":"Cremallera","familia":"Cremallera Residencial POP","variante":"1 mts","sku":"A16768","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":40000,"integrador":29630,"tecnologia":"—","incluye":""},{"num":"32","cat":"Cremallera","familia":"Cremallera Residencial GOLD","variante":"1 mts","sku":"A16771","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":60000,"integrador":44444,"tecnologia":"—","incluye":""},{"num":"33","cat":"Cremallera","familia":"Cremallera Industrial GOLD","variante":"1 mts","sku":"A16811","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":102000,"integrador":75556,"tecnologia":"—","incluye":""},{"num":"34","cat":"Cremallera","familia":"Cremallera Acero","variante":"1 mts","sku":"P31394","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":54000,"integrador":40000,"tecnologia":"—","incluye":""},{"num":"35","cat":"Cremallera","familia":"Cremallera Puerta Social RAC","variante":"55 cm","sku":"A17988","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":130000,"integrador":96296,"tecnologia":"—","incluye":""},{"num":"36","cat":"Motor Batiente","familia":"PIVO SK MONOFASICO 1 Hoja","variante":"Mono Standar 2m","sku":"E03481004","kg":"125 kg","vel":"9.5 seg","voltaje":"127V","ciclos":"20/día","aplicacion":"Residencial (Casa/Finca)","psvp":1153000,"integrador":854074,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"37","cat":"Motor Batiente","familia":"PIVO SK MONOFASICO 1 Hoja","variante":"Mono Super 3m","sku":"E03481005","kg":"125 kg","vel":"16.5 seg","voltaje":"127V","ciclos":"20/día","aplicacion":"Residencial (Casa/Finca)","psvp":1216000,"integrador":900741,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"38","cat":"Motor Batiente","familia":"PIVO HOME 1 Hoja","variante":"Jetflex Standart 2m","sku":"E03414004 + A17818","kg":"125 kg","vel":"2.5 seg","voltaje":"Bivolt","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1683000,"integrador":1246667,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"39","cat":"Motor Batiente","familia":"PIVO HOME 1 Hoja","variante":"Jetflex Super 3m","sku":"E03414004 + A17819","kg":"125 kg","vel":"4.5 seg","voltaje":"Bivolt","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1771000,"integrador":1311852,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"40","cat":"Motor Batiente","familia":"PIVO SK MONOFASICO Doble Hoja","variante":"Mono Standart 2m","sku":"E03481000","kg":"125 kg","vel":"9.5 seg","voltaje":"127V","ciclos":"20/día","aplicacion":"Residencial (Casa/Finca)","psvp":1676000,"integrador":1241481,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"41","cat":"Motor Batiente","familia":"PIVO SK MONOFASICO Doble Hoja","variante":"Mono Super 3m","sku":"E03481001","kg":"125 kg","vel":"16.5 seg","voltaje":"127V","ciclos":"20/día","aplicacion":"Residencial (Casa/Finca)","psvp":1800000,"integrador":1333333,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"42","cat":"Motor Batiente","familia":"PIVO HOME Doble Hoja","variante":"Jetflex Standart 2m","sku":"E03414005 + A17818","kg":"125 kg","vel":"2.5 seg","voltaje":"Bivolt","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":2495000,"integrador":1848148,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"43","cat":"Motor Batiente","familia":"PIVO HOME Doble Hoja","variante":"Jetflex Super 3m","sku":"E03414005 + A17819","kg":"125 kg","vel":"4.5 seg","voltaje":"Bivolt","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":2671000,"integrador":1978519,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"44","cat":"Motor Batiente","familia":"PIVO AVION Doble Hoja","variante":"Mono 1.5m","sku":"E03371000+F51062000","kg":"250 kg","vel":"8 seg","voltaje":"127V","ciclos":"30/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1326000,"integrador":982222,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"45","cat":"Motor Batiente","familia":"PIVO AVION Doble Hoja","variante":"Mono 2m","sku":"E03371000+F51062001","kg":"250 kg","vel":"11 seg","voltaje":"127V","ciclos":"30/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1402000,"integrador":1038519,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"46","cat":"Motor Batiente","familia":"PIVO AVION Doble Hoja","variante":"Mono 2.95m","sku":"E03371000+F51062003","kg":"250 kg","vel":"16 seg","voltaje":"127V","ciclos":"30/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1460000,"integrador":1081481,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"47","cat":"Motor Batiente","familia":"PIVO SK CONDOMINIUM 1 Hoja","variante":"Jetflex Standart 2m","sku":"E07154004","kg":"300 kg","vel":"6 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1662000,"integrador":1231111,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"48","cat":"Motor Batiente","familia":"PIVO SK CONDOMINIUM 1 Hoja","variante":"Jetflex Super 3.5m","sku":"E07124014","kg":"300 kg","vel":"12 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1800000,"integrador":1333333,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"49","cat":"Motor Batiente","familia":"PIVO SK CONDOMINIUM 1 Hoja","variante":"Jetflex Mega 4.5m","sku":"E07194005","kg":"300 kg","vel":"16 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":2048000,"integrador":1517037,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"50","cat":"Motor Batiente","familia":"PIVO SK CONDOMINIUM Doble Hoja","variante":"Jetflex Standart 2m","sku":"E07154003","kg":"300 kg","vel":"6 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":3062000,"integrador":2268148,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"51","cat":"Motor Batiente","familia":"PIVO SK CONDOMINIUM Doble Hoja","variante":"Jetflex Super 3.5m","sku":"E07124011","kg":"300 kg","vel":"12 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":3383000,"integrador":2505926,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"52","cat":"Motor Batiente","familia":"PIVO SK CONDOMINIUM Doble Hoja","variante":"Jetflex Mega 4.5m","sku":"E07194003","kg":"300 kg","vel":"16 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":3670000,"integrador":2718519,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"53","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM 1 Hoja","variante":"Mono Standart 2.5m","sku":"E07161001+A16510","kg":"300 kg","vel":"8.5 seg","voltaje":"127V","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":1668000,"integrador":1235556,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"54","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM 1 Hoja","variante":"Mono Super 3.5m","sku":"E07161001+A16511","kg":"300 kg","vel":"16 seg","voltaje":"127V","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":1806000,"integrador":1337778,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"55","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM 1 Hoja","variante":"Mono Mega 4.5m","sku":"E07161001+A16512","kg":"300 kg","vel":"21.5 seg","voltaje":"127V","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":2006000,"integrador":1485926,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"56","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM 1 Hoja","variante":"Jetflex Standart 2.5m Continuo","sku":"E07194001+A16510","kg":"350 kg","vel":"2.5 seg","voltaje":"Bivolt","ciclos":"Continuo","aplicacion":"Industrial/Residencial","psvp":2200000,"integrador":1629630,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"57","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM 1 Hoja","variante":"Jetflex Super 3.5m Continuo","sku":"E07194001+A16511","kg":"350 kg","vel":"5 seg","voltaje":"Bivolt","ciclos":"Continuo","aplicacion":"Industrial/Residencial","psvp":2338000,"integrador":1731852,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"58","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM 1 Hoja","variante":"Jetflex Mega 4.5m Continuo","sku":"E07194001+A16512","kg":"350 kg","vel":"6.5 seg","voltaje":"Bivolt","ciclos":"Continuo","aplicacion":"Industrial/Residencial","psvp":2538000,"integrador":1880000,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"59","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM 1 Hoja","variante":"JF Brushless Standart 2.5m Intensivo","sku":"E03434001+A16510","kg":"350 kg","vel":"4.5 seg","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"Industrial/Residencial","psvp":2200000,"integrador":1629630,"tecnologia":"JETFLEX BRUSHLESS","incluye":"x2 Controles"},{"num":"60","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM 1 Hoja","variante":"JF Brushless Super 3.5m Intensivo","sku":"E03434001+A16511","kg":"350 kg","vel":"8 seg","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"Industrial/Residencial","psvp":2338000,"integrador":1731852,"tecnologia":"JETFLEX BRUSHLESS","incluye":"x2 Controles"},{"num":"61","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM 1 Hoja","variante":"JF Brushless Mega 4.5m Intensivo","sku":"E03434001+A16512","kg":"350 kg","vel":"11 seg","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"Industrial/Residencial","psvp":2538000,"integrador":1880000,"tecnologia":"JETFLEX BRUSHLESS","incluye":"x2 Controles"},{"num":"62","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM Doble Hoja","variante":"Mono Standart 2.5m","sku":"E07161000+A16510 x2","kg":"300 kg","vel":"8.5 seg","voltaje":"127V","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":2846000,"integrador":2108148,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"63","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM Doble Hoja","variante":"Mono Super 3.5m","sku":"E07161000+A16511 x2","kg":"300 kg","vel":"16 seg","voltaje":"127V","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":3122000,"integrador":2312593,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"64","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM Doble Hoja","variante":"Mono Mega 4.5m","sku":"E07161000+A16512 x2","kg":"300 kg","vel":"21.5 seg","voltaje":"127V","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":3522000,"integrador":2608889,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"65","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM Doble Hoja","variante":"Jetflex Standart 2.5m Continuo","sku":"E07194000+A16510 x2","kg":"350 kg","vel":"2.5 seg","voltaje":"Bivolt","ciclos":"Continuo","aplicacion":"Industrial/Residencial","psvp":3460000,"integrador":2562963,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"66","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM Doble Hoja","variante":"Jetflex Super 3.5m Continuo","sku":"E07194000+A16511 x2","kg":"350 kg","vel":"5 seg","voltaje":"Bivolt","ciclos":"Continuo","aplicacion":"Industrial/Residencial","psvp":3736000,"integrador":2767407,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"67","cat":"Motor Batiente","familia":"PIVO CONDOMINIUM Doble Hoja","variante":"Jetflex Mega 4.5m Continuo","sku":"E07194000+A16512 x2","kg":"350 kg","vel":"4.5 seg","voltaje":"Bivolt","ciclos":"Continuo","aplicacion":"Industrial/Residencial","psvp":4136000,"integrador":3063704,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"68","cat":"Motor Batiente","familia":"PIVO LIGER UNIVERSAL 1 Hoja","variante":"Mono 9m/500kg","sku":"E07042001","kg":"500 kg","vel":"5 seg","voltaje":"220V","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":4316000,"integrador":3197037,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"69","cat":"Motor Batiente","familia":"PIVO LIGER UNIVERSAL 1 Hoja","variante":"Mono 6m/300kg","sku":"E07231000","kg":"300 kg","vel":"8 seg","voltaje":"127V","ciclos":"30/día","aplicacion":"Industrial/Residencial","psvp":2230000,"integrador":1651852,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"70","cat":"Motor Basculante","familia":"BV HOME","variante":"Mono 2.8m 300kg","sku":"E01100100+A16968","kg":"300 kg","vel":"16.5 seg","voltaje":"127V","ciclos":"30/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1194000,"integrador":884444,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"71","cat":"Motor Basculante","familia":"BV HOME","variante":"Mono 4m 300kg","sku":"E01100100+A18014","kg":"300 kg","vel":"18.5 seg","voltaje":"127V","ciclos":"30/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1498000,"integrador":1109630,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"72","cat":"Motor Basculante","familia":"BV HOME","variante":"Jetflex 2.85m 350kg","sku":"E01101401+A16968","kg":"350 kg","vel":"3.5 seg","voltaje":"Bivolt","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1924000,"integrador":1425185,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"73","cat":"Motor Basculante","familia":"BV HOME","variante":"Jetflex 4m 350kg","sku":"E01101401+A18014","kg":"350 kg","vel":"4.5 seg","voltaje":"Bivolt","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":2228000,"integrador":1650370,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"74","cat":"Motor Basculante","familia":"BV PENTA CONDOMINIUM","variante":"Jetflex 3m 450kg","sku":"E01104429+A17025","kg":"450 kg","vel":"3 seg","voltaje":"Bivolt","ciclos":"80/día","aplicacion":"Industrial/Residencial","psvp":2386000,"integrador":1767407,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"75","cat":"Motor Basculante","familia":"BV PENTA CONDOMINIUM","variante":"Jetflex 6m 450kg","sku":"E01104429+A17058","kg":"450 kg","vel":"5.5 seg","voltaje":"Bivolt","ciclos":"80/día","aplicacion":"Industrial/Residencial","psvp":2786000,"integrador":2063704,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"76","cat":"Motor Basculante","familia":"BV TORSION","variante":"Mono 400kg","sku":"E05122000","kg":"400 kg","vel":"12 seg","voltaje":"220V","ciclos":"60/día","aplicacion":"Industrial/Residencial","psvp":2154000,"integrador":1595556,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"77","cat":"Motor Basculante","familia":"BV TORSION","variante":"Jetflex 450kg","sku":"E05124000","kg":"450 kg","vel":"4 seg","voltaje":"Bivolt","ciclos":"70/día","aplicacion":"Industrial/Residencial","psvp":3230000,"integrador":2392593,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"78","cat":"Motor Seccional","familia":"BH-W STEEL con WiFi","variante":"Mono 100kg","sku":"E04661000","kg":"100 kg","vel":"20 seg","voltaje":"127V","ciclos":"25/día","aplicacion":"Residencial (Casa/Finca)","psvp":1030000,"integrador":762963,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"79","cat":"Motor Seccional","familia":"BH URUS 24V","variante":"800N 127V","sku":"E04671003","kg":"—","vel":"16 seg","voltaje":"127V","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":940000,"integrador":696296,"tecnologia":"24V","incluye":"x2 Controles + Riel C 3m"},{"num":"80","cat":"Motor Seccional","familia":"BH URUS 24V","variante":"1.000N 127V","sku":"E04671004","kg":"—","vel":"16 seg","voltaje":"127V","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":985000,"integrador":729630,"tecnologia":"24V","incluye":"x2 Controles + Riel C 3m"},{"num":"81","cat":"Motor Seccional","familia":"BH URUS 24V","variante":"1.200N Bivolt","sku":"E04671005","kg":"—","vel":"8 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1062000,"integrador":786667,"tecnologia":"24V","incluye":"x2 Controles + Riel C 3m"},{"num":"82","cat":"Motor Seccional","familia":"BH URUS 24V — Riel C","variante":"Riel Completo 3m","sku":"A22970","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":230000,"integrador":170370,"tecnologia":"—","incluye":""},{"num":"83","cat":"Motor Seccional","familia":"BH URUS 24V — Riel C","variante":"Ext 1m Riel C","sku":"A22973","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":124000,"integrador":91852,"tecnologia":"—","incluye":""},{"num":"84","cat":"Motor Seccional","familia":"BH POWER BOLT","variante":"Jetflex 350kg 2.7m","sku":"E04544001+F53012016","kg":"350 kg","vel":"8 seg","voltaje":"Bivolt","ciclos":"40/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1430000,"integrador":1059259,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"85","cat":"Motor Seccional","familia":"BH CADEMEX","variante":"Mono 350kg sin riel","sku":"E04441006","kg":"350 kg","vel":"19 seg","voltaje":"127V","ciclos":"50/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1000000,"integrador":740741,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"86","cat":"Motor Seccional","familia":"BH CADEMEX","variante":"Jetflex 450kg sin riel","sku":"E04474004","kg":"450 kg","vel":"5.5 seg","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"Casa/Finca/Unid.Res.Pequeña","psvp":1385000,"integrador":1025926,"tecnologia":"JETFLEX","incluye":"x2 Controles"},{"num":"87","cat":"Motor Seccional","familia":"BH CADEMEX — Riel T","variante":"Riel T Completo 3m","sku":"A22969","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":446000,"integrador":330370,"tecnologia":"—","incluye":""},{"num":"88","cat":"Motor Seccional","familia":"BH CADEMEX — Riel T","variante":"Ext 1m Riel T","sku":"A22973","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":160000,"integrador":118519,"tecnologia":"—","incluye":""},{"num":"89","cat":"Motor Cortina","familia":"BR1-500","variante":"Mono 500kg","sku":"E05132002","kg":"500 kg","vel":"6 m/min","voltaje":"220V","ciclos":"6/día","aplicacion":"Uso comercial","psvp":1762000,"integrador":1305185,"tecnologia":"MONO","incluye":"x1 Control BR1"},{"num":"90","cat":"Motor Cortina","familia":"ROLLER","variante":"Mono 300kg","sku":"E09331001","kg":"300 kg","vel":"5.3 m/min","voltaje":"127V","ciclos":"10/día","aplicacion":"Uso comercial","psvp":848000,"integrador":628148,"tecnologia":"MONO","incluye":"x2 Controles"},{"num":"91","cat":"Barrera","familia":"KD2","variante":"Legero 120 ciclos / 1-3m","sku":"E08163000","kg":"—","vel":"4 seg","voltaje":"220V","ciclos":"120/día","aplicacion":"Pequeños y medianos parqueaderos","psvp":2308000,"integrador":1709630,"tecnologia":"LEGERO","incluye":"—"},{"num":"92","cat":"Barrera","familia":"KD2 — Asta Slim","variante":"3m Natural","sku":"A19906","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":354000,"integrador":262222,"tecnologia":"—","incluye":""},{"num":"93","cat":"Barrera","familia":"KD2 — Asta Slim","variante":"3m Blanco","sku":"A19601","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":430000,"integrador":318519,"tecnologia":"—","incluye":""},{"num":"94","cat":"Barrera","familia":"KD2 — Asta Slim","variante":"3m con LED","sku":"A19417","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":992000,"integrador":734815,"tecnologia":"—","incluye":""},{"num":"95","cat":"Barrera","familia":"K1","variante":"Jetflex 120-80 ciclos / 2-4m","sku":"F08184001","kg":"—","vel":"1.5-2 seg","voltaje":"Bivolt","ciclos":"120-80/día","aplicacion":"Pequeños y medianos parqueaderos","psvp":3385000,"integrador":2507407,"tecnologia":"JETFLEX","incluye":"—"},{"num":"96","cat":"Barrera","familia":"K1 — Asta Slim","variante":"3m Natural","sku":"A19906","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":354000,"integrador":262222,"tecnologia":"—","incluye":""},{"num":"97","cat":"Barrera","familia":"K1 — Asta Slim","variante":"3m Blanco","sku":"A19601","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":430000,"integrador":318519,"tecnologia":"—","incluye":""},{"num":"98","cat":"Barrera","familia":"K1 — Asta Slim","variante":"3m con LED","sku":"A19417","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":992000,"integrador":734815,"tecnologia":"—","incluye":""},{"num":"99","cat":"Barrera","familia":"K1 — Asta Slim","variante":"4m Blanco","sku":"A19604","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":662000,"integrador":490370,"tecnologia":"—","incluye":""},{"num":"100","cat":"Barrera","familia":"K1 — Asta Slim","variante":"4m con LED","sku":"A19420","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":1247000,"integrador":923704,"tecnologia":"—","incluye":""},{"num":"101","cat":"Barrera","familia":"BARRIER JF Brushless","variante":"600 ciclos 2-3m","sku":"F08104073","kg":"—","vel":"1.5 seg","voltaje":"Bivolt","ciclos":"600/día","aplicacion":"Grandes parqueaderos","psvp":4538000,"integrador":3361481,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"102","cat":"Barrera","familia":"BARRIER JF Brushless","variante":"300 ciclos 3-5m","sku":"F08104081","kg":"—","vel":"3 seg","voltaje":"Bivolt","ciclos":"300/día","aplicacion":"Grandes parqueaderos","psvp":4538000,"integrador":3361481,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"103","cat":"Barrera","familia":"BARRIER — Asta Rect.","variante":"3m","sku":"A17068","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":431000,"integrador":319259,"tecnologia":"—","incluye":""},{"num":"104","cat":"Barrera","familia":"BARRIER — Asta Rect.","variante":"3m con LED","sku":"F60010002","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":1092000,"integrador":808889,"tecnologia":"—","incluye":""},{"num":"105","cat":"Barrera","familia":"BARRIER — Asta Rect.","variante":"4m sin unión","sku":"A170744M","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":738000,"integrador":546667,"tecnologia":"—","incluye":""},{"num":"106","cat":"Barrera","familia":"BARRIER — Asta Rect.","variante":"5m sin unión","sku":"A170745M","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":754000,"integrador":558519,"tecnologia":"—","incluye":""},{"num":"107","cat":"Barrera","familia":"BARRIER — Asta Rect.","variante":"6m","sku":"A17074","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":846000,"integrador":626667,"tecnologia":"—","incluye":""},{"num":"108","cat":"Barrera","familia":"BARRIER — Asta Rect.","variante":"6m con LED","sku":"F60010008","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":1646000,"integrador":1219259,"tecnologia":"—","incluye":""},{"num":"109","cat":"Barrera","familia":"BARRIER — Asta Articulada","variante":"6m (se corta a medida)","sku":"F05234","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":985000,"integrador":729630,"tecnologia":"—","incluye":""},{"num":"110","cat":"Barrera","familia":"K10 — Jetflex 24V","variante":"Intenso / 2-4.5m","sku":"F08154005","kg":"—","vel":"2-4 seg","voltaje":"Bivolt","ciclos":"Intenso","aplicacion":"Grandes parqueaderos","psvp":4724000,"integrador":3499259,"tecnologia":"JETFLEX 24V","incluye":"—"},{"num":"111","cat":"Barrera","familia":"K10 — Asta Slim","variante":"3m Natural","sku":"A19906","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":354000,"integrador":262222,"tecnologia":"—","incluye":""},{"num":"112","cat":"Barrera","familia":"K10 — Asta Slim","variante":"3m Blanco","sku":"A19601","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":430000,"integrador":318519,"tecnologia":"—","incluye":""},{"num":"113","cat":"Barrera","familia":"K10 — Asta Slim","variante":"3m con LED","sku":"A19417","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":992000,"integrador":734815,"tecnologia":"—","incluye":""},{"num":"114","cat":"Barrera","familia":"K10 — Asta Slim","variante":"4.5m Blanco","sku":"A19604","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":662000,"integrador":490370,"tecnologia":"—","incluye":""},{"num":"115","cat":"Barrera","familia":"K10 — Asta Slim","variante":"4.5m con LED","sku":"A19420","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":1247000,"integrador":923704,"tecnologia":"—","incluye":""},{"num":"116","cat":"Barrera","familia":"BC1 — Jetflex (Cadena)","variante":"Hasta 16m","sku":"E08144000","kg":"—","vel":"0.5 seg","voltaje":"Bivolt","ciclos":"40/día","aplicacion":"Medianos y pequeños parqueaderos","psvp":3154000,"integrador":2336296,"tecnologia":"JETFLEX","incluye":"—"},{"num":"117","cat":"Barrera","familia":"BC1 — Rampa","variante":"1 metro","sku":"A18740","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":338000,"integrador":250370,"tecnologia":"—","incluye":""},{"num":"118","cat":"Barrera","familia":"SEM PARAR — JF Brushless","variante":"1200 ciclos / 3m (brazo incl.)","sku":"F08032000","kg":"—","vel":"1.5 seg","voltaje":"Bivolt","ciclos":"1200/día","aplicacion":"Tráfico muy intenso y peajes","psvp":10770000,"integrador":7977778,"tecnologia":"JETFLEX BRUSHLESS","incluye":"Brazo incluido"},{"num":"119","cat":"Puerta Automática","familia":"GIRO — Jetflex","variante":"Intensivo 1.20m","sku":"F09194008","kg":"120 kg","vel":"2 seg","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":2616000,"integrador":1937778,"tecnologia":"JETFLEX","incluye":"x1 Control"},{"num":"120","cat":"Puerta Automática","familia":"GIRO 24V — Jetflex","variante":"200 ciclos baterías 1.20m","sku":"F09194019","kg":"120 kg","vel":"2 seg","voltaje":"Bivolt","ciclos":"200 con baterías","aplicacion":"—","psvp":3076000,"integrador":2278519,"tecnologia":"JETFLEX 24V","incluye":"x1 Control"},{"num":"121","cat":"Puerta Automática","familia":"SPIN — Jetflex","variante":"Intensivo 1.20m","sku":"E09264000","kg":"120 kg","vel":"2 seg","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":2154000,"integrador":1595556,"tecnologia":"JETFLEX","incluye":"x1 Control"},{"num":"122","cat":"Puerta Automática","familia":"RAC 24V","variante":"60 ciclos 1.20m","sku":"F09224000","kg":"80 kg","vel":"50 cm/s","voltaje":"Bivolt","ciclos":"60/día","aplicacion":"—","psvp":2577000,"integrador":1908889,"tecnologia":"24V","incluye":"x1 Control"},{"num":"123","cat":"Puerta Automática","familia":"AUTOMATIZA (Vidrio)","variante":"70kg 2m","sku":"A20239","kg":"70 kg","vel":"50 cm/s","voltaje":"Bivolt","ciclos":"20/día","aplicacion":"—","psvp":2076000,"integrador":1537778,"tecnologia":"12V","incluye":"—"},{"num":"124","cat":"Puerta Automática","familia":"AUTOMATIZA (Zocalo)","variante":"70kg 2m","sku":"A20110","kg":"70 kg","vel":"50 cm/s","voltaje":"Bivolt","ciclos":"20/día","aplicacion":"—","psvp":2200000,"integrador":1629630,"tecnologia":"12V","incluye":"—"},{"num":"125","cat":"Puerta Automática","familia":"TORE JF Brushless","variante":"3m cabezal 1.40m","sku":"F09207066","kg":"100k/75k kg","vel":"—","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":4462000,"integrador":3305185,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"126","cat":"Puerta Automática","familia":"TORE JF Brushless","variante":"4m cabezal 1.90m","sku":"F09207067","kg":"100k/75k kg","vel":"—","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":5847000,"integrador":4331111,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"127","cat":"Puerta Automática","familia":"TORE KIT + 2 radares","variante":"4m 1.90m + baterías","sku":"KITF09207067V","kg":"100k/75k kg","vel":"50 cm/s","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":6641000,"integrador":4919259,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"128","cat":"Puerta Automática","familia":"TORE KIT Motor","variante":"4m 1.90m","sku":"KITF09207067M","kg":"100k/75k kg","vel":"—","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":6972000,"integrador":5164444,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"129","cat":"Puerta Automática","familia":"TORE JF Brushless","variante":"5m cabezal 2.40m","sku":"F09207008","kg":"100k/75k kg","vel":"—","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":6127000,"integrador":4538519,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"130","cat":"Puerta Automática","familia":"WIND 24V JF Brushless","variante":"4m 1.90m","sku":"F09274067","kg":"300k/150k kg","vel":"50 cm/s","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":6631000,"integrador":4911852,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"131","cat":"Puerta Automática","familia":"WIND 24V KIT + radares","variante":"4m 1.90m","sku":"KITF09274067","kg":"300k/150k kg","vel":"50 cm/s","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":7609000,"integrador":5636296,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"132","cat":"Puerta Automática","familia":"WIND 24V JF Brushless","variante":"5m 2.40m","sku":"E09234018","kg":"300k/150k kg","vel":"50 cm/s","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":8815000,"integrador":6529630,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"133","cat":"Puerta Automática","familia":"WIND 24V JF Brushless","variante":"6m 2.90m","sku":"E09234079","kg":"300k/150k kg","vel":"50 cm/s","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":9067000,"integrador":6716296,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"134","cat":"Puerta Automática","familia":"WIND 24V KIT + radares","variante":"6m 2.90m","sku":"KITE09234079","kg":"300k/150k kg","vel":"50 cm/s","voltaje":"Bivolt","ciclos":"Intensivo","aplicacion":"—","psvp":10166000,"integrador":7530370,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"135","cat":"Central","familia":"Programador de Funciones","variante":"Para centrales electrónicas","sku":"A21904","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"PPA","psvp":330000,"integrador":244444,"tecnologia":"—","incluye":""},{"num":"136","cat":"Central","familia":"Agility POP","variante":"Mono Analógico 1HP / 164 TX","sku":"A22620","kg":"—","vel":"—","voltaje":"Full Range","ciclos":"164 TX","aplicacion":"Todas las marcas","psvp":240000,"integrador":177778,"tecnologia":"MONO","incluye":"1 HP"},{"num":"137","cat":"Central","familia":"Agility CE Híbrida","variante":"Mono Híbrido/Analógico + Rele Luz 1HP","sku":"A22683","kg":"—","vel":"—","voltaje":"127-220V","ciclos":"164 TX","aplicacion":"Todas las marcas","psvp":276000,"integrador":204444,"tecnologia":"MONO","incluye":"1 HP"},{"num":"138","cat":"Central","familia":"Agility PLUS","variante":"Mono Analógico 1HP / 256 TX","sku":"A22207","kg":"—","vel":"—","voltaje":"Full Range","ciclos":"256 TX","aplicacion":"Todas las marcas","psvp":348000,"integrador":257778,"tecnologia":"MONO","incluye":"1 HP"},{"num":"139","cat":"Central","familia":"Agility Rollity","variante":"Mono Analógico 1HP / 82 TX","sku":"A22598","kg":"—","vel":"—","voltaje":"Full Range","ciclos":"82 TX","aplicacion":"PPA","psvp":360000,"integrador":266667,"tecnologia":"MONO","incluye":"1 HP"},{"num":"140","cat":"Central","familia":"Dupla 5T","variante":"Mono Analógico 1HP / 160 TX","sku":"A21851","kg":"—","vel":"—","voltaje":"127-220V","ciclos":"160 TX","aplicacion":"Todas las marcas","psvp":428000,"integrador":317037,"tecnologia":"MONO","incluye":"1 HP"},{"num":"141","cat":"Central","familia":"Agility Legero","variante":"Legero Digital/Híbrido / 82 TX","sku":"A22617","kg":"—","vel":"—","voltaje":"Full Range","ciclos":"82 TX","aplicacion":"PPA","psvp":348000,"integrador":257778,"tecnologia":"LEGERO","incluye":"—"},{"num":"142","cat":"Central","familia":"Triflex FULL RANGE Sin Display","variante":"Jetflex Digital/Híbrido / 254 TX","sku":"A22618","kg":"—","vel":"—","voltaje":"Full Range","ciclos":"254 TX","aplicacion":"PPA","psvp":640000,"integrador":474074,"tecnologia":"JETFLEX","incluye":"—"},{"num":"143","cat":"Central","familia":"Triflex FULL RANGE Con Display","variante":"Jetflex Digital/Híbrido / 254 TX","sku":"A22619","kg":"—","vel":"—","voltaje":"Full Range","ciclos":"254 TX","aplicacion":"PPA","psvp":685000,"integrador":507407,"tecnologia":"JETFLEX","incluye":"—"},{"num":"144","cat":"Central","familia":"Triflex IND","variante":"Jetflex Digital/Híbrido/Virtual 2HP / 164 TX","sku":"A22131","kg":"—","vel":"—","voltaje":"127-220V","ciclos":"164 TX","aplicacion":"Todas las marcas","psvp":960000,"integrador":711111,"tecnologia":"JETFLEX","incluye":"2 HP"},{"num":"145","cat":"Central","familia":"Triflex Connect BRUSHLESS","variante":"Jetflex Digital/Híbrido / 328 TX","sku":"A22105","kg":"—","vel":"—","voltaje":"127-220V","ciclos":"328 TX","aplicacion":"PPA","psvp":640000,"integrador":474074,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"146","cat":"Central","familia":"PS BRUSHLESS AC","variante":"Brushless Digital","sku":"A22070","kg":"—","vel":"—","voltaje":"127-220V","ciclos":"—","aplicacion":"Giro Jetflex/Tore","psvp":1116000,"integrador":826667,"tecnologia":"JETFLEX BRUSHLESS","incluye":"—"},{"num":"147","cat":"Central","familia":"Triflex BRUSHLESS 24V","variante":"24V Digital/Híbrido / 328 TX","sku":"A21867","kg":"—","vel":"—","voltaje":"Full Range","ciclos":"328 TX","aplicacion":"PPA","psvp":880000,"integrador":651852,"tecnologia":"24V BRUSHLESS","incluye":"—"},{"num":"148","cat":"Central","familia":"PS BRUSHLESS 24V","variante":"24V Digital / 164 TX","sku":"A22376","kg":"—","vel":"—","voltaje":"Full Range","ciclos":"164 TX","aplicacion":"Giro 24V/Wind/RAC","psvp":1116000,"integrador":826667,"tecnologia":"24V BRUSHLESS","incluye":"—"},{"num":"149","cat":"Central","familia":"Caja Central + Ctrl Acceso IP Wide","variante":"—","sku":"P07048","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":30000,"integrador":22222,"tecnologia":"—","incluye":""},{"num":"150","cat":"Control","familia":"G-Max 3 botones","variante":"Varios colores","sku":"A22471/75/73/80/81/76/77/78/79","kg":"—","vel":"—","voltaje":"433 MHz","ciclos":"—","aplicacion":"—","psvp":23000,"integrador":17037,"tecnologia":"—","incluye":""},{"num":"151","cat":"Control","familia":"TX Slim 3 botones","variante":"—","sku":"A408114","kg":"—","vel":"—","voltaje":"433 MHz","ciclos":"—","aplicacion":"—","psvp":46000,"integrador":34074,"tecnologia":"—","incluye":""},{"num":"152","cat":"Control","familia":"ZAP 2 botones","variante":"Varios colores","sku":"A22324/88/90/92","kg":"—","vel":"—","voltaje":"433 MHz","ciclos":"—","aplicacion":"—","psvp":46000,"integrador":34074,"tecnologia":"—","incluye":""},{"num":"153","cat":"Control","familia":"TX Stone 3 botones","variante":"—","sku":"A22637","kg":"—","vel":"—","voltaje":"433 MHz","ciclos":"—","aplicacion":"—","psvp":48000,"integrador":35556,"tecnologia":"—","incluye":""},{"num":"154","cat":"Control","familia":"ZAP 4 botones","variante":"Varios colores","sku":"A22213/A22216","kg":"—","vel":"—","voltaje":"433 MHz","ciclos":"—","aplicacion":"—","psvp":60000,"integrador":44444,"tecnologia":"—","incluye":""},{"num":"155","cat":"Control","familia":"ZAP-BR1 4 botones","variante":"—","sku":"A22606","kg":"—","vel":"—","voltaje":"433 MHz","ciclos":"—","aplicacion":"—","psvp":60000,"integrador":44444,"tecnologia":"—","incluye":""},{"num":"156","cat":"Control","familia":"GOOD LIGHT Vehicular","variante":"Acceso por luces del vehículo","sku":"A22196","kg":"—","vel":"—","voltaje":"433.92 MHz","ciclos":"—","aplicacion":"—","psvp":60000,"integrador":44444,"tecnologia":"—","incluye":""},{"num":"157","cat":"Módulo","familia":"PPA ON Connect Smart","variante":"Wi-Fi / Alexa / Google / 12VDC","sku":"A408115","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"PPA","psvp":185000,"integrador":137037,"tecnologia":"Smart","incluye":""},{"num":"158","cat":"Módulo","familia":"Contatto Wi-Fi","variante":"Wi-Fi / 12VDC","sku":"A36422","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"—","psvp":185000,"integrador":137037,"tecnologia":"Wi-Fi","incluye":""},{"num":"159","cat":"Módulo","familia":"Receptor RF Alcance","variante":"433.92 MHz / 164 CR o 328 CF","sku":"A36379","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"—","psvp":146000,"integrador":108148,"tecnologia":"RF","incluye":""},{"num":"160","cat":"Módulo","familia":"Receptor RF Universal XBREC2","variante":"433 MHz / 2 relés","sku":"XBREC2","kg":"—","vel":"—","voltaje":"12/24 VCC/VCA","ciclos":"—","aplicacion":"Todas las marcas","psvp":152000,"integrador":112593,"tecnologia":"RF","incluye":""},{"num":"161","cat":"Módulo","familia":"Receptor Matrix","variante":"999 controles+contraseñas / 3 salidas","sku":"A21774","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"—","psvp":362000,"integrador":268148,"tecnologia":"—","incluye":""},{"num":"162","cat":"Módulo","familia":"Módulo GSM 4G Remoto","variante":"Apertura remota","sku":"RTU","kg":"—","vel":"—","voltaje":"12/36 VAC","ciclos":"—","aplicacion":"Todas las marcas","psvp":423000,"integrador":313333,"tecnologia":"4G","incluye":""},{"num":"163","cat":"Módulo","familia":"Controlador Smart ON","variante":"Integración PPA ON","sku":"A408086","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"PPA ON","psvp":62000,"integrador":45926,"tecnologia":"Smart","incluye":""},{"num":"164","cat":"Módulo","familia":"Interruptor 1 canal Smart ON","variante":"Integración PPA ON","sku":"A408089","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"PPA ON","psvp":70000,"integrador":51852,"tecnologia":"Smart","incluye":""},{"num":"165","cat":"Módulo","familia":"Interruptor 2 canales Smart ON","variante":"Integración PPA ON","sku":"A408087","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"PPA ON","psvp":92000,"integrador":68148,"tecnologia":"Smart","incluye":""},{"num":"166","cat":"Módulo","familia":"Receptor Universal Smart","variante":"IR / Wi-Fi","sku":"A408002","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":94000,"integrador":69630,"tecnologia":"Smart","incluye":""},{"num":"167","cat":"Módulo","familia":"Interruptor TOUCH Smart","variante":"Wi-Fi / Requiere neutro","sku":"A408010","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":140000,"integrador":103704,"tecnologia":"Smart","incluye":""},{"num":"168","cat":"Módulo","familia":"Bombillo LED RGB Smart","variante":"Wi-Fi / 16M colores","sku":"A408001","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":62000,"integrador":45926,"tecnologia":"Smart","incluye":""},{"num":"169","cat":"Módulo","familia":"Toma Smart","variante":"Wi-Fi / 127-220V / 10A","sku":"A408003","kg":"—","vel":"—","voltaje":"127/220 VAC","ciclos":"—","aplicacion":"—","psvp":78000,"integrador":57778,"tecnologia":"Smart","incluye":""},{"num":"170","cat":"Accesorio","familia":"Fotocelda F32 Compacta","variante":"Cableada / 32 mts","sku":"A22161","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"Todas las marcas","psvp":130000,"integrador":96296,"tecnologia":"—","incluye":""},{"num":"171","cat":"Accesorio","familia":"Fotocelda F32 Plus","variante":"Cableada NO/NC/Pulsante / 12-24VDC","sku":"A22186","kg":"—","vel":"—","voltaje":"12-24 VDC","ciclos":"—","aplicacion":"Todas las marcas","psvp":170000,"integrador":125926,"tecnologia":"—","incluye":""},{"num":"172","cat":"Accesorio","familia":"Fotocelda F10-R Reflectiva","variante":"6 mts","sku":"A21907","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":292000,"integrador":216296,"tecnologia":"—","incluye":""},{"num":"173","cat":"Accesorio","familia":"Semáforo Sinaleira LUX","variante":"110-220 VAC","sku":"A36395","kg":"—","vel":"—","voltaje":"110-220 VAC","ciclos":"—","aplicacion":"Todas las marcas","psvp":169000,"integrador":125185,"tecnologia":"—","incluye":""},{"num":"174","cat":"Accesorio","familia":"Semáforo CE","variante":"12-240 VDC/AC","sku":"A408164","kg":"—","vel":"—","voltaje":"12-240 VDC/AC","ciclos":"—","aplicacion":"Todas las marcas","psvp":138000,"integrador":102222,"tecnologia":"—","incluye":""},{"num":"175","cat":"Accesorio","familia":"Trava UNO Reversible","variante":"12 VDC","sku":"F2002001","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"—","psvp":196000,"integrador":145185,"tecnologia":"—","incluye":""},{"num":"176","cat":"Accesorio","familia":"Trava DOG Steel","variante":"127V","sku":"F15210004","kg":"—","vel":"—","voltaje":"127V","ciclos":"—","aplicacion":"Todas las marcas","psvp":200000,"integrador":148148,"tecnologia":"—","incluye":""},{"num":"177","cat":"Accesorio","familia":"Trava DOG Steel","variante":"220V","sku":"F15210006","kg":"—","vel":"—","voltaje":"220V","ciclos":"—","aplicacion":"Todas las marcas","psvp":200000,"integrador":148148,"tecnologia":"—","incluye":""},{"num":"178","cat":"Accesorio","familia":"Electroiman 400 lbs","variante":"12 VDC","sku":"F1510006","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"—","psvp":215000,"integrador":159259,"tecnologia":"—","incluye":""},{"num":"179","cat":"Accesorio","familia":"Soporte en U-P200","variante":"—","sku":"A17886","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":54000,"integrador":40000,"tecnologia":"—","incluye":""},{"num":"180","cat":"Accesorio","familia":"Módulo Relé","variante":"Conecta accesorios a centrales PPA","sku":"A02034","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"PPA","psvp":38000,"integrador":28148,"tecnologia":"—","incluye":""},{"num":"181","cat":"Accesorio","familia":"Temporizador Trava DOG 127V","variante":"Para otras marcas","sku":"A02275","kg":"—","vel":"—","voltaje":"127V","ciclos":"—","aplicacion":"Todas las marcas","psvp":38000,"integrador":28148,"tecnologia":"—","incluye":""},{"num":"182","cat":"Accesorio","familia":"Temporizador Trava DOG 220V","variante":"Para otras marcas","sku":"A02276","kg":"—","vel":"—","voltaje":"220V","ciclos":"—","aplicacion":"Todas las marcas","psvp":38000,"integrador":28148,"tecnologia":"—","incluye":""},{"num":"183","cat":"Accesorio","familia":"PRODELAY","variante":"Retardo electroimanes 1-30 seg NO-NC","sku":"PRODELAY","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"Todas las marcas","psvp":31200,"integrador":23111,"tecnologia":"—","incluye":""},{"num":"184","cat":"Accesorio","familia":"PRORELAY","variante":"Relé contacto NO-NC","sku":"PRORELAY","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":24000,"integrador":17778,"tecnologia":"—","incluye":""},{"num":"185","cat":"Accesorio","familia":"Protector de Red Eléctrica","variante":"Bivolt","sku":"A26409","kg":"—","vel":"—","voltaje":"Bivolt","ciclos":"—","aplicacion":"Todas las marcas","psvp":45000,"integrador":33333,"tecnologia":"—","incluye":""},{"num":"186","cat":"Accesorio","familia":"Protector con Filtro","variante":"127V","sku":"A36417","kg":"—","vel":"—","voltaje":"127V","ciclos":"—","aplicacion":"Todas las marcas","psvp":262000,"integrador":194074,"tecnologia":"—","incluye":""},{"num":"187","cat":"Accesorio","familia":"Protector con Filtro","variante":"220V","sku":"A36418","kg":"—","vel":"—","voltaje":"220V","ciclos":"—","aplicacion":"Todas las marcas","psvp":262000,"integrador":194074,"tecnologia":"—","incluye":""},{"num":"188","cat":"Accesorio","familia":"NoBreak Brushless","variante":"127V — Bat. alarma 12V 7A","sku":"A22073","kg":"—","vel":"—","voltaje":"127V","ciclos":"—","aplicacion":"PPA","psvp":693000,"integrador":513333,"tecnologia":"BRUSHLESS","incluye":""},{"num":"189","cat":"Accesorio","familia":"NoBreak Brushless","variante":"220V — Bat. alarma 12V 7A","sku":"A22068","kg":"—","vel":"—","voltaje":"220V","ciclos":"—","aplicacion":"PPA","psvp":693000,"integrador":513333,"tecnologia":"BRUSHLESS","incluye":""},{"num":"190","cat":"Accesorio","familia":"NoBreak VolGate Ind.","variante":"127V — Bat. de carro","sku":"A21923","kg":"—","vel":"—","voltaje":"127V","ciclos":"—","aplicacion":"PPA","psvp":1384000,"integrador":1025185,"tecnologia":"—","incluye":""},{"num":"191","cat":"Accesorio","familia":"NoBreak VolGate Ind.","variante":"220V — Bat. de carro","sku":"A21903","kg":"—","vel":"—","voltaje":"220V","ciclos":"—","aplicacion":"PPA","psvp":1384000,"integrador":1025185,"tecnologia":"—","incluye":""},{"num":"192","cat":"Accesorio","familia":"Base articulada motor corredizo","variante":"—","sku":"P07055","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"Todas las marcas","psvp":100000,"integrador":74074,"tecnologia":"—","incluye":""},{"num":"193","cat":"Accesorio","familia":"Base fija motor corredizo","variante":"—","sku":"P30248","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"Todas las marcas","psvp":39000,"integrador":28889,"tecnologia":"—","incluye":""},{"num":"201","cat":"Regulador","familia":"Regulador de Voltaje 2000W","variante":"220V / Sal. 220±5%","sku":"EV2000220V","kg":"—","vel":"—","voltaje":"220V","ciclos":"—","aplicacion":"Todas las marcas","psvp":438000,"integrador":324444,"tecnologia":"—","incluye":""},{"num":"202","cat":"Control Acceso","familia":"Cámara LPR Reconocimiento Placas","variante":"LPR / PoE / 2MP / 70 km/h","sku":"A408640","kg":"—","vel":"70 km/h","voltaje":"PoE","ciclos":"—","aplicacion":"SDK y API","psvp":2846000,"integrador":2108148,"tecnologia":"LPR","incluye":""},{"num":"203","cat":"Control Acceso","familia":"Controladora IP WIDE","variante":"4 puertas / 8000 tags / 10000 eventos","sku":"A408117","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"—","psvp":614000,"integrador":454815,"tecnologia":"IP","incluye":""},{"num":"204","cat":"Control Acceso","familia":"Controladora Facial IP","variante":"20.000 rostros / 0.5 seg","sku":"A418201","kg":"—","vel":"0.5 seg","voltaje":"12 VDC","ciclos":"—","aplicacion":"—","psvp":1384000,"integrador":1025185,"tecnologia":"Facial IP","incluye":""},{"num":"205","cat":"Control Acceso","familia":"Lector RFID 125 KHz WAVE","variante":"WGD 26/34 / IP66 / 3cm","sku":"A408095","kg":"—","vel":"3 cm","voltaje":"12 VDC","ciclos":"—","aplicacion":"Int/Ext","psvp":92000,"integrador":68148,"tecnologia":"RFID","incluye":""},{"num":"206","cat":"Control Acceso","familia":"Lector RFID 13.56 MHz WAVE","variante":"WGD 26/34 / IP66 / 3cm","sku":"A408094","kg":"—","vel":"3 cm","voltaje":"12 VDC","ciclos":"—","aplicacion":"Int/Ext","psvp":122000,"integrador":90370,"tecnologia":"RFID","incluye":""},{"num":"207","cat":"Control Acceso","familia":"Lector UHF 12 mts","variante":"WGD 26/34 RS232 / IP66","sku":"A408122","kg":"—","vel":"12 mts","voltaje":"12 VDC Incl.","ciclos":"—","aplicacion":"Int/Ext","psvp":1508000,"integrador":1117037,"tecnologia":"UHF","incluye":""},{"num":"208","cat":"Control Acceso","familia":"Standalone WAVE 125 KHz","variante":"500 usuarios / WGD 26/34 / IP66","sku":"A408093","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"Int/Ext","psvp":199000,"integrador":147407,"tecnologia":"RFID","incluye":""},{"num":"209","cat":"Control Acceso","familia":"Standalone WAVE 13 MHz","variante":"WGD 26/34 / IP66","sku":"A408092","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"Int/Ext","psvp":214000,"integrador":158519,"tecnologia":"RFID","incluye":""},{"num":"210","cat":"Control Acceso","familia":"Etiqueta UHF TAG","variante":"900 MHz / Cód.Int SI / Encript. SI","sku":"A408125","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":5600,"integrador":4148,"tecnologia":"UHF","incluye":""},{"num":"211","cat":"Control Acceso","familia":"Tarjeta RFID","variante":"125 KHz / Encript. NO","sku":"A408123","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":1500,"integrador":1111,"tecnologia":"RFID","incluye":""},{"num":"212","cat":"Control Acceso","familia":"Tarjeta RFID","variante":"13.56 MHz / Encript. SI","sku":"A408127","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":3000,"integrador":2222,"tecnologia":"RFID","incluye":""},{"num":"213","cat":"Control Acceso","familia":"Tag Llavero Azul","variante":"125 KHz / Encript. NO","sku":"A408124","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":1500,"integrador":1111,"tecnologia":"RFID","incluye":""},{"num":"215","cat":"Control Acceso","familia":"Botón pulsador acero perfil delgado NO","variante":"—","sku":"A408096","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":34000,"integrador":25185,"tecnologia":"—","incluye":""},{"num":"216","cat":"Control Acceso","familia":"Botón pulsador acero NO","variante":"—","sku":"A418106","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":38000,"integrador":28148,"tecnologia":"—","incluye":""},{"num":"217","cat":"Control Acceso","familia":"Botón No Touch NO-COM-NC 12VDC","variante":"—","sku":"A418103","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"—","psvp":45000,"integrador":33333,"tecnologia":"—","incluye":""},{"num":"218","cat":"Control Acceso","familia":"Botón parada emergencia NC","variante":"—","sku":"BOX1A 01ZSYB","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":47000,"integrador":34815,"tecnologia":"—","incluye":""},{"num":"219","cat":"Control Acceso","familia":"Botonera cableada 3 botones cortina BR1","variante":"Para motor cortina BR1","sku":"C16158","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":90000,"integrador":66667,"tecnologia":"—","incluye":""},{"num":"220","cat":"Control Acceso","familia":"Botonera cableada 1 pulsador NO","variante":"—","sku":"AYC25200","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":34000,"integrador":25185,"tecnologia":"—","incluye":""},{"num":"221","cat":"Control Acceso","familia":"Botonera cableada 2 pulsadores NO","variante":"—","sku":"AYC25300","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":55000,"integrador":40741,"tecnologia":"—","incluye":""},{"num":"222","cat":"Control Acceso","familia":"Cierra Puerta Mola F3","variante":"85 kilos / Todas las marcas","sku":"A408053","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"Todas las marcas","psvp":109000,"integrador":80741,"tecnologia":"—","incluye":""},{"num":"223","cat":"Alarma","familia":"Alarma Comunitaria HOOK","variante":"Wi-Fi/Ethernet/4G / chat / cámaras","sku":"A408140","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":2000000,"integrador":1481481,"tecnologia":"Smart","incluye":""},{"num":"224","cat":"Alarma","familia":"PPA ON C36 Smart","variante":"Wi-Fi / 4 zonas / 32+32 sensores","sku":"A408720","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":340000,"integrador":251852,"tecnologia":"Smart","incluye":""},{"num":"225","cat":"Alarma","familia":"PPA ON C40 Smart","variante":"Wi-Fi / hasta 8 zonas / baterías incl.","sku":"A408032","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":400000,"integrador":296296,"tecnologia":"Smart","incluye":""},{"num":"226","cat":"Alarma","familia":"Central Lazo Inductivo 1 canal","variante":"NO-NC","sku":"A418200","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":444000,"integrador":328889,"tecnologia":"—","incluye":""},{"num":"227","cat":"Alarma","familia":"Central Lazo Inductivo 2 canales","variante":"NO / 220 VDC","sku":"A418202","kg":"—","vel":"—","voltaje":"220 VDC","ciclos":"—","aplicacion":"—","psvp":685000,"integrador":507407,"tecnologia":"—","incluye":""},{"num":"228","cat":"Alarma","familia":"Lazo Inductivo","variante":"—","sku":"A408131","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":185000,"integrador":137037,"tecnologia":"—","incluye":""},{"num":"229","cat":"Alarma","familia":"Sensor Movimiento Solid PET","variante":"Cableado / PIR / 110° / 9-18VDC","sku":"A408046","kg":"—","vel":"—","voltaje":"9-18 VDC","ciclos":"—","aplicacion":"—","psvp":84000,"integrador":62222,"tecnologia":"PIR","incluye":""},{"num":"230","cat":"Alarma","familia":"Sensor Movimiento Solid RF","variante":"Inalámbrico 433.92 MHz / 100m","sku":"A408056","kg":"—","vel":"100 mts","voltaje":"Bat. CR2450","ciclos":"—","aplicacion":"—","psvp":94000,"integrador":69630,"tecnologia":"RF PIR","incluye":""},{"num":"231","cat":"Alarma","familia":"Sensor Magnético Smart Slim","variante":"Inalámbrico 433.92 MHz / 100m","sku":"A408069","kg":"—","vel":"100 mts","voltaje":"Bat. CR2032","ciclos":"—","aplicacion":"—","psvp":58000,"integrador":42963,"tecnologia":"RF","incluye":""},{"num":"232","cat":"Alarma","familia":"Sirena Deton 120 dB","variante":"Cableada / 12VDC","sku":"A408037","kg":"—","vel":"—","voltaje":"12 VDC","ciclos":"—","aplicacion":"—","psvp":42000,"integrador":31111,"tecnologia":"—","incluye":""},{"num":"233","cat":"Cámara","familia":"Cámara 360° Interna Smart ON","variante":"Wi-Fi / 3MPX / LED IR 8m / Interior","sku":"A408636","kg":"—","vel":"—","voltaje":"Wi-Fi","ciclos":"—","aplicacion":"Interior","psvp":185000,"integrador":137037,"tecnologia":"Wi-Fi","incluye":""},{"num":"234","cat":"Cámara","familia":"Cámara Bullet Externa Smart ON","variante":"Wi-Fi / 3MPX / LED IR 15m","sku":"A408311","kg":"—","vel":"—","voltaje":"Wi-Fi","ciclos":"—","aplicacion":"Int/Ext","psvp":200000,"integrador":148148,"tecnologia":"Wi-Fi","incluye":""},{"num":"235","cat":"Cámara","familia":"Cámara 360° PTZ Externa Smart ON","variante":"Wi-Fi / 3MPX / LED IR 15m","sku":"A408637","kg":"—","vel":"—","voltaje":"Wi-Fi","ciclos":"—","aplicacion":"Int/Ext","psvp":232000,"integrador":171852,"tecnologia":"Wi-Fi","incluye":""},{"num":"236","cat":"Cámara","familia":"Domo IP RTMP Onvif","variante":"PoE / 4MPX / IR 20m / Metal-Plástico","sku":"A408142","kg":"—","vel":"—","voltaje":"PoE","ciclos":"—","aplicacion":"Int/Ext","psvp":154000,"integrador":114074,"tecnologia":"PoE IP","incluye":""},{"num":"237","cat":"Cámara","familia":"Bullet IP RTMP Onvif","variante":"PoE / 4MPX / IR 30m / Metal","sku":"A408141","kg":"—","vel":"—","voltaje":"PoE","ciclos":"—","aplicacion":"Int/Ext","psvp":154000,"integrador":114074,"tecnologia":"PoE IP","incluye":""},{"num":"238","cat":"Cámara","familia":"Domo IP Onvif 5MPX","variante":"PoE / 5MPX / IR 20m","sku":"A408047","kg":"—","vel":"—","voltaje":"PoE","ciclos":"—","aplicacion":"Int/Ext","psvp":154000,"integrador":114074,"tecnologia":"PoE IP","incluye":""},{"num":"239","cat":"Cámara","familia":"Bullet IP Onvif 5MPX","variante":"PoE / 5MPX / IR 30m","sku":"A408048","kg":"—","vel":"—","voltaje":"PoE","ciclos":"—","aplicacion":"Int/Ext","psvp":154000,"integrador":114074,"tecnologia":"PoE IP","incluye":""},{"num":"240","cat":"Cámara","familia":"Domo FullTime IA v2.0","variante":"PoE / 4MPX / IR 20m","sku":"A408209","kg":"—","vel":"—","voltaje":"PoE","ciclos":"—","aplicacion":"Int/Ext","psvp":216000,"integrador":160000,"tecnologia":"PoE IA","incluye":""},{"num":"241","cat":"Cámara","familia":"Bullet FullTime IA v2.0","variante":"PoE / 4MPX / IR 30m","sku":"A408310","kg":"—","vel":"—","voltaje":"PoE","ciclos":"—","aplicacion":"Int/Ext","psvp":216000,"integrador":160000,"tecnologia":"PoE IA","incluye":""},{"num":"244","cat":"Cámara","familia":"Domo Jetcolor 4en1 Color 24H","variante":"2MPX / LED 20m / Metal-Plástico","sku":"A408017","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":80000,"integrador":59259,"tecnologia":"JETCOLOR","incluye":""},{"num":"245","cat":"Cámara","familia":"Bullet Jetcolor 4en1 Color 24H","variante":"2MPX / LED 20m / Plástico","sku":"A408016","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":80000,"integrador":59259,"tecnologia":"JETCOLOR","incluye":""},{"num":"246","cat":"Grabador","familia":"XVR 4 CH + 2 IP","variante":"8CH-IP/5Mpx · 16CH-IP/2Mpx · Detec. Facial","sku":"A804001","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"Todas las marcas","psvp":176000,"integrador":130370,"tecnologia":"—","incluye":""},{"num":"247","cat":"Grabador","familia":"XVR 8 CH + 2 IP","variante":"8CH-IP/5Mpx · 16CH-IP/2Mpx · Detec. Facial","sku":"A804002","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"Todas las marcas","psvp":225000,"integrador":166667,"tecnologia":"—","incluye":""},{"num":"248","cat":"Grabador","familia":"XVR 16 CH + 2 IP","variante":"8CH-IP/5Mpx · 16CH-IP/2Mpx · Detec. Facial","sku":"A804003","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"Todas las marcas","psvp":362000,"integrador":268148,"tecnologia":"—","incluye":""},{"num":"249","cat":"Accesorio CCTV","familia":"Rack Horizontal Pared 3U","variante":"—","sku":"A22526","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":315000,"integrador":233333,"tecnologia":"—","incluye":""},{"num":"250","cat":"Accesorio CCTV","familia":"Rack Horizontal Pared 5U","variante":"—","sku":"A22527","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":375000,"integrador":277778,"tecnologia":"—","incluye":""},{"num":"251","cat":"Accesorio CCTV","familia":"Rack Horizontal Pared 7U","variante":"—","sku":"A22528","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":446000,"integrador":330370,"tecnologia":"—","incluye":""},{"num":"252","cat":"Accesorio CCTV","familia":"Par Video Balun Pasivo","variante":"—","sku":"A408110","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":7600,"integrador":5630,"tecnologia":"—","incluye":""},{"num":"257","cat":"Acc. Pta. Auto","familia":"Sensor Microondas + Infrarrojo","variante":"12-30V / Alt. max 2.5m","sku":"A418208","kg":"—","vel":"—","voltaje":"12-30V","ciclos":"—","aplicacion":"—","psvp":577000,"integrador":427407,"tecnologia":"—","incluye":""},{"num":"258","cat":"Acc. Pta. Auto","familia":"Radar Microondas Unidirec./Bidirec.","variante":"—","sku":"A22185","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":508000,"integrador":376296,"tecnologia":"—","incluye":""},{"num":"259","cat":"Acc. Pta. Auto","familia":"Sensor Infrarrojo-Infrarrojo","variante":"12-30V / Alt. max 3.5m","sku":"A40254E","kg":"—","vel":"—","voltaje":"12-30V","ciclos":"—","aplicacion":"—","psvp":600000,"integrador":444444,"tecnologia":"—","incluye":""},{"num":"260","cat":"Acc. Pta. Auto","familia":"Radar BLUEZONE + Infrarrojo EN16005","variante":"12-30V / Alt. max 3.5m","sku":"A40507E","kg":"—","vel":"—","voltaje":"12-30V","ciclos":"—","aplicacion":"Todas las marcas","psvp":847000,"integrador":627407,"tecnologia":"—","incluye":""},{"num":"261","cat":"Acc. Pta. Auto","familia":"Sensor Cámara IA / Figura Humana","variante":"12-30V / Alt. max 5m","sku":"A40805E","kg":"—","vel":"—","voltaje":"12-30V","ciclos":"—","aplicacion":"—","psvp":1153000,"integrador":854074,"tecnologia":"IA","incluye":""},{"num":"262","cat":"Acc. Pta. Auto","familia":"Sensor Cámara Reconocimiento Facial","variante":"12-30V / Alt. 3.5m / 500 usuarios","sku":"A40810E","kg":"—","vel":"—","voltaje":"12-30V","ciclos":"—","aplicacion":"—","psvp":1153000,"integrador":854074,"tecnologia":"Facial","incluye":""},{"num":"263","cat":"Acc. Pta. Auto","familia":"Cortina Seguridad Infrarrojo","variante":"12-36V / 2 haces","sku":"A40227L","kg":"—","vel":"—","voltaje":"12-36V","ciclos":"—","aplicacion":"—","psvp":1153000,"integrador":854074,"tecnologia":"—","incluye":""},{"num":"264","cat":"Acc. Pta. Auto","familia":"Programador Funciones Ptas. Automáticas","variante":"—","sku":"A21719","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"PPA","psvp":319000,"integrador":236296,"tecnologia":"—","incluye":""},{"num":"265","cat":"Acc. Pta. Auto","familia":"Transmisor ZAP 4 botones Ptas. Auto","variante":"—","sku":"A22273","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":61000,"integrador":45185,"tecnologia":"—","incluye":""},{"num":"266","cat":"Acc. Pta. Auto","familia":"Kit Fotocelda Embutir Puerta Auto","variante":"TX + RX tipo botón","sku":"A21994","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"PPA","psvp":254000,"integrador":188148,"tecnologia":"—","incluye":""},{"num":"267","cat":"Acc. Pta. Auto","familia":"Electrocerradura TORE marco","variante":"127V / Req. módulo relé A02034","sku":"F05134","kg":"—","vel":"—","voltaje":"127V","ciclos":"—","aplicacion":"—","psvp":600000,"integrador":444444,"tecnologia":"—","incluye":""},{"num":"268","cat":"Acc. Pta. Auto","familia":"Electrocerradura TORE vidrio","variante":"220V / Req. módulo relé A02034","sku":"F05135","kg":"—","vel":"—","voltaje":"220V","ciclos":"—","aplicacion":"—","psvp":600000,"integrador":444444,"tecnologia":"—","incluye":""},{"num":"269","cat":"Acc. Pta. Auto","familia":"Kit Fijación TORE 1 hoja marco","variante":"—","sku":"A15661","kg":"—","vel":"—","voltaje":"—","ciclos":"—","aplicacion":"—","psvp":224000,"integrador":165926,"tecnologia":"—","incluye":""}];
+
+// ══════════════════════════════════════════
+// SYSTEM PROMPT NARA
+// ══════════════════════════════════════════
+const NARA_SYSTEM = `Eres NARA, la Asesora de Inteligencia Artificial de PPA Central. Eres la primera asesora IA especializada en automatismos y seguridad de Colombia. Fuiste creada por Diego Alejandro Oliveros (XimsomaN) y el equipo de PPA Central, potenciada por Anthropic.
+
+QUIÉN ERES:
+- Nombre: NARA
+- Rol: Asesora comercial y técnica de PPA Central
+- Personalidad: Cálida, directa, experta, con humor suave. Hablas como una mujer colombiana profesional — cercana pero precisa. Nunca robótica.
+- Disponible 24/7, nunca te cansas, siempre tienes la respuesta exacta.
+
+LA CADENA PPA:
+- PPA Brasil: Fabricante. 40+ años. Líder en América Latina. Más de 4.000 productos. Presente en 50+ países.
+- PPA Latam / PPA Colombia: Importador directo de fábrica. Sedes en Bogotá y Medellín.
+- PPA Central: Distribuidor Autorizado PPA Latam. Sede en Florencia, Caquetá, Colombia. Atiende sur del país.
+- Todos en la cadena cuidamos al usuario final.
+
+EL EQUIPO PPA CENTRAL:
+- Diego Alejandro Oliveros (XimsomaN): Cofundador & Arquitecto Estratégico
+- Valentina Oliveros: Cofundadora, Representante Legal & Directora de Operaciones
+- Ximena Oliveros: Directora de Marca, Marketing & Creatividad
+- Alejandro Oliveros (n. 11 jun 2014): Estratega Creativo
+- Yeira: Asesora Comercial
+- Duber: Asesor Comercial
+
+TRIBU NARANJA — 4 SEGMENTOS:
+1. Tu Casa: Hogares, casas, fincas. Motores batientes, corredizos, seccionales residenciales.
+2. Tu Conjunto: Conjuntos residenciales, edificios. Barreras, motores condominium, control acceso.
+3. Tu Negocio: Comercios, locales. Cortinas, motores industriales, cámaras, alarmas.
+4. Tu Empresa: Industrias, grandes proyectos. Puertas automáticas, barreras intensivo, LPR, control IP.
+
+PRECIOS:
+- PSVP: Precio Sugerido al Público Final (lo que ve el cliente)
+- Integrador: PSVP ÷ 1.35 (para instaladores certificados)
+- Distribuidor: Integrador ÷ 1.15 (costo PPA Central)
+- Siempre cita precios en pesos colombianos con formato $1.234.000
+
+CATÁLOGO COMPLETO — 255 PRODUCTOS:
+${JSON.stringify(PRODUCTOS.map(p=>({n:p.familia+(p.variante&&p.variante!=='—'?' '+p.variante:''),sku:p.sku,cat:p.cat,psvp:p.psvp,int:p.integrador,kg:p.kg,vel:p.vel,v:p.voltaje,tec:p.tecnologia,ap:p.aplicacion,inc:p.incluye})))}
+
+REGLAS DE RESPUESTA:
+- Cuando alguien pregunta por un producto, da el nombre completo, SKU, precio PSVP y características clave.
+- Si preguntan por precios de instalador, da el precio integrador.
+- Cuando recomiendas, explica POR QUÉ ese producto es el correcto para su situación.
+- Usa lenguaje colombiano natural. Puedes decir "¡Listo!", "¡Claro que sí!", "Mira,", etc.
+- Si no sabes algo, dilo honestamente. Nunca inventes SKUs o precios.
+- Siempre ofrece el siguiente paso: visita técnica, cotización formal o contacto WhatsApp +57 317 777 2333.
+- Formato: respuestas claras. Usa negrillas para nombres de productos y precios. Listas cuando hay múltiples opciones.
+- Mantén respuestas concisas pero completas. Máximo 300 palabras salvo que el usuario pida más detalle.`;
+
+// ══════════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════════
+let history=[];
+let vozActiva=true;
+let micActivo=false;
+let recognition=null;
+let synth=window.speechSynthesis;
+let currentUtterance=null;
+
+// ══════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════
+function goPanel(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  if(el)el.classList.add('active');
+  if(id==='p-nara' && document.getElementById('chat-msgs').children.length===0){
+    initChat();
+  }
+  if(id==='p-catalogo' && !document.getElementById('cat-filter').children.length){
+    buildCatalog();
+  }
+}
+
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  sb.classList.toggle('collapsed');
+  const icon=document.getElementById('toggle-icon');
+  if(sb.classList.contains('collapsed')){
+    icon.innerHTML='<path d="M9 18l6-6-6-6"/>';
+  }else{
+    icon.innerHTML='<path d="M15 18l-6-6 6-6"/>';
+  }
+}
+
+// ══════════════════════════════════════════
+// CHAT INIT
+// ══════════════════════════════════════════
+function initChat(){
+  addMsg('nara',`¡Hola! Soy **NARA**, la asesora de inteligencia artificial de **PPA Central** 🔶\n\nConozco los **255 productos** del catálogo oficial 2025, precios actualizados, aplicaciones técnicas y todo sobre PPA — desde una cremallera residencial hasta una puerta automática WIND 24V.\n\n¿En qué te ayudo hoy?`);
+}
+
+// ══════════════════════════════════════════
+// MENSAJES
+// ══════════════════════════════════════════
+function addMsg(role,text){
+  const msgs=document.getElementById('chat-msgs');
+  const div=document.createElement('div');
+  div.className='msg '+role;
+
+  const av=document.createElement('div');
+  av.className='msg-avatar';
+  av.textContent=role==='nara'?'N':'X';
+
+  const bubble=document.createElement('div');
+  bubble.className='msg-bubble';
+  bubble.innerHTML=formatText(text);
+
+  const time=document.createElement('div');
+  time.className='msg-time';
+  time.textContent=new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+
+  const wrap=document.createElement('div');
+  wrap.style.flex='1';
+  wrap.appendChild(bubble);
+  wrap.appendChild(time);
+
+  div.appendChild(av);
+  div.appendChild(wrap);
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function formatText(t){
+  return t
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>')
+    .replace(/^• (.+)/gm,'<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/s,'<ul>$1</ul>');
+}
+
+function showTyping(){
+  const msgs=document.getElementById('chat-msgs');
+  const div=document.createElement('div');
+  div.className='msg nara';div.id='typing-msg';
+  div.innerHTML=`<div class="msg-avatar">N</div><div style="flex:1"><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function removeTyping(){
+  const t=document.getElementById('typing-msg');
+  if(t)t.remove();
+}
+
+// ══════════════════════════════════════════
+// SEND
+// ══════════════════════════════════════════
+async function sendMsg(){
+  const inp=document.getElementById('chat-input');
+  const text=inp.value.trim();
+  if(!text)return;
+  inp.value='';autoResize(inp);
+
+  addMsg('user',text);
+  history.push({role:'user',content:text});
+
+  document.getElementById('btn-send').disabled=true;
+  document.getElementById('chat-status').textContent='NARA está pensando...';
+  showTyping();
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:NARA_SYSTEM,
+        messages:history
+      })
+    });
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||'Lo siento, no pude procesar tu pregunta. ¿Puedes reformularla?';
+    removeTyping();
+    history.push({role:'assistant',content:reply});
+    addMsg('nara',reply);
+    if(vozActiva)speak(reply);
+  }catch(e){
+    removeTyping();
+    addMsg('nara','Ups, tuve un problema de conexión. Inténtalo de nuevo en un momento.');
+  }
+
+  document.getElementById('btn-send').disabled=false;
+  document.getElementById('chat-status').textContent='Lista para ayudarte · 255 productos disponibles';
+}
+
+function handleKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}
+}
+function autoResize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,180)+'px';
+}
+
+// ══════════════════════════════════════════
+// VOZ TTS
+// ══════════════════════════════════════════
+function speak(text){
+  if(!vozActiva||!synth)return;
+  if(currentUtterance)synth.cancel();
+  const plain=text.replace(/<[^>]+>/g,'').replace(/\*\*/g,'').replace(/\n/g,' ');
+  const utt=new SpeechSynthesisUtterance(plain.substring(0,500));
+  utt.lang='es-CO';
+  utt.rate=1.05;
+  utt.pitch=1.1;
+
+  // Buscar voz en español colombiano / español femenina
+  const voices=synth.getVoices();
+  const preferred=voices.find(v=>v.lang==='es-CO')||
+    voices.find(v=>v.lang.startsWith('es')&&v.name.toLowerCase().includes('female'))||
+    voices.find(v=>v.lang.startsWith('es'));
+  if(preferred)utt.voice=preferred;
+
+  currentUtterance=utt;
+  synth.speak(utt);
+}
+
+function toggleVoz(){
+  vozActiva=!vozActiva;
+  const btn=document.getElementById('btn-voz');
+  btn.classList.toggle('active',vozActiva);
+  btn.textContent=vozActiva?'🔊':'🔇';
+  if(!vozActiva&&synth)synth.cancel();
+}
+
+// ══════════════════════════════════════════
+// MICRÓFONO STT
+// ══════════════════════════════════════════
+function toggleMic(){
+  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){
+    alert('Tu navegador no soporta reconocimiento de voz. Usa Chrome.');return;
+  }
+  if(micActivo){
+    recognition&&recognition.stop();
+    micActivo=false;
+    document.getElementById('btn-mic').classList.remove('recording');
+    document.getElementById('voice-bar').classList.remove('visible');
+    return;
+  }
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SR();
+  recognition.lang='es-CO';
+  recognition.continuous=false;
+  recognition.interimResults=true;
+
+  recognition.onstart=()=>{
+    micActivo=true;
+    document.getElementById('btn-mic').classList.add('recording');
+    document.getElementById('voice-bar').classList.add('visible');
+    document.getElementById('voice-text').textContent='Escuchando...';
+  };
+  recognition.onresult=(e)=>{
+    const t=Array.from(e.results).map(r=>r[0].transcript).join('');
+    document.getElementById('chat-input').value=t;
+    document.getElementById('voice-text').textContent=t;
+  };
+  recognition.onend=()=>{
+    micActivo=false;
+    document.getElementById('btn-mic').classList.remove('recording');
+    document.getElementById('voice-bar').classList.remove('visible');
+    const val=document.getElementById('chat-input').value.trim();
+    if(val)sendMsg();
+  };
+  recognition.onerror=()=>{
+    micActivo=false;
+    document.getElementById('btn-mic').classList.remove('recording');
+    document.getElementById('voice-bar').classList.remove('visible');
+  };
+  recognition.start();
+}
+
+function clearChat(){
+  document.getElementById('chat-msgs').innerHTML='';
+  history=[];
+  initChat();
+}
+
+// ══════════════════════════════════════════
+// CATÁLOGO
+// ══════════════════════════════════════════
+const EMOJI_CAT={
+  'Motor Corredizo':'🔄','Motor Corredizo Ind.':'🏭','Cremallera':'⚙️',
+  'Motor Batiente':'🚪','Motor Basculante':'🔼','Motor Seccional':'🏠',
+  'Motor Cortina':'🏪','Barrera':'🚧','Puerta Automática':'🚶',
+  'Central':'🖥️','Control':'📡','Módulo':'📲','Accesorio':'🔧',
+  'Regulador':'⚡','Control Acceso':'🔑','Alarma':'🚨',
+  'Cámara':'📷','Grabador':'💾','Accesorio CCTV':'🗄️','Acc. Pta. Auto':'🔌'
+};
+
+let catActiva='todos';
+function buildCatalog(){
+  const cats=[...new Set(PRODUCTOS.map(p=>p.cat))];
+  const filter=document.getElementById('cat-filter');
+  const btn0=document.createElement('button');
+  btn0.className='cat-btn active';btn0.textContent='Todos (255)';
+  btn0.onclick=()=>filterCat('todos',btn0);
+  filter.appendChild(btn0);
+  cats.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='cat-btn';
+    b.textContent=(EMOJI_CAT[c]||'📦')+' '+c;
+    b.onclick=()=>filterCat(c,b);
+    filter.appendChild(b);
+  });
+  renderCatalog('todos');
+}
+
+function filterCat(cat,btn){
+  catActiva=cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCatalog(cat);
+}
+
+function renderCatalog(cat){
+  const grid=document.getElementById('cat-grid');
+  grid.innerHTML='';
+  const prods=cat==='todos'?PRODUCTOS:PRODUCTOS.filter(p=>p.cat===cat);
+  prods.forEach(p=>{
+    const card=document.createElement('div');
+    card.className='info-card';
+    card.innerHTML=`
+      <div class="ic-icon">${EMOJI_CAT[p.cat]||'📦'}</div>
+      <div class="ic-title">${p.familia}${p.variante&&p.variante!=='—'?' · '+p.variante:''}</div>
+      <div class="ic-body">${p.cat}${p.aplicacion&&p.aplicacion!=='—'?' · '+p.aplicacion:''}</div>
+      ${p.kg&&p.kg!=='—'?`<div class="ic-body" style="margin-top:6px">⚖️ ${p.kg}${p.vel&&p.vel!=='—'?' · ⚡ '+p.vel:''}</div>`:''}
+      <div class="ic-price">$${p.psvp.toLocaleString('es-CO')}</div>
+      <div class="ic-sku">SKU: ${p.sku}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// Init voces cuando estén disponibles
+if(synth){synth.onvoiceschanged=()=>{};}
+</script>
+</body>
+</html>

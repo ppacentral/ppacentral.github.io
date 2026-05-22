@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Cotizador PPA Central v11.6</title>
+<title>Cotizador PPA Central v11.7</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -307,6 +307,25 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 
 
 /* AGENDAMIENTO */
+
+/* BLOQUE REGALO */
+.prop-regalo{background:linear-gradient(135deg,rgba(232,92,0,.08) 0%,rgba(255,107,0,.03) 100%);border:1.5px solid rgba(232,92,0,.3);border-radius:16px;padding:20px;margin-bottom:14px;}
+.regalo-tag{font-size:clamp(9px,2.5vw,10px);font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--naranja);margin-bottom:8px;}
+.regalo-titulo{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(18px,5vw,22px);color:var(--blanco);line-height:1.15;margin-bottom:16px;}
+.regalo-items{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.regalo-item{display:flex;align-items:flex-start;gap:10px;}
+.regalo-check{width:22px;height:22px;border-radius:50%;background:var(--naranja);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px;}
+.regalo-item-t{font-size:clamp(13px,3.5vw,14px);font-weight:600;color:var(--blanco);margin-bottom:2px;}
+.regalo-item-s{font-size:clamp(10px,2.8vw,11px);color:#999;line-height:1.5;}
+.regalo-nota{font-size:clamp(11px,3vw,12px);color:#bbb;margin-bottom:16px;padding:10px;background:rgba(255,255,255,.03);border-radius:8px;border-left:2px solid rgba(232,92,0,.4);}
+.regalo-btns{display:flex;flex-direction:column;gap:8px;}
+.regalo-btn-si{width:100%;background:var(--naranja);color:#fff;border:none;border-radius:10px;padding:14px;font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(14px,4vw,16px);cursor:pointer;transition:all .2s;}
+.regalo-btn-si:hover{background:var(--naranja2);transform:translateY(-1px);}
+.regalo-btn-no{width:100%;background:transparent;color:#777;border:1px solid #333;border-radius:10px;padding:10px;font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(12px,3vw,13px);cursor:pointer;transition:all .2s;}
+.regalo-btn-no:hover{color:#bbb;border-color:#555;}
+.regalo-conf-fecha{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(16px,4.5vw,20px);color:var(--naranja);margin-bottom:8px;}
+.regalo-conf-nota{font-size:clamp(11px,3vw,13px);color:#bbb;line-height:1.7;}
+
 .prop-agenda{background:var(--g2);border:1.5px solid rgba(232,92,0,.25);border-radius:14px;padding:18px;margin-bottom:12px;cursor:pointer;transition:border-color .2s,background .2s;}
 .prop-agenda:hover{border-color:rgba(232,92,0,.5);background:rgba(232,92,0,.04);}
 .pag-header{display:flex;align-items:center;justify-content:space-between;gap:12px;}
@@ -398,7 +417,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
     </div>
     <div>
       <div class="tl-title">NARA <span class="nara-badge">IA</span></div>
-      <div class="tl-sub">Asistente PPA Central · v11.6</div>
+      <div class="tl-sub">Asistente PPA Central · v11.7</div>
     </div>
   </div>
   <div class="tl-right">
@@ -679,38 +698,59 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
       </div>
 
       <!-- BLOQUE AGENDAMIENTO -->
-      <div class="prop-agenda" id="bloque-agenda" onclick="abrirCalendarioAgenda(event)">
-        <div class="pag-header">
-          <div class="pag-header-txt">
-            <div class="pag-titulo">Agenda tu visita técnica</div>
-            <div class="pag-sub">Toca aquí para elegir el día y la hora. Un instalador certificado confirmará la cita.</div>
-          </div>
-          <div class="pag-cal-icon">📅</div>
-        </div>
+      <div class="prop-regalo" id="bloque-agenda">
 
-        <div class="pag-fila" id="pag-campos" style="display:none">
-          <div class="pag-grupo">
-            <label class="pag-label">Fecha</label>
-            <input type="date" class="pag-input" id="agenda-fecha" lang="es" onchange="validarFechaAgenda()" style="color-scheme:dark;" onclick="event.stopPropagation()">
-            <div class="pag-hint" id="agenda-fecha-hint"></div>
+        <!-- Estado 1: Invitación (inicial) -->
+        <div id="regalo-invitacion">
+          <div class="regalo-tag">🎁 Tu primer regalo de PPA Central</div>
+          <div class="regalo-titulo">Sin costo. Sin compromiso.</div>
+          <div class="regalo-items">
+            <div class="regalo-item"><div class="regalo-check">✓</div><div><div class="regalo-item-t">Visita técnica al espacio</div><div class="regalo-item-s">Un instalador certificado va donde tú estás</div></div></div>
+            <div class="regalo-item"><div class="regalo-check">✓</div><div><div class="regalo-item-t">Diseño personalizado de la solución</div><div class="regalo-item-s">Medidas reales · condiciones eléctricas · materiales exactos</div></div></div>
+            <div class="regalo-item"><div class="regalo-check">✓</div><div><div class="regalo-item-t">Propuesta final con todos los costos</div><div class="regalo-item-s">Sin sorpresas · precio final antes de decidir</div></div></div>
           </div>
-          <div class="pag-grupo">
-            <label class="pag-label">Hora</label>
-            <select class="pag-input" id="agenda-hora" onclick="event.stopPropagation()">
-              <option value="">Primero elige fecha…</option>
-            </select>
+          <div class="regalo-nota">Solo necesitamos 30 minutos contigo.</div>
+          <div class="regalo-btns">
+            <button class="regalo-btn-si" onclick="mostrarCalendarioRegalo()">🎁 Quiero mi visita gratuita</button>
+            <button class="regalo-btn-no" onclick="sinAgenda()">Me contactan después →</button>
           </div>
         </div>
 
-        <div class="pag-confirmado" id="pag-confirmado" style="display:none">
-          <div class="pag-conf-icon">✓</div>
-          <div>
-            <div class="pag-conf-t" id="pag-conf-texto"></div>
-            <div class="pag-conf-s">PPA Central confirmará tu cita a la brevedad.</div>
+        <!-- Estado 2: Selector de fecha -->
+        <div id="regalo-calendario" style="display:none">
+          <div class="regalo-tag">📅 Elige cuándo nos vemos</div>
+          <div class="regalo-titulo" style="font-size:clamp(14px,3.5vw,16px);margin-bottom:14px">Lunes a viernes 8am–5pm · Sábados 9am–2pm</div>
+          <div class="pag-fila">
+            <div class="pag-grupo">
+              <label class="pag-label">Fecha</label>
+              <input type="date" class="pag-input" id="agenda-fecha" lang="es" onchange="validarFechaAgenda()" style="color-scheme:dark;">
+              <div class="pag-hint" id="agenda-fecha-hint"></div>
+            </div>
+            <div class="pag-grupo">
+              <label class="pag-label">Hora</label>
+              <select class="pag-input" id="agenda-hora">
+                <option value="">Primero elige fecha…</option>
+              </select>
+            </div>
           </div>
+          <button class="regalo-btn-si" id="pag-btn" onclick="confirmarAgenda()" style="margin-top:8px">Confirmar visita gratuita</button>
+          <button class="regalo-btn-no" onclick="sinAgenda()" style="margin-top:6px">Me contactan después →</button>
         </div>
 
-        <button class="pag-btn" id="pag-btn" onclick="event.stopPropagation();confirmarAgenda()" style="display:none">Confirmar visita técnica</button>
+        <!-- Estado 3: Confirmado -->
+        <div id="regalo-confirmado" style="display:none">
+          <div class="regalo-tag">✅ ¡Visita confirmada!</div>
+          <div class="regalo-conf-fecha" id="regalo-conf-fecha"></div>
+          <div class="regalo-conf-nota">PPA Central te contactará para confirmar los detalles.<br>Un instalador certificado estará en tu espacio.</div>
+        </div>
+
+        <!-- Estado 4: Sin agenda -->
+        <div id="regalo-sinagenda" style="display:none">
+          <div class="regalo-tag">📞 Te contactamos pronto</div>
+          <div class="regalo-titulo" style="font-size:clamp(13px,3.5vw,15px)">Tu asesor coordinará la visita gratuita.</div>
+          <div class="regalo-conf-nota">Guarda este número: <strong>+57 317 777 2 333</strong><br>También puedes escribirnos: <strong>@ppacentral</strong></div>
+        </div>
+
       </div>
 
       <div class="prop-firma">
@@ -1813,15 +1853,16 @@ function renderTiposSegmento(){
   const seg = segActual.code||'L01';
   const tipos = TIPOS_POR_SEG[seg]||TIPOS_POR_SEG['L01'];
   const container = document.getElementById('tipo-chips');
+  if(!container) return;
   container.innerHTML = tipos.map(t=>`
     <div class="tipo-chip" id="tc-${t.id}" onclick="selTipo('${t.id}')">
       <div class="tipo-chip-icon">${t.icon}</div>
       <div class="tipo-chip-lbl">${t.lbl}</div>
       <div class="tipo-chip-sub">${t.sub}</div>
     </div>`).join('');
-  document.getElementById('tipo-ficha').classList.remove('vis');
-  document.getElementById('eq-rec').classList.remove('vis');
-  document.getElementById('eq-lista').innerHTML='';
+  document.getElementById('tipo-ficha')?.classList.remove('vis');
+  document.getElementById('eq-rec')?.classList.remove('vis');
+  if(document.getElementById('eq-lista')) document.getElementById('eq-lista').innerHTML='';
   tipoSel=''; equipoSel=null;
 }
 
@@ -1849,7 +1890,7 @@ function selTipo(id){
   const tipo=tipos.find(t=>t.id===id);
   if(tipo){
     const sp=tipo.specs;
-    document.getElementById('tipo-ficha').innerHTML=`
+    if(document.getElementById('tipo-ficha')) document.getElementById('tipo-ficha').innerHTML=`
       <div class="tipo-ficha-titulo">📊 ${tipo.lbl} — Parámetros técnicos</div>
       <div class="tipo-specs">
         <div class="tipo-spec"><div class="tipo-spec-lbl">Capacidad de peso</div><div class="tipo-spec-val">${sp.peso}</div></div>
@@ -1857,9 +1898,8 @@ function selTipo(id){
         <div class="tipo-spec"><div class="tipo-spec-lbl">Ciclos recomendados</div><div class="tipo-spec-val warn">${sp.ciclos}</div></div>
         <div class="tipo-spec"><div class="tipo-spec-lbl">Uso ideal</div><div class="tipo-spec-val" style="font-size:10px">${sp.uso}</div></div>
       </div>`;
-    document.getElementById('tipo-ficha').classList.add('vis');
-    const rec=document.getElementById('eq-rec');
-    rec.textContent='💡 '+tipo.rec; rec.classList.add('vis');
+    document.getElementById('tipo-ficha')?.classList.add('vis');
+    const rec=document.getElementById('eq-rec'); if(rec){rec.textContent='💡 '+tipo.rec; rec.classList.add('vis');}
     // Traducir id → clave real de EQUIPOS considerando el segmento
     const catKey = tipo.cat || TIPO_A_CAT[id] || id;
     cargarEquipos(catKey, tipo);
@@ -2176,6 +2216,9 @@ function goStep(n){
 // ══════════════════════════════════════
 // SEGMENTOS
 // ══════════════════════════════════════
+function selSegmento(
+  return selSeg.apply(this,arguments);
+}
 function selSeg(code, nombre, desc, icon, btn){
   segActual = {code, nombre, icon};
   document.querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('sel'));
@@ -2191,7 +2234,8 @@ function selSeg(code, nombre, desc, icon, btn){
 // ASESORES
 // ══════════════════════════════════════
 function renderAsesores(){
-  document.getElementById('asesores-grid').innerHTML = ASESORES.map(a=>`
+  const ag = document.getElementById('asesores-grid'); if(!ag) return;
+  ag.innerHTML = ASESORES.map(a=>`
     <div class="asesor-card" id="ac-${a.id}" onclick="selAsesor('${a.id}')">
       <div class="asesor-sel-dot">✓</div>
       <div class="asesor-foto">${a.foto?`<img src="${a.foto}" alt="${a.nombre}">`:`<span>${a.emoji}</span>`}</div>
@@ -2226,8 +2270,9 @@ function prevFoto(input){
 function cargarEquipos(tipo, tipoObj){
   const lista = document.getElementById('eq-lista');
   const nota  = document.getElementById('eq-nota');
+  if(!lista){ return; }
   lista.innerHTML = ''; equipoSel = null;
-  if(!tipo){ nota.style.display='none'; return; }
+  if(!tipo){ if(nota) nota.style.display='none'; return; }
 
   let eqs = EQUIPOS[tipo]||[];
 
@@ -2813,54 +2858,54 @@ return `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tu Sistema PPA Automatizado para ${nombre} — ${consec.split('·')[0].trim()}</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#060606;color:#fff;font-family:'Barlow',sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+body{background:#060606;color:#fff;font-family:'DM Sans',sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 .page{max-width:720px;margin:0 auto;}
 .hero{background:linear-gradient(150deg,${SG.split(',')[0]} 0%,${SG.split(',')[1]} 40%,#060606 100%);position:relative;overflow:hidden;border-bottom:1px solid #1E1E1E;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 92% 50%,${SC}38 0%,transparent 70%);}
-.hero::after{content:'PPA';position:absolute;right:-6px;top:-16px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:140px;color:rgba(255,255,255,.03);letter-spacing:-6px;pointer-events:none;}
+.hero::after{content:'PPA';position:absolute;right:-6px;top:-16px;font-family:'Inter',sans-serif;font-weight:900;font-size:140px;color:rgba(255,255,255,.03);letter-spacing:-6px;pointer-events:none;}
 .h-in{padding:38px 32px 0;position:relative;z-index:1;}
 .h-consec{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:${SC};margin-bottom:8px;font-weight:600;}
-.h-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:56px;line-height:.92;text-transform:uppercase;letter-spacing:-2px;}
+.h-title{font-family:'Inter',sans-serif;font-weight:900;font-size:56px;line-height:.92;text-transform:uppercase;letter-spacing:-2px;}
 .h-title span{color:${SC};}
 .h-sub{font-size:13px;color:#555;margin-top:8px;font-weight:300;letter-spacing:.5px;}
 .h-bar{display:grid;grid-template-columns:1fr 1fr;padding:22px 32px 32px;border-top:1px solid rgba(255,255,255,.06);margin-top:24px;position:relative;z-index:1;}
 .hbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:4px;}
-.hbv{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;}
+.hbv{font-family:'Inter',sans-serif;font-weight:700;font-size:24px;}
 .hbs{font-size:12px;color:#555;margin-top:2px;}
 .fachada{width:100%;max-height:280px;object-fit:cover;display:block;}
 .body{padding:32px;}
 .asesor-row{display:flex;align-items:center;gap:14px;background:#111;border-radius:10px;padding:14px;margin-bottom:22px;border:1px solid #1E1E1E;}
 .af{width:52px;height:52px;border-radius:50%;background:#1A1A1A;border:2px solid ${SC};display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0;}
 .af img{width:100%;height:100%;object-fit:cover;}
-.an{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;}
+.an{font-family:'Inter',sans-serif;font-weight:700;font-size:18px;}
 .ac{font-size:11px;color:#555;margin-top:2px;}
 .ae{font-size:11px;color:${SC};margin-top:3px;font-weight:600;}
 
 .aida{border-left:3px solid ${SC};padding:20px 22px;background:linear-gradient(90deg,${SC}12 0%,transparent 100%);margin-bottom:24px;border-radius:0 10px 10px 0;}
-.aq{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;line-height:1.05;margin-bottom:10px;}
+.aq{font-family:'Inter',sans-serif;font-weight:700;font-size:26px;line-height:1.05;margin-bottom:10px;}
 .ap{font-size:14px;color:#AAA;line-height:1.75;}.ap strong{color:#fff;}.ap em{color:#666;font-size:12px;}
 .eq-card{background:#111;border-radius:10px;overflow:hidden;margin-bottom:22px;display:grid;grid-template-columns:130px 1fr;border:1px solid #1E1E1E;}
 .ei{width:130px;height:120px;background:#181818;display:flex;align-items:center;justify-content:center;font-size:48px;}
 .einfo{padding:18px 20px;}
-.en{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:.5px;}
+.en{font-family:'Inter',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:.5px;}
 .et{display:inline-block;background:${SC}25;color:${SC};font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin:7px 0;}
 .ed{font-size:12px;color:#555;line-height:1.5;}.ed strong{color:${SC};}
-.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#444;margin:22px 0 10px;}
+.sec{font-family:'Inter',sans-serif;font-weight:700;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#444;margin:22px 0 10px;}
 .row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #141414;}
 .row:last-child{border-bottom:none;}
 .rn{font-size:14px;font-weight:600;}.rsku{font-size:9px;color:#444;margin-top:2px;}
-.rp{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;white-space:nowrap;}
+.rp{font-family:'Inter',sans-serif;font-weight:700;font-size:18px;white-space:nowrap;}
 .total{background:${SC};border-radius:12px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;margin:22px 0;}
 .tl{font-size:9px;letter-spacing:4px;text-transform:uppercase;opacity:.8;}.ts2{font-size:10px;opacity:.65;margin-top:3px;}
-.tm{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:46px;}
+.tm{font-family:'Inter',sans-serif;font-weight:900;font-size:46px;}
 .ventaja{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.18);border-radius:10px;padding:16px 18px;margin-bottom:20px;}
-.vt{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:1.5px;color:#4ADE80;text-transform:uppercase;margin-bottom:6px;}
+.vt{font-family:'Inter',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;color:#4ADE80;text-transform:uppercase;margin-bottom:6px;}
 .vp{font-size:13px;color:#777;line-height:1.65;}.vp strong{color:#4ADE80;}
 .ssg{background:linear-gradient(135deg,${SC}12 0%,${SC}06 100%);border:1px solid ${SC}30;border-radius:10px;padding:20px;margin-bottom:20px;}
-.ssg-t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;margin-bottom:14px;}
+.ssg-t{font-family:'Inter',sans-serif;font-weight:900;font-size:20px;margin-bottom:14px;}
 .si{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#888;line-height:1.6;margin-bottom:12px;}
 .si:last-child{margin-bottom:0;}
 .sd{width:24px;height:24px;border-radius:50%;background:${SC};color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px;}
@@ -2891,13 +2936,13 @@ body{background:#060606;color:#fff;font-family:'Barlow',sans-serif;-webkit-print
 .pi:last-child{border-bottom:none;}
 .pd{width:18px;height:18px;border-radius:50%;background:${SC}25;border:1px solid ${SC}50;display:flex;align-items:center;justify-content:center;font-size:8px;color:${SC};flex-shrink:0;}
 .firma{display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid #1A1A1A;padding-top:18px;margin-top:6px;}
-.fe{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:${SC};}
+.fe{font-family:'Inter',sans-serif;font-weight:900;font-size:22px;color:${SC};}
 .fd{font-size:10px;color:#555;line-height:2;margin-top:4px;}.fd a{color:${SC};text-decoration:none;}
-.fs{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;color:${SC};text-align:right;}
+.fs{font-family:'Inter',sans-serif;font-weight:900;font-size:26px;color:${SC};text-align:right;}
 .fsub{font-size:10px;color:#555;text-align:right;line-height:1.8;margin-top:2px;}
 .ffecha{font-size:9px;color:#333;text-align:right;margin-top:4px;}
 .seg-badge{display:inline-block;background:${SC};color:#fff;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
-.btn-print{display:block;width:100%;margin-top:22px;background:#1A1A1A;color:#AAA;border:1px solid #2A2A2A;border-radius:8px;padding:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.5px;cursor:pointer;text-align:center;}
+.btn-print{display:block;width:100%;margin-top:22px;background:#1A1A1A;color:#AAA;border:1px solid #2A2A2A;border-radius:8px;padding:12px;font-family:'Inter',sans-serif;font-weight:700;font-size:14px;letter-spacing:.5px;cursor:pointer;text-align:center;}
 .btn-print:hover{background:#2A2A2A;}
 @media print{.btn-print{display:none!important}}
 </style>
@@ -3240,6 +3285,29 @@ function nuevaCot(){
   goStep(1);
 }
 
+function mostrarCalendarioRegalo(){
+  document.getElementById('regalo-invitacion').style.display = 'none';
+  document.getElementById('regalo-calendario').style.display = 'block';
+  initFechaAgenda();
+}
+
+function sinAgenda(){
+  document.getElementById('regalo-invitacion').style.display  = 'none';
+  document.getElementById('regalo-calendario').style.display  = 'none';
+  document.getElementById('regalo-sinagenda').style.display   = 'block';
+  // Registrar en Bitrix que el cliente prefiere ser contactado
+  try{
+    const HOOK   = 'https://b24-4kxmmv.bitrix24.co/rest/1/yhxx3e3goq98d4di/';
+    const dealId = window._ppaDealId;
+    if(dealId){
+      const body = new URLSearchParams();
+      body.append('id', dealId);
+      body.append('fields[COMMENTS]', 'Cliente prefiere ser contactado por asesor para coordinar visita técnica.');
+      fetch(HOOK + 'crm.deal.update', {method:'POST', body});
+    }
+  } catch(e){}
+}
+
 function abrirCalendarioAgenda(e){
   const campos = document.getElementById('pag-campos');
   const btn    = document.getElementById('pag-btn');
@@ -3352,15 +3420,33 @@ function confirmarAgenda(){
 
   agendaConfirmada = {fecha, hora, label};
 
-  // Mostrar confirmación visual
-  document.getElementById('pag-conf-texto').textContent = `Visita solicitada: ${label}`;
-  document.getElementById('pag-confirmado').style.display = 'flex';
-  document.getElementById('pag-btn').textContent = '✓ Visita confirmada — puedes cambiarla';
+  // Mostrar estado confirmado
+  document.getElementById('regalo-calendario').style.display = 'none';
+  document.getElementById('regalo-invitacion').style.display = 'none';
+  const confFecha = document.getElementById('regalo-conf-fecha');
+  if(confFecha) confFecha.textContent = label;
+  document.getElementById('regalo-confirmado').style.display = 'block';
 
   showToast('✅ Visita agendada');
 
-  // Registrar en Bitrix24 si hay deal activo
+  // Registrar en Bitrix24
   registrarAgendaBitrix(fecha, hora, label);
+
+  // Actualizar deal con la fecha de visita
+  actualizarDealConAgenda(label);
+}
+
+function actualizarDealConAgenda(label){
+  try{
+    const HOOK   = 'https://b24-4kxmmv.bitrix24.co/rest/1/yhxx3e3goq98d4di/';
+    const dealId = window._ppaDealId;
+    if(!dealId) return;
+    const body = new URLSearchParams();
+    body.append('id', dealId);
+    body.append('fields[COMMENTS]', `Visita técnica confirmada: ${label}`);
+    body.append('fields[STAGE_ID]', 'PREPAYMENT_INVOICE'); // Avanza etapa en pipeline
+    fetch(HOOK + 'crm.deal.update', {method:'POST', body});
+  } catch(e){}
 }
 
 function registrarAgendaBitrix(fecha, hora, label){

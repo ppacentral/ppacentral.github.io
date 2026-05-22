@@ -2771,7 +2771,9 @@ async function registrarEnBitrix(entry){
     );
     if(contactoId) negBody.append('fields[CONTACT_ID]', String(contactoId));
 
-    await fetch(`${BITRIX_HOOK}crm.deal.add`, {method:'POST', body:negBody});
+    const negResp = await fetch(`${BITRIX_HOOK}crm.deal.add`, {method:'POST', body:negBody});
+    const negJson = await negResp.json().catch(()=>({}));
+    if(negJson.result) window._ppaDealId = negJson.result;
     showToast('✅ Lead registrado en Bitrix24');
 
   } catch(e){
@@ -3363,27 +3365,61 @@ function confirmarAgenda(){
 
 function registrarAgendaBitrix(fecha, hora, label){
   try{
-    const HOOK = 'https://b24-4kxmmv.bitrix24.co/rest/1/yhxx3e3goq98d4di/';
-    const nombre  = document.getElementById('c-nombre')?.value?.trim() || 'Cliente';
-    const consec  = document.getElementById('consecBadge')?.textContent || '';
-    const inicio  = `${fecha}T${hora}:00`;
-    const fin     = `${fecha}T${String(parseInt(hora)+1).padStart(2,'0')}:00:00`;
+    const HOOK   = 'https://b24-4kxmmv.bitrix24.co/rest/1/yhxx3e3goq98d4di/';
+    const nombre = document.getElementById('c-nombre')?.value?.trim() || 'Cliente';
+    const tel    = document.getElementById('c-tel')?.value?.trim() || '';
+    const consec = document.getElementById('consecBadge')?.textContent || '';
 
-    fetch(HOOK + 'crm.activity.add', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+    // Formato hora correcto HH:MM:SS
+    const [hh, mm] = hora.split(':');
+    const hhFin    = String((parseInt(hh) + 1) % 24).padStart(2,'0');
+    const inicio   = `${fecha} ${hh}:${mm || '00'}:00`;
+    const fin      = `${fecha} ${hhFin}:${mm || '00'}:00`;
+
+    const titulo   = `Visita técnica PPA — ${nombre}`;
+    const descrip  = `Visita técnica agendada desde el cotizador PPA Central.\n\nCliente: ${nombre}\nTeléfono: ${tel}\nCotización: ${consec}\nFecha confirmada: ${label}\n\nCoordinar con instalador certificado.`;
+
+    // 1. Evento en calendario Bitrix (aparece en el calendario del usuario)
+    fetch(HOOK + 'calendar.event.add', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        fields:{
-          OWNER_TYPE_ID: 2,
-          TYPE_ID: 2,
-          SUBJECT: `Visita técnica PPA — ${nombre} · ${consec}`,
-          DESCRIPTION: `Visita técnica agendada desde cotizador PPA Central.\nCliente: ${nombre}\nCotización: ${consec}\nFecha solicitada: ${label}`,
-          START_TIME: inicio,
-          END_TIME: fin,
-          COMPLETED: 'N',
-        }
+        type: 'user',
+        ownerId: 1,
+        name: titulo,
+        description: descrip,
+        from: inicio,
+        to: fin,
+        skipTime: 'N',
+        color: '#FF6B00',
+        textColor: '#ffffff',
+        accessibility: 'busy',
+        importance: 'high',
+        private: 'N',
       })
     }).catch(()=>{});
+
+    // 2. Actividad CRM vinculada al deal (si existe dealId guardado)
+    const dealId = window._ppaDealId || null;
+    if(dealId){
+      fetch(HOOK + 'crm.activity.add', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          fields:{
+            OWNER_TYPE_ID: 2,
+            OWNER_ID: dealId,
+            TYPE_ID: 1,
+            SUBJECT: titulo,
+            DESCRIPTION: descrip,
+            START_TIME: inicio,
+            END_TIME: fin,
+            COMPLETED: 'N',
+          }
+        })
+      }).catch(()=>{});
+    }
+
   } catch(e){}
 }
 

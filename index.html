@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Cotizador PPA Central v11.6</title>
+<title>Cotizador PPA Central v12.8</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -11,10 +11,50 @@
   --naranja:#E85C00;--naranja2:#FF6B00;--naranja3:#FF8C3A;
   --blanco:#FFFFFF;--blanco2:#E8E4DC;--gtxt:#666;--gtxt2:#999;
   --verde:#22C55E;--azul:#3B82F6;--dorado:#F59E0B;--rojo:#981E32;
+  /* Colores corporativos 4 segmentos */
+  --c1:#005293;--c2:#4D4F53;--c3:#F15A22;--c4:#981E32;
+  --c1g:rgba(0,82,147,.08);--c2g:rgba(77,79,83,.08);
+  --c3g:rgba(241,90,34,.08);--c4g:rgba(152,30,50,.08);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;overflow:hidden;background:var(--ng);}
 body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-direction:column;max-width:600px;width:100%;margin:0 auto;position:relative;box-sizing:border-box;}
+/* ── GRADIENTE FONDO POR PASO ACTIVO ── */
+#p1.active{background:radial-gradient(ellipse at top left,var(--c1g) 0%,transparent 65%);}
+#p2.active{background:radial-gradient(ellipse at top,var(--c2g) 0%,transparent 65%);}
+#p3.active{background:radial-gradient(ellipse at top right,var(--c3g) 0%,transparent 65%);}
+#p4.active{background:radial-gradient(ellipse at bottom,var(--c4g) 0%,transparent 65%);}
+/* ── ÍCONOS PASO ── */
+.step-ico{display:flex;align-items:center;justify-content:center;height:34px;margin-bottom:2px;}
+/* ── ANIMACIONES ÍCONOS ── */
+@keyframes spin-slow{to{transform:rotate(360deg);}}
+@keyframes star-pulse{0%,100%{transform:scale(.85);opacity:.6;}50%{transform:scale(1.1);opacity:1;}}
+@keyframes draw-line{from{stroke-dashoffset:30;}to{stroke-dashoffset:0;}}
+.step.active .gear-svg{animation:spin-slow 4s linear infinite;}
+.step.active .star-ico{animation:star-pulse 1.8s ease-in-out infinite;}
+.step.active .build-l1{animation:draw-line .6s .1s ease forwards;}
+.step.active .build-l2{animation:draw-line .6s .35s ease forwards;}
+.step.active .build-l3{animation:draw-line .6s .6s ease forwards;}
+/* ── GUÍA OPCIONES ── */
+.guia-opt{background:var(--g2);border:1px solid var(--g4);border-radius:12px;padding:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;}
+.guia-opt:hover{border-color:var(--naranja3);transform:translateY(-1px);}
+.guia-opt.sel{border-color:var(--naranja);background:rgba(232,92,0,.1);}
+.guia-opt-icon{width:46px;height:46px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.guia-opt-lbl{font-family:'Inter',sans-serif;font-weight:700;font-size:clamp(13px,3.5vw,15px);color:var(--blanco);}
+.guia-opt-sub{font-size:clamp(10px,2.5vw,11px);color:#bbb;margin-top:3px;}
+/* ── MEDIDA ANCHO DE PUERTA ── */
+.guia-medida-box{background:var(--g2);border:1.5px solid rgba(232,92,0,.3);border-radius:14px;padding:20px;text-align:center;margin-top:8px;}
+.guia-input-grande{background:var(--g3);border:2px solid var(--naranja);border-radius:10px;color:var(--blanco);font-family:'Inter',sans-serif;font-weight:800;font-size:32px;text-align:center;padding:14px;width:100%;box-sizing:border-box;outline:none;margin:12px 0 6px;}
+.guia-input-grande::placeholder{color:#444;font-weight:400;font-size:18px;}
+.guia-unidad{font-size:13px;color:var(--naranja);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.guia-medida-hint{font-size:11px;color:#999;margin-top:10px;line-height:1.7;}
+/* ── TARJETAS SEGMENTO SVG ── */
+.seg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.seg-card{border-radius:14px;padding:18px 12px 14px;cursor:pointer;transition:all .25s;text-align:center;border:1.5px solid transparent;}
+.seg-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.2);}
+.seg-card.sel{border-color:var(--naranja);}
+.seg-card-lbl{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(12px,3.5vw,14px);color:var(--blanco);margin-bottom:4px;}
+.seg-card-sub{font-size:clamp(9px,2.5vw,10px);color:rgba(255,255,255,.6);line-height:1.5;}
 @media(min-width:600px){
   body{max-width:720px;}
   .eq-lista{grid-template-columns:repeat(2,1fr)!important;}
@@ -58,7 +98,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 .step.active .step-lbl,.step.done .step-lbl{color:var(--blanco2);}
 
 /* ── CONTENT ── */
-.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior:contain;}
 .panel{display:none;padding:14px;}
 .panel.active{display:block;}
 
@@ -97,11 +137,13 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 
 /* FOTO FACHADA */
 .foto-zone{background:var(--g2);border:1px dashed var(--g5);border-radius:10px;overflow:hidden;margin-bottom:12px;}
-.foto-drop{padding:20px;text-align:center;cursor:pointer;}
-.foto-drop input{display:none;}
-.foto-drop-icon{font-size:28px;margin-bottom:6px;}
-.foto-drop-txt{font-size:12px;color:var(--gtxt);}
-.foto-drop-sub{font-size:10px;color:var(--gtxt2);margin-top:3px;}
+.foto-banner{background:linear-gradient(135deg,rgba(232,92,0,.12) 0%,rgba(20,10,0,.95) 100%);border:1.5px dashed rgba(232,92,0,.4);border-radius:16px;padding:28px 20px 22px;text-align:center;cursor:pointer;margin-bottom:14px;transition:border-color .2s,background .2s;}
+.foto-banner:hover{border-color:var(--naranja);background:linear-gradient(135deg,rgba(232,92,0,.2) 0%,rgba(20,10,0,.98) 100%);}
+.foto-banner-emoji{font-size:36px;margin-bottom:10px;display:block;}
+.foto-banner-title{font-family:'DM Sans',sans-serif;font-weight:800;font-size:18px;color:#fff;margin-bottom:8px;}
+.foto-banner-sub{font-size:12px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:16px;}
+.foto-banner-btn{display:inline-block;background:var(--naranja);color:#fff;font-weight:700;font-size:13px;padding:9px 22px;border-radius:24px;letter-spacing:.3px;}
+.foto-drop{display:none;}.foto-zone{margin-bottom:14px;}
 #foto-prev-img{width:100%;max-height:130px;object-fit:cover;display:none;}
 
 /* EQUIPOS */
@@ -378,6 +420,80 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 }
 .nara-badge{display:inline-block;background:var(--naranja);color:#fff;font-size:7px;font-weight:800;letter-spacing:.5px;padding:1px 5px;border-radius:4px;vertical-align:middle;margin-left:4px;position:relative;top:-1px;}
 
+
+/* ── MEDALLAS TOP 3 ── */
+.top3-header{text-align:center;margin-bottom:18px;}
+.top3-titulo{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(20px,5.5vw,26px);color:var(--blanco);line-height:1.1;margin-bottom:4px;}
+.top3-sub{font-size:clamp(14px,4vw,17px);color:#fff;font-weight:600;line-height:1.5;margin-top:6px;}
+.motor-card{background:var(--g2);border:1.5px solid var(--g4);border-radius:14px;padding:0;margin-bottom:12px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;display:flex;align-items:stretch;}
+.motor-card:hover{border-color:var(--naranja3);transform:translateY(-1px);}
+.motor-card.sel{border-color:var(--naranja);background:rgba(232,92,0,.06);}
+.motor-medalla{width:52px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 0;border-right:1px solid var(--g4);}
+.medalla-1{background:linear-gradient(180deg,rgba(255,215,0,.15) 0%,rgba(255,165,0,.05) 100%);}
+.medalla-2{background:linear-gradient(180deg,rgba(192,192,192,.12) 0%,rgba(128,128,128,.04) 100%);}
+.medalla-3{background:linear-gradient(180deg,rgba(205,127,50,.1) 0%,rgba(139,69,19,.04) 100%);}
+.medalla-ico{font-size:26px;line-height:1;}
+.medalla-lbl{font-size:7px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#888;margin-top:3px;}
+.motor-body{flex:1;padding:13px 12px;}
+.motor-nombre{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(13px,3.5vw,15px);color:var(--blanco);margin-bottom:4px;line-height:1.2;}
+.motor-razon{font-size:clamp(11px,3vw,12px);color:#bbb;line-height:1.6;margin-bottom:8px;}
+.motor-precio{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(18px,5vw,22px);color:var(--naranja);margin-top:6px;}
+.motor-sel-badge{position:absolute;top:8px;right:8px;background:var(--verde);color:#000;font-size:7px;font-weight:800;padding:2px 7px;border-radius:10px;letter-spacing:.5px;display:none;}
+.motor-card.sel .motor-sel-badge{display:block;}
+
+/* ── VISITA TÉCNICA REDISEÑADA ── */
+.visita-regalo{background:linear-gradient(135deg,rgba(34,197,94,.08) 0%,rgba(34,197,94,.03) 100%);border:1.5px solid rgba(34,197,94,.2);border-radius:14px;padding:18px;margin:14px 0;}
+.visita-regalo-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.visita-regalo-ico{font-size:32px;flex-shrink:0;}
+.visita-regalo-titulo{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(14px,4vw,17px);color:#4ADE80;line-height:1.2;}
+.visita-regalo-sub{font-size:clamp(10px,2.8vw,12px);color:#bbb;margin-top:3px;}
+.visita-items{display:flex;flex-direction:column;gap:10px;}
+.visita-item{display:flex;align-items:flex-start;gap:10px;}
+.visita-dot{width:28px;height:28px;border-radius:8px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.visita-item-t{font-size:clamp(12px,3.5vw,14px);font-weight:600;color:var(--blanco);margin-bottom:2px;}
+.visita-item-s{font-size:clamp(10px,2.8vw,11px);color:#888;line-height:1.5;}
+
+/* ── ACCESORIOS IMPRESCINDIBLES ── */
+.acc-header{margin-bottom:14px;}
+.acc-header-titulo{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(18px,5vw,22px);color:var(--blanco);margin-bottom:4px;}
+.acc-header-sub{font-size:clamp(11px,3vw,13px);color:#bbb;line-height:1.5;}
+.impresc-section{margin-bottom:16px;}
+.impresc-label{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--naranja);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.impresc-label::after{content:'';flex:1;height:1px;background:rgba(232,92,0,.3);}
+.impresc-item{background:var(--g2);border:1.5px solid rgba(232,92,0,.3);border-radius:12px;padding:13px;margin-bottom:8px;display:flex;align-items:flex-start;gap:11px;}
+.impresc-ico{width:36px;height:36px;border-radius:9px;background:rgba(232,92,0,.1);border:1px solid rgba(232,92,0,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.impresc-t{font-size:clamp(12px,3.5vw,14px);font-weight:700;color:var(--blanco);margin-bottom:3px;}
+.impresc-s{font-size:clamp(10px,2.8vw,11px);color:#bbb;line-height:1.5;}
+.impresc-badge{display:inline-block;background:rgba(232,92,0,.15);border:1px solid rgba(232,92,0,.3);color:var(--naranja);font-size:8px;font-weight:800;padding:2px 7px;border-radius:10px;letter-spacing:.5px;margin-top:4px;}
+.opcionales-toggle{width:100%;background:var(--g2);border:1px solid var(--g4);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .2s;margin-bottom:10px;}
+.opcionales-toggle:hover{border-color:var(--naranja3);}
+.opcionales-toggle-lbl{font-size:clamp(12px,3.5vw,14px);font-weight:600;color:var(--blanco);}
+.opcionales-toggle-arr{font-size:18px;color:var(--naranja);transition:transform .2s;}
+.opcionales-toggle.open .opcionales-toggle-arr{transform:rotate(180deg);}
+
+/* ── PROPUESTA v12: header apretón de manos ── */
+.prop-handshake{background:#0E0E0E;border:1px solid #1E1E1E;border-radius:14px;padding:18px 20px;margin-bottom:14px;}
+.prop-hs-ico{display:none;}
+.prop-hs-quote{font-size:clamp(13px,3.5vw,15px);color:#ccc;font-style:italic;line-height:1.75;margin-bottom:6px;}
+.prop-hs-quote strong{color:var(--naranja);font-style:normal;}
+.prop-hs-attr{font-size:clamp(14px,3.8vw,16px);font-weight:800;color:var(--naranja);margin-top:2px;letter-spacing:.2px;}
+.prop-hs-firma{font-size:clamp(13px,3.5vw,15px);color:#bbb;font-style:italic;line-height:1.75;margin-top:14px;padding-top:14px;border-top:1px solid #1E1E1E;}
+@keyframes hs-pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
+
+/* ── AGENDA VISUAL v12 ── */
+.agenda-v12{background:var(--g2);border:1.5px solid rgba(232,92,0,.25);border-radius:16px;padding:18px;margin-bottom:14px;}
+.agenda-v12-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.agenda-v12-ico{font-size:36px;flex-shrink:0;}
+.agenda-v12-titulo{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(15px,4vw,18px);color:var(--blanco);}
+.agenda-v12-sub{font-size:clamp(10px,2.8vw,12px);color:#bbb;margin-top:3px;}
+.agenda-v12-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.agenda-v12-resultado{font-size:clamp(13px,3.5vw,15px);font-weight:700;color:#4ADE80;text-align:center;padding:10px;background:rgba(34,197,94,.06);border-radius:9px;margin-bottom:10px;display:none;}
+
+/* ── BOTÓN WHATSAPP LLAMATIVO ── */
+.btn-wa-v12{width:100%;background:linear-gradient(135deg,#25D366 0%,#128C7E 100%);color:#fff;border:none;border-radius:12px;padding:16px;font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(15px,4vw,18px);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s;box-shadow:0 4px 20px rgba(37,211,102,.3);margin-bottom:10px;}
+.btn-wa-v12:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,.4);}
+.btn-wa-v12 svg{flex-shrink:0;}
+
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:2px;}
 ::-webkit-scrollbar-track{background:var(--ng);}
@@ -398,7 +514,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
     </div>
     <div>
       <div class="tl-title">NARA <span class="nara-badge">IA</span></div>
-      <div class="tl-sub">Asistente PPA Central · v11.6</div>
+      <div class="tl-sub">Asistente PPA Central · v12.8</div>
     </div>
   </div>
   <div class="tl-right">
@@ -409,10 +525,42 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 
 <!-- STEPS -->
 <div class="steps">
-  <div class="step active" id="s1" onclick="goStep(1)"><div class="step-num">①</div><div class="step-lbl">Cliente</div></div>
-  <div class="step" id="s2" onclick="goStep(2)"><div class="step-num">②</div><div class="step-lbl">Equipo</div></div>
-  <div class="step" id="s3" onclick="goStep(3)"><div class="step-num">③</div><div class="step-lbl">Extras</div></div>
-  <div class="step" id="s4" onclick="goStep(4)"><div class="step-num">④</div><div class="step-lbl">Propuesta</div></div>
+  <div class="step active" id="s1" onclick="goStep(1)">
+    <div class="step-ico"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Casa Tu Espacio -->
+  <path d="M4 16L16 5L28 16" stroke="#005293" stroke-width="2" stroke-linecap="round"/>
+  <rect x="8" y="16" width="16" height="12" rx="1" stroke="#005293" stroke-width="2"/>
+  <rect x="13" y="21" width="6" height="7" rx="1" stroke="#005293" stroke-width="1.5"/>
+  <!-- punto pulsante en la puerta — solo activo -->
+  <circle cx="18.5" cy="24.5" r="1.5" fill="#005293" class="door-dot"/>
+</svg></div>
+    <div class="step-lbl">Tu Espacio</div>
+  </div>
+  <div class="step " id="s2" onclick="goStep(2)">
+    <div class="step-ico"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="gear-svg">
+  <!-- Engranaje Tu Solución -->
+  <circle cx="16" cy="16" r="4" stroke="#4D4F53" stroke-width="2"/>
+  <path d="M16 6v3M16 23v3M6 16H9M23 16h3M8.9 8.9l2.1 2.1M21 21l2.1 2.1M8.9 23.1L11 21M21 11l2.1-2.1" stroke="#4D4F53" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
+    <div class="step-lbl">Tu Solución</div>
+  </div>
+  <div class="step " id="s3" onclick="goStep(3)">
+    <div class="step-ico"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Plano Tu Proyecto -->
+  <line x1="6" y1="12" x2="26" y2="12" stroke="#F15A22" stroke-width="2" stroke-linecap="round" stroke-dasharray="20" stroke-dashoffset="20" class="build-l1"/>
+  <line x1="6" y1="18" x2="22" y2="18" stroke="#F15A22" stroke-width="2" stroke-linecap="round" stroke-dasharray="16" stroke-dashoffset="16" class="build-l2"/>
+  <line x1="6" y1="24" x2="18" y2="24" stroke="#F15A22" stroke-width="2" stroke-linecap="round" stroke-dasharray="12" stroke-dashoffset="12" class="build-l3"/>
+  <line x1="6" y1="8" x2="6" y2="26" stroke="#F15A22" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
+    <div class="step-lbl">Tu Proyecto</div>
+  </div>
+  <div class="step " id="s4" onclick="goStep(4)">
+    <div class="step-ico"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Destello Tu Propuesta -->
+  <path d="M16 4L17.5 14.5L28 16L17.5 17.5L16 28L14.5 17.5L4 16L14.5 14.5Z" stroke="#981E32" stroke-width="1.8" fill="rgba(152,30,50,.15)" class="star-ico"/>
+</svg></div>
+    <div class="step-lbl">Tu Propuesta</div>
+  </div>
 </div>
 
 <!-- CONTENT -->
@@ -444,17 +592,17 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
       <label class="flabel">¿Desde dónde nos escribes?</label>
       <select class="fselect" id="c-depto" onchange="cargarMunicipios()">
         <option value="">Seleccione…</option>
-        <option>Amazonas</option><option>Antioquia</option><option>Arauca</option>
-        <option>Atlántico</option><option>Bolívar</option><option>Boyacá</option>
-        <option>Caldas</option><option>Caquetá</option><option>Casanare</option>
-        <option>Cauca</option><option>Cesar</option><option>Chocó</option>
-        <option>Córdoba</option><option>Cundinamarca</option><option>Guainía</option>
-        <option>Guaviare</option><option>Huila</option><option>La Guajira</option>
-        <option>Magdalena</option><option>Meta</option><option>Nariño</option>
-        <option>Norte de Santander</option><option>Putumayo</option><option>Quindío</option>
-        <option>Risaralda</option><option>San Andrés</option><option>Santander</option>
-        <option>Sucre</option><option>Tolima</option><option>Valle del Cauca</option>
-        <option>Vaupés</option><option>Vichada</option>
+        <option value="Amazonas">Amazonas</option><option value="Antioquia">Antioquia</option><option value="Arauca">Arauca</option>
+        <option value="Atlántico">Atlántico</option><option value="Bolívar">Bolívar</option><option value="Boyacá">Boyacá</option>
+        <option value="Caldas">Caldas</option><option value="Caquetá">Caquetá</option><option value="Casanare">Casanare</option>
+        <option value="Cauca">Cauca</option><option value="Cesar">Cesar</option><option value="Chocó">Chocó</option>
+        <option value="Córdoba">Córdoba</option><option value="Cundinamarca">Cundinamarca</option><option value="Guainía">Guainía</option>
+        <option value="Guaviare">Guaviare</option><option value="Huila">Huila</option><option value="La Guajira">La Guajira</option>
+        <option value="Magdalena">Magdalena</option><option value="Meta">Meta</option><option value="Nariño">Nariño</option>
+        <option value="Norte de Santander">Norte de Santander</option><option value="Putumayo">Putumayo</option><option value="Quindío">Quindío</option>
+        <option value="Risaralda">Risaralda</option><option value="San Andrés">San Andrés</option><option value="Santander">Santander</option>
+        <option value="Sucre">Sucre</option><option value="Tolima">Tolima</option><option value="Valle del Cauca">Valle del Cauca</option>
+        <option value="Vaupés">Vaupés</option><option value="Vichada">Vichada</option>
       </select>
     </div>
     <div class="fgroup">
@@ -487,19 +635,19 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
   </div>
 
 
-  <div class="sec-t">Foto de la fachada (opcional)</div>
-  <div class="foto-zone">
-    <div class="foto-drop" onclick="document.getElementById('fotoInput').click()">
-      <input type="file" id="fotoInput" accept="image/*" onchange="prevFoto(this)">
-      <div class="foto-drop-icon">📷</div>
-      <div class="foto-drop-txt">Foto de la entrada o portón</div>
-      <div class="foto-drop-sub">Nos ayuda a personalizar mejor la propuesta · Opcional</div>
-    </div>
-    <img id="foto-prev-img" src="" alt="Fachada">
+  <!-- FOTO FACHADA -->
+  <div class="foto-banner" id="foto-banner" onclick="document.getElementById('fotoInput').click()" style="cursor:pointer">
+    <input type="file" id="fotoInput" accept="image/*" onchange="prevFoto(this)" style="display:none">
+    <div class="foto-banner-emoji">📸</div>
+    <div class="foto-banner-title">Muéstranos tu espacio</div>
+    <div class="foto-banner-sub">Una foto del portón o la entrada nos ayuda a darte<br>la solución exacta — no una solución genérica.</div>
+    <div class="foto-banner-btn">Tomar o subir foto</div>
   </div>
+  <img id="foto-prev-img" src="" alt="Fachada" style="display:none;width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-bottom:12px">
 
   <button class="btn-wa" onclick="goStep(2)">Empezar mi propuesta →</button>
 </div>
+
 
 <!-- ── PASO 2: MOTOR DE PREGUNTAS GUIADAS ── -->
 <div class="panel" id="p2">
@@ -510,15 +658,15 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
     <div class="guia-sub">Seleccione el camino para esta cotización.</div>
     <div class="guia-opciones" style="margin-bottom:8px">
       <div class="guia-opt" onclick="selCamino('automatizar')">
-        <div class="guia-opt-icon">🚗</div>
+        <div class="guia-opt-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="10" width="22" height="26" rx="2" stroke="#005293" stroke-width="2"/><circle cx="23" cy="23" r="2" fill="#005293"/><path d="M30 16l8-2v14l-8-2" stroke="#005293" stroke-width="1.5" stroke-linecap="round"/><path d="M22 34l4 4 8-8" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div><div class="guia-opt-lbl">Automatizar una puerta</div><div class="guia-opt-sub">Motor guiado · Recomendación inteligente</div></div>
       </div>
       <div class="guia-opt" onclick="selCamino('accesorios')">
-        <div class="guia-opt-icon">🔧</div>
+        <div class="guia-opt-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="6" stroke="#4D4F53" stroke-width="2"/><path d="M22 6v5M22 33v5M6 22h5M33 22h5M10.1 10.1l3.5 3.5M30.4 30.4l3.5 3.5M10.1 33.9l3.5-3.5M30.4 13.6l3.5-3.5" stroke="#4D4F53" stroke-width="2" stroke-linecap="round"/></svg></div>
         <div><div class="guia-opt-lbl">Accesorios y repuestos</div><div class="guia-opt-sub">Centrales · Controles · Cremalleras · Protección</div></div>
       </div>
       <div class="guia-opt" onclick="selCamino('seguridad')">
-        <div class="guia-opt-icon">📷</div>
+        <div class="guia-opt-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M22 6L8 12v10c0 9 6 16 14 18 8-2 14-9 14-18V12L22 6z" stroke="#981E32" stroke-width="2" fill="rgba(152,30,50,.1)"/><circle cx="22" cy="22" r="5" stroke="#981E32" stroke-width="1.5"/><circle cx="22" cy="22" r="1.5" fill="#981E32"/></svg></div>
         <div><div class="guia-opt-lbl">Seguridad y cámaras</div><div class="guia-opt-sub">CCTV · Alarmas · Control de acceso · Domótica</div></div>
       </div>
     </div>
@@ -530,21 +678,46 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
     <div class="guia-progress" id="guia-progress"></div>
     <div id="guia-pantalla"></div>
     <div id="motor-resultado" style="display:none">
-      <div class="sec-t">⭐ Recomendaciones para su caso</div>
+
+      <!-- Header Top 3 -->
+      <div class="top3-header">
+        <div class="top3-titulo">Tu Top 3</div>
+        <div class="top3-sub">Los más usados para tu caso — selecciona el que mejor se ajusta</div>
+      </div>
+
+      <!-- Tarjetas con medallas -->
       <div id="motor-cards"></div>
-      <div class="visita-alert">
-        <div class="visita-t">📋 Visita técnica obligatoria</div>
-        <div class="visita-p">
-          Esta propuesta incluye los <strong>equipos recomendados</strong>. Para confirmar la instalación es necesaria una visita en sitio para verificar dimensiones, peso real y condiciones eléctricas.<br><br>
-          <strong>No incluido:</strong> mano de obra · cableado · obra civil · ornamentación · materiales de instalación.<br>
-          Su asesor coordinará la visita con nuestro <strong>técnico certificado</strong>.
+
+      <!-- Visita técnica rediseñada como propuesta de valor -->
+      <div class="visita-regalo">
+        <div class="visita-regalo-header">
+          <div class="visita-regalo-ico">🎁</div>
+          <div>
+            <div class="visita-regalo-titulo">En tu visita técnica gratuita vas a descubrir:</div>
+            <div class="visita-regalo-sub">Un instalador certificado PPA va a tu espacio sin costo</div>
+          </div>
+        </div>
+        <div class="visita-items">
+          <div class="visita-item">
+            <div class="visita-dot">⚒</div>
+            <div><div class="visita-item-t">El costo exacto de instalación</div><div class="visita-item-s">Varía según la estructura, la altura y las condiciones reales del espacio</div></div>
+          </div>
+          <div class="visita-item">
+            <div class="visita-dot">⚡</div>
+            <div><div class="visita-item-t">Los materiales eléctricos reales</div><div class="visita-item-s">Cableado, protecciones y distancias medidas en sitio</div></div>
+          </div>
+          <div class="visita-item">
+            <div class="visita-dot">📐</div>
+            <div><div class="visita-item-t">La ornamentación que necesita</div><div class="visita-item-s">Acabados y refuerzos según el estado real de la estructura</div></div>
+          </div>
         </div>
       </div>
+
+      <!-- Búsqueda alternativa -->
       <div style="margin-top:10px">
-        <div class="sec-t">¿El motor recomendado no es el correcto?</div>
-        <div style="font-size:clamp(11px,3vw,12px);color:#bbb;margin-bottom:6px">Escriba el nombre del equipo — por ejemplo: <em>stark, industrial, barrera, liger, cademex</em></div>
+        <div style="font-size:clamp(11px,3vw,12px);color:#888;margin-bottom:6px;text-align:center">¿No ves lo que buscas? Escribe el nombre del equipo</div>
         <input class="busqueda-input" id="busqueda-input" type="text"
-          placeholder="Buscar equipo por nombre…"
+          placeholder="Ej: stark, industrial, barrera, liger…"
           oninput="buscarProducto(this.value)">
         <div id="busqueda-resultados" style="margin-top:4px"></div>
       </div>
@@ -569,9 +742,31 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 
 <!-- ── PASO 3: ACCESORIOS (Acordeón inteligente) ── -->
 <div class="panel" id="p3">
-  <div class="sec-t" id="acc-seg-hint"></div>
-  <div id="acc-acordeones"></div>
-  <button class="btn-wa" onclick="generarProp()">🚀 Generar Propuesta</button>
+  <!-- Header paso 3 -->
+  <div class="acc-header">
+    <div class="acc-header-titulo">Tu proyecto, casi listo</div>
+    <div class="acc-header-sub" id="acc-seg-hint">Revisamos tu selección y destacamos lo que no puede faltar.</div>
+  </div>
+
+  <!-- Imprescindibles — calculados automáticamente -->
+  <div class="impresc-section" id="impresc-section">
+    <div class="impresc-label">⚠ Imprescindibles para tu solución</div>
+    <div id="impresc-lista"></div>
+  </div>
+
+  <!-- Toggle opcionales -->
+  <div class="opcionales-toggle" id="opcionales-toggle" onclick="toggleOpcionales()">
+    <div>
+      <div class="opcionales-toggle-lbl">Ver accesorios opcionales</div>
+      <div style="font-size:10px;color:#888;margin-top:2px">Conectividad · Controles · Protección · Domótica y más</div>
+    </div>
+    <div class="opcionales-toggle-arr">▾</div>
+  </div>
+
+  <!-- Acordeones opcionales (colapsados por defecto) -->
+  <div id="acc-acordeones" style="display:none"></div>
+
+  <div style="position:sticky;bottom:0;background:var(--ng);padding:12px 0 4px;margin-top:14px;z-index:10"><button class="btn-wa" onclick="generarProp()" style="margin-top:0">🚀 Generar mi propuesta</button></div>
   <button class="btn-sec" style="margin-top:8px;" onclick="goStep(2)">← Volver</button>
 </div>
 
@@ -579,9 +774,10 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 <div class="panel" id="p4">
   <div id="p4-content" style="display:none">
 
+    <!-- HERO -->
     <div class="prop-hero">
       <div class="ph-inner">
-        <div class="ph-consec" id="ph-consec">WEB-PPA-0001 · PPA Central</div>
+        <div class="ph-consec" id="ph-consec">— · PPA Central</div>
         <div class="ph-title">Automatización<br><span>de Alta</span><br>Velocidad</div>
         <div class="ph-sub" id="ph-sub">Tecnología PPA</div>
       </div>
@@ -595,6 +791,18 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 
     <div class="prop-body">
 
+      <!-- 1. APRETÓN DE MANOS + FRASES -->
+      <div class="prop-handshake">
+        <div class="prop-hs-ico">🤝</div>
+        <div class="prop-hs-quote">
+          <em>"El precio es lo que pagas. El valor es lo que recibes."</em>
+        </div>
+        <div class="prop-hs-attr">— Warren Buffett</div>
+        <div class="prop-hs-firma">"Hay tres tipos de automatización: la que falla, la que dura — y la que te hace olvidar que existe."</div>
+        <div class="prop-hs-attr" style="margin-top:2px;color:var(--blanco)">— PPA Central</div>
+      </div>
+
+      <!-- 2. NARA -->
       <div class="prop-nara-box">
         <div class="prop-nara-avatar">
           <div class="pna-ring pna-r2"></div>
@@ -608,11 +816,67 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
         </div>
       </div>
 
+      <!-- 3. COPY AIDA -->
       <div class="prop-aida">
         <div class="pa-q" id="pa-q"></div>
         <div class="pa-p" id="pa-p"></div>
       </div>
 
+      <!-- 4. PRECIO TOTAL — el globo naranja grande -->
+      <div class="prop-total">
+        <div><div class="ptl">Total Equipos ★</div><div class="pts" id="pts-lista">PSVP · Referencia usuario final</div></div>
+        <div class="ptm" id="prop-total-num"></div>
+      </div>
+
+      <!-- 5. AGENDA VISITA V12 — calendario izq + hora der + ícono evolución -->
+      <div class="agenda-v12" id="bloque-agenda">
+        <div class="agenda-v12-header">
+          <div class="agenda-v12-ico">🌱</div>
+          <div>
+            <div class="agenda-v12-titulo">Agenda tu visita gratuita</div>
+            <div class="agenda-v12-sub">El siguiente paso convierte esta propuesta en tu proyecto real — con costos exactos y fecha de instalación.</div>
+          </div>
+        </div>
+        <div class="agenda-v12-grid" id="pag-campos">
+          <div class="pag-grupo">
+            <label class="pag-label">📅 Fecha</label>
+            <input type="date" class="pag-input" id="agenda-fecha" lang="es" onchange="validarFechaAgenda()" style="color-scheme:dark;">
+            <div class="pag-hint" id="agenda-fecha-hint"></div>
+          </div>
+          <div class="pag-grupo">
+            <label class="pag-label">🕐 Hora</label>
+            <select class="pag-input" id="agenda-hora">
+              <option value="">Primero elige fecha…</option>
+            </select>
+          </div>
+        </div>
+        <div class="agenda-v12-resultado" id="agenda-v12-ok"></div>
+        <button class="pag-btn" id="pag-btn" onclick="confirmarAgenda()" style="margin-top:8px">Confirmar visita gratuita →</button>
+        <button class="regalo-btn-no" onclick="sinAgenda()" style="width:100%;margin-top:6px">Me contactan después →</button>
+      </div>
+
+      <!-- 6. BOTÓN WHATSAPP LLAMATIVO -->
+      <button class="btn-wa-v12" id="btn-pub" onclick="publicarYEnviar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.116 1.532 5.843L.058 23.617a.75.75 0 00.917.911l5.877-1.533A11.937 11.937 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.73 9.73 0 01-4.96-1.355l-.355-.214-3.687.963.983-3.595-.232-.37A9.726 9.726 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+        Descargar y Enviar por WhatsApp
+      </button>
+
+      <!-- 7. LINK BOX -->
+      <div class="link-box" id="link-box">
+        <div class="lb-lbl">📎 Cómo enviar al cliente</div>
+        <div style="font-size:12px;color:#ccc;line-height:1.7;margin-bottom:10px">El archivo HTML ya se descargó. En WhatsApp adjúntelo desde Descargas.</div>
+        <div class="lb-btns">
+          <button class="lb-btn" onclick="publicarYEnviar()">📲 Re-abrir WA</button>
+          <button class="lb-btn" onclick="verLink()">👁 Ver propuesta</button>
+        </div>
+      </div>
+
+      <!-- 8. SEPARADOR: "Lo que sigue en detalle" -->
+      <div style="text-align:center;margin:20px 0 12px;border-top:1px solid var(--g4);padding-top:16px">
+        <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#555">Resumen completo de tu selección</div>
+      </div>
+
+      <!-- 9. EQUIPO SELECCIONADO -->
       <div class="prop-eq-card">
         <div class="peq-img" id="peq-img">🚪</div>
         <div class="peq-info">
@@ -622,97 +886,39 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
         </div>
       </div>
 
+      <!-- 10. TABLA EQUIPAMIENTO -->
       <div class="prop-sec">Equipamiento propuesto</div>
       <div id="prop-rows"></div>
 
-      <div class="prop-total">
-        <div><div class="ptl">Total Equipos ★</div><div class="pts" id="pts-lista">PSVP · Referencia usuario final</div></div>
-        <div class="ptm" id="prop-total-num"></div>
-      </div>
-
+      <!-- 11. SSG / Ventaja -->
       <div class="prop-ventaja" id="prop-ventaja" style="display:none">
         <div class="pvt" id="pvt"></div>
         <div class="pvp" id="pvp"></div>
       </div>
-
       <div class="prop-ssg">
         <div class="ssg-t">¿Por qué elegirnos?</div>
         <div class="ssg-items" id="ssg-items"></div>
       </div>
 
-      <!-- BLOQUE PROYECTO -->
+      <!-- 12. PROYECTO COMPLETO -->
       <div class="prop-proyecto">
         <div class="pproj-header">
           <div class="pproj-icon">🏗</div>
           <div>
             <div class="pproj-titulo">Proyecto de automatización</div>
-            <div class="pproj-sub">Esta propuesta cubre el equipo y los accesorios seleccionados. Para que el proyecto quede completo necesitamos conocer el espacio.</div>
+            <div class="pproj-sub">Esta propuesta cubre equipo y accesorios. Para completar el proyecto necesitamos conocer el espacio.</div>
           </div>
         </div>
-        <div class="pproj-divider">Lo siguiente solo se puede determinar con una visita técnica</div>
+        <div class="pproj-divider">Lo siguiente solo se determina con una visita técnica</div>
         <div class="pproj-items">
-          <div class="pproj-item">
-            <div class="pproj-dot">⚒</div>
-            <div>
-              <div class="pproj-item-t">Mano de obra de instalación</div>
-              <div class="pproj-item-s">Varía según condiciones del espacio, altura y tipo de estructura</div>
-            </div>
-          </div>
-          <div class="pproj-item">
-            <div class="pproj-dot">⚡</div>
-            <div>
-              <div class="pproj-item-t">Materiales eléctricos requeridos</div>
-              <div class="pproj-item-s">Cableado, canaleta, tomas y protecciones según distancias reales</div>
-            </div>
-          </div>
-          <div class="pproj-item">
-            <div class="pproj-dot">🔩</div>
-            <div>
-              <div class="pproj-item-t">Materiales de ornamentación</div>
-              <div class="pproj-item-s">Aplica según el estado de la estructura y acabados requeridos</div>
-            </div>
-          </div>
+          <div class="pproj-item"><div class="pproj-dot">⚒</div><div><div class="pproj-item-t">Mano de obra de instalación</div><div class="pproj-item-s">Varía según condiciones del espacio y tipo de estructura</div></div></div>
+          <div class="pproj-item"><div class="pproj-dot">⚡</div><div><div class="pproj-item-t">Materiales eléctricos requeridos</div><div class="pproj-item-s">Cableado, canaleta y protecciones según distancias reales</div></div></div>
+          <div class="pproj-item"><div class="pproj-dot">🔩</div><div><div class="pproj-item-t">Materiales de ornamentación</div><div class="pproj-item-s">Aplica según estado de la estructura y acabados requeridos</div></div></div>
         </div>
-        <div class="pproj-cta">
-          PPA Central coordinará para que un <strong>instalador certificado</strong> realice la visita y puedas recibir el proyecto completo con todos los costos reales.
-        </div>
+        <div class="pproj-cta">PPA Central coordinará un <strong>instalador certificado</strong> para la visita y recibirás el proyecto completo.</div>
       </div>
 
-      <!-- BLOQUE AGENDAMIENTO -->
-      <div class="prop-agenda" id="bloque-agenda" onclick="abrirCalendarioAgenda(event)">
-        <div class="pag-header">
-          <div class="pag-header-txt">
-            <div class="pag-titulo">Agenda tu visita técnica</div>
-            <div class="pag-sub">Toca aquí para elegir el día y la hora. Un instalador certificado confirmará la cita.</div>
-          </div>
-          <div class="pag-cal-icon">📅</div>
-        </div>
-
-        <div class="pag-fila" id="pag-campos" style="display:none">
-          <div class="pag-grupo">
-            <label class="pag-label">Fecha</label>
-            <input type="date" class="pag-input" id="agenda-fecha" lang="es" onchange="validarFechaAgenda()" style="color-scheme:dark;" onclick="event.stopPropagation()">
-            <div class="pag-hint" id="agenda-fecha-hint"></div>
-          </div>
-          <div class="pag-grupo">
-            <label class="pag-label">Hora</label>
-            <select class="pag-input" id="agenda-hora" onclick="event.stopPropagation()">
-              <option value="">Primero elige fecha…</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="pag-confirmado" id="pag-confirmado" style="display:none">
-          <div class="pag-conf-icon">✓</div>
-          <div>
-            <div class="pag-conf-t" id="pag-conf-texto"></div>
-            <div class="pag-conf-s">PPA Central confirmará tu cita a la brevedad.</div>
-          </div>
-        </div>
-
-        <button class="pag-btn" id="pag-btn" onclick="event.stopPropagation();confirmarAgenda()" style="display:none">Confirmar visita técnica</button>
-      </div>
-
+      <!-- 13. FIRMA -->
       <div class="prop-firma">
         <div>
           <div class="pf-empresa">PPA Central</div>
@@ -724,17 +930,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
         </div>
       </div>
 
-      <!-- ACCIONES ENVÍO -->
-      <button class="btn-wa" id="btn-pub" onclick="publicarYEnviar()">📲 Descargar y Enviar por WhatsApp</button>
 
-      <div class="link-box" id="link-box">
-        <div class="lb-lbl">📎 Cómo enviar al cliente</div>
-        <div style="font-size:12px;color:#ccc;line-height:1.7;margin-bottom:10px">
-          El archivo HTML ya se descargó. En WhatsApp adjúntelo desde Descargas.
-        </div>
-        <div class="lb-btns">
-          <button class="lb-btn" onclick="reenviarWA()">📲 Re-abrir WA</button>
-          <button class="lb-btn" onclick="verLink()">👁 Ver propuesta</button>
           <button class="lb-btn" onclick="descargarHTML()">⬇ Re-descargar</button>
         </div>
       </div>
@@ -751,7 +947,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
     </div>
   </div>
 
-  <div id="p4-vacia" style="text-align:center;padding:40px 20px;color:var(--gtxt)">
+  <div id="p4-vacia" style="display:none;text-align:center;padding:40px 20px;color:var(--gtxt)">
     <div style="font-size:40px;margin-bottom:12px">📄</div>
     <div style="font-family:'Inter',sans-serif;font-weight:700;font-size:18px;margin-bottom:6px">Sin propuesta activa</div>
     <div style="font-size:13px">Completa los pasos anteriores y genera tu propuesta premium.</div>
@@ -1182,17 +1378,32 @@ function guiaRender(){
   if(paso.tipo==='opciones'){
     html += `<div class="guia-opciones ${paso.cols===2?'col2':''}">`;
     paso.opciones.forEach(o=>{
-      html += `<div class="guia-opt ${val===o.val?'sel':''}" onclick="guiaSel('${paso.id}','${o.val}')">
-        <div class="guia-opt-icon">${o.icon}</div>
+      const svgMap = {'corredera': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="4" y="10" width="24" height="26" rx="2" stroke="#005293" stroke-width="2"/><line x1="28" y1="10" x2="28" y2="36" stroke="#005293" stroke-width="2"/><circle cx="25" cy="23" r="2" fill="#005293"/><path d="M32 18l6-2v12l-6-2" stroke="#005293" stroke-width="1.5" stroke-linecap="round"/></svg>', 'batiente': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="8" y="8" width="20" height="28" rx="2" stroke="#005293" stroke-width="2"/><circle cx="26" cy="22" r="2" fill="#005293"/><path d="M28 16 Q36 18 36 22 Q36 26 28 28" stroke="#005293" stroke-width="1.5" stroke-dasharray="3 2"/></svg>', 'seccional': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="20" width="32" height="8" rx="1" stroke="#005293" stroke-width="2"/><rect x="6" y="12" width="32" height="8" rx="1" stroke="#005293" stroke-width="2"/><line x1="14" y1="8" x2="14" y2="12" stroke="#E85C00" stroke-width="2"/><line x1="22" y1="8" x2="22" y2="12" stroke="#E85C00" stroke-width="2"/><line x1="30" y1="8" x2="30" y2="12" stroke="#E85C00" stroke-width="2"/></svg>', 'barrera': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="18" width="6" height="18" rx="2" fill="#4D4F53" stroke="#4D4F53" stroke-width="1"/><line x1="12" y1="22" x2="40" y2="16" stroke="#F15A22" stroke-width="3" stroke-linecap="round"/><circle cx="40" cy="16" r="2" fill="#F15A22"/></svg>', 'vidrio': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="5" y="8" width="34" height="28" rx="2" stroke="#005293" stroke-width="2" fill="rgba(0,82,147,.08)"/><line x1="22" y1="8" x2="22" y2="36" stroke="#005293" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="20" cy="22" r="1.5" fill="#005293"/><circle cx="24" cy="22" r="1.5" fill="#005293"/></svg>', 'cortina': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="6" width="32" height="4" rx="1" fill="#4D4F53"/><line x1="10" y1="10" x2="10" y2="36" stroke="#4D4F53" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="10" x2="16" y2="36" stroke="#4D4F53" stroke-width="2.5" stroke-linecap="round"/><line x1="22" y1="10" x2="22" y2="36" stroke="#4D4F53" stroke-width="2.5" stroke-linecap="round"/><line x1="28" y1="10" x2="28" y2="36" stroke="#4D4F53" stroke-width="2.5" stroke-linecap="round"/><line x1="34" y1="10" x2="34" y2="36" stroke="#4D4F53" stroke-width="2.5" stroke-linecap="round"/></svg>', 'casa': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M8 22L22 8L36 22" stroke="#005293" stroke-width="2.5" stroke-linecap="round"/><rect x="12" y="22" width="20" height="16" rx="1" stroke="#005293" stroke-width="2"/><rect x="18" y="29" width="8" height="9" rx="1" stroke="#005293" stroke-width="1.5"/></svg>', 'conjunto': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="4" y="12" width="16" height="26" rx="1" stroke="#4D4F53" stroke-width="2"/><rect x="24" y="6" width="16" height="32" rx="1" stroke="#4D4F53" stroke-width="2"/><rect x="8" y="18" width="4" height="4" fill="#4D4F53" rx=".5"/><rect x="28" y="12" width="4" height="4" fill="#4D4F53" rx=".5"/><rect x="28" y="20" width="4" height="4" fill="#4D4F53" rx=".5"/><rect x="28" y="28" width="4" height="4" fill="#4D4F53" rx=".5"/></svg>', 'comercial': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="14" width="32" height="24" rx="1" stroke="#F15A22" stroke-width="2"/><path d="M6 20h32" stroke="#F15A22" stroke-width="1.5"/><rect x="18" y="26" width="8" height="12" rx="1" stroke="#F15A22" stroke-width="1.5"/><path d="M6 14V10a2 2 0 012-2h28a2 2 0 012 2v4" stroke="#F15A22" stroke-width="2"/></svg>', 'industrial': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="4" y="18" width="36" height="22" rx="1" stroke="#981E32" stroke-width="2"/><path d="M4 24L12 18V24" stroke="#981E32" stroke-width="2" fill="rgba(152,30,50,.1)"/><path d="M20 24L28 18V24" stroke="#981E32" stroke-width="2" fill="rgba(152,30,50,.1)"/><path d="M4 18h36M10 8v10M20 8v10M30 8v10" stroke="#981E32" stroke-width="1.5" stroke-linecap="round"/></svg>', 'reja_liviana': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="8" width="32" height="28" rx="2" stroke="#005293" stroke-width="1.5"/><line x1="14" y1="8" x2="14" y2="36" stroke="#005293" stroke-width="1" stroke-dasharray="2 2"/><line x1="22" y1="8" x2="22" y2="36" stroke="#005293" stroke-width="1" stroke-dasharray="2 2"/><line x1="30" y1="8" x2="30" y2="36" stroke="#005293" stroke-width="1" stroke-dasharray="2 2"/><line x1="6" y1="18" x2="38" y2="18" stroke="#005293" stroke-width="1" stroke-dasharray="2 2"/><line x1="6" y1="26" x2="38" y2="26" stroke="#005293" stroke-width="1" stroke-dasharray="2 2"/></svg>', 'lamina': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="8" width="32" height="28" rx="2" fill="rgba(77,79,83,.2)" stroke="#4D4F53" stroke-width="2"/><line x1="6" y1="15" x2="38" y2="15" stroke="#4D4F53" stroke-width="1"/><line x1="6" y1="22" x2="38" y2="22" stroke="#4D4F53" stroke-width="1"/><line x1="6" y1="29" x2="38" y2="29" stroke="#4D4F53" stroke-width="1"/></svg>', 'reja_pesada': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="8" width="32" height="28" rx="2" stroke="#4D4F53" stroke-width="3"/><line x1="14" y1="8" x2="14" y2="36" stroke="#4D4F53" stroke-width="2.5"/><line x1="22" y1="8" x2="22" y2="36" stroke="#4D4F53" stroke-width="2.5"/><line x1="30" y1="8" x2="30" y2="36" stroke="#4D4F53" stroke-width="2.5"/><line x1="6" y1="20" x2="38" y2="20" stroke="#4D4F53" stroke-width="2"/></svg>', 'madera': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="8" width="32" height="28" rx="2" fill="rgba(120,72,20,.15)" stroke="#C47A2A" stroke-width="2"/><line x1="10" y1="14" x2="34" y2="14" stroke="#C47A2A" stroke-width="1" stroke-dasharray="4 2"/><line x1="10" y1="22" x2="34" y2="22" stroke="#C47A2A" stroke-width="1" stroke-dasharray="4 2"/><line x1="10" y1="30" x2="34" y2="30" stroke="#C47A2A" stroke-width="1" stroke-dasharray="4 2"/></svg>', 'pesado': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="4" y="6" width="36" height="32" rx="2" fill="rgba(152,30,50,.1)" stroke="#981E32" stroke-width="2.5"/><path d="M4 20h36M4 28h36M16 6v32M28 6v32" stroke="#981E32" stroke-width="1.5"/></svg>', 'bajo': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="14" stroke="#005293" stroke-width="2"/><path d="M16 26l4-8 4 5 3-4" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>', 'moderado': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M10 34V24l6-4 6 4 6-6 6 4v12" stroke="#005293" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>', 'intenso': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M8 10l6 6-6 6M16 10l6 6-6 6M24 10l6 6-6 6" stroke="#F15A22" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>', 'muy_intenso': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M22 6l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z" stroke="#981E32" stroke-width="2" fill="rgba(152,30,50,.15)"/></svg>', 'estable': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M8 22l8 8 18-16" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="22" r="14" stroke="#22C55E" stroke-width="1.5"/></svg>', 'inestable': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M8 22h6l4-10 6 20 4-14 4 8 4-4" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>', 'sin_red': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="14" y="10" width="16" height="24" rx="2" stroke="#981E32" stroke-width="2"/><path d="M22 28v2M18 34h8" stroke="#981E32" stroke-width="2" stroke-linecap="round"/><path d="M28 8l-12 6" stroke="#E85C00" stroke-width="1.5" stroke-dasharray="2 2"/></svg>', '1': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="10" y="8" width="18" height="28" rx="2" stroke="#005293" stroke-width="2"/><circle cx="26" cy="22" r="2" fill="#005293"/><path d="M28 18 Q36 20 36 22 Q36 24 28 26" stroke="#005293" stroke-width="1.5" stroke-dasharray="2 2"/></svg>', '2': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="4" y="8" width="16" height="28" rx="2" stroke="#005293" stroke-width="2"/><rect x="24" y="8" width="16" height="28" rx="2" stroke="#005293" stroke-width="2"/><circle cx="20" cy="22" r="2" fill="#005293"/><circle cx="24" cy="22" r="2" fill="#005293"/></svg>', 'sb_cond': '<svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="4" y="10" width="36" height="28" rx="2" stroke="#4D4F53" stroke-width="2.5"/><line x1="22" y1="10" x2="22" y2="38" stroke="#4D4F53" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="19" cy="24" r="2" fill="#4D4F53"/><circle cx="25" cy="24" r="2" fill="#4D4F53"/></svg>'};
+    const icoHtml = svgMap[o.val] || `<span style="font-size:28px">${o.icon}</span>`;
+    html += `<div class="guia-opt ${val===o.val?'sel':''}" onclick="guiaSel('${paso.id}','${o.val}')">
+        <div class="guia-opt-icon">${icoHtml}</div>
         <div><div class="guia-opt-lbl">${o.lbl}</div><div class="guia-opt-sub">${o.sub}</div></div>
       </div>`;
     });
     html += '</div>';
   } else {
-    html += `<input class="guia-input" type="number" min="0.5" max="50" step="0.5"
-      placeholder="${paso.placeholder}" value="${val||''}" id="guia-num"
-      oninput="guiaRespuestas['${paso.id}']=parseFloat(this.value)||0">
-    <div class="guia-input-unit">${paso.unidad}</div>`;
+    // SVG de puerta con flecha de medida
+    const svgMedida = `<svg width="180" height="110" viewBox="0 0 180 110" fill="none" class="guia-medida-svg" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="10" width="120" height="80" rx="3" stroke="#4D4F53" stroke-width="2" fill="rgba(77,79,83,.06)"/>
+      <circle cx="138" cy="50" r="4" fill="#E85C00"/>
+      <!-- Flecha de medida -->
+      <line x1="30" y1="100" x2="150" y2="100" stroke="#E85C00" stroke-width="1.5"/>
+      <path d="M30 96v8M150 96v8" stroke="#E85C00" stroke-width="1.5"/>
+      <text x="90" y="97" text-anchor="middle" font-size="10" fill="#E85C00" font-family="Inter,sans-serif" font-weight="700">ANCHO</text>
+    </svg>`;
+    html += `<div class="guia-medida-box">
+      ${svgMedida}
+      <input class="guia-input-grande" type="number" min="0.5" max="50" step="0.5"
+        placeholder="${paso.placeholder}" value="${val||''}" id="guia-num"
+        oninput="guiaRespuestas['${paso.id}']=parseFloat(this.value)||0">
+      <div class="guia-unidad">${paso.unidad}</div>
+      <div class="guia-medida-hint">Mide el ancho total de la abertura del vano.<br>Para portones de dos hojas, ingresa el ancho de <strong>cada hoja</strong> por separado.</div>
+    </div>`;
   }
   document.getElementById('guia-pantalla').innerHTML = html;
   document.getElementById('motor-resultado').style.display='none';
@@ -1449,23 +1660,35 @@ function mostrarResultadoMotor(){
   }
 
   let encontrados = 0;
+  const medallas = [
+    {ico:'🥇', lbl:'1ª opción', cls:'medalla-1'},
+    {ico:'🥈', lbl:'2ª opción', cls:'medalla-2'},
+    {ico:'🥉', lbl:'3ª opción', cls:'medalla-3'},
+  ];
+
   recs.filter(r=>r&&r.sku).forEach((rec,idx)=>{
     const eq = findEquipoBySku(rec.sku);
     if(!eq) return;
     encontrados++;
-    const rankClass = idx===0?'rank-1':idx===1?'rank-2':'rank-3';
+    const med = medallas[idx] || {ico:'⭐', lbl:'Opción', cls:'medalla-3'};
     const selId = `mc-${eq.id}`;
     html += `<div class="motor-card ${equipoSel?.id===eq.id?'sel':''}" id="${selId}" onclick="selEquipoMotor('${eq.id}')">
-      <span class="motor-rank ${rankClass}">${rec.rank}</span>
-      <div class="motor-nombre">${eq.e} ${eq.n}</div>
-      <div class="motor-razon">${rec.razon}</div>
-      <div class="eq-tags">
-        <span class="tag tag-n">${eq.tec}</span>
-        ${eq.kg?`<span class="tag tag-a">${eq.kg}kg</span>`:''}
-        ${eq.vel?`<span class="tag tag-a">⚡${eq.vel}</span>`:''}
-        ${eq.v?`<span class="tag tag-v">${eq.v}</span>`:''}
+      <div class="motor-medalla ${med.cls}">
+        <div class="medalla-ico">${med.ico}</div>
+        <div class="medalla-lbl">${med.lbl}</div>
       </div>
-      <div class="motor-precio">${fmtCOP(precioMostrar(eq.p))}</div>
+      <div class="motor-body">
+        <div class="motor-sel-badge">✓ SELECCIONADO</div>
+        <div class="motor-nombre">${eq.e} ${eq.n}</div>
+        <div class="motor-razon">${rec.razon}</div>
+        <div class="eq-tags" style="margin-top:6px">
+          <span class="tag tag-n">${eq.tec}</span>
+          ${eq.kg?`<span class="tag tag-a">${eq.kg}kg</span>`:''}
+          ${eq.vel&&eq.vel!=='—'?`<span class="tag tag-a">⚡${eq.vel}</span>`:''}
+          ${eq.v?`<span class="tag tag-v">${eq.v}</span>`:''}
+        </div>
+        <div class="motor-precio">${fmtCOP(precioMostrar(eq.p))}</div>
+      </div>
     </div>`;
   });
 
@@ -1492,6 +1715,11 @@ function mostrarResultadoMotor(){
 function selEquipoMotor(id){
   const eq = getCatalogoCompleto().find(e=>e.id===id);
   if(!eq){ showToast('⚠ Use la búsqueda manual'); return; }
+  // Inyectar .cat buscando la categoría en EQUIPOS
+  if(!eq.cat){
+    var catKey = Object.keys(EQUIPOS).find(function(k){ return EQUIPOS[k].find(function(e){ return e.id===id; }); });
+    if(catKey) eq.cat = catKey;
+  }
   equipoSel = eq;
   document.querySelectorAll('.motor-card').forEach(c=>c.classList.remove('sel'));
   const card = document.getElementById(`mc-${id}`);
@@ -1520,6 +1748,10 @@ function buscarProducto(q){
 function selBusqueda(id){
   const eq = getCatalogoCompleto().find(e=>e.id===id);
   if(!eq) return;
+  if(!eq.cat){
+    var catKey = Object.keys(EQUIPOS).find(function(k){ return EQUIPOS[k].find(function(e){ return e.id===id; }); });
+    if(catKey) eq.cat = catKey;
+  }
   equipoSel = eq;
   document.getElementById('busqueda-input').value='';
   document.getElementById('busqueda-resultados').innerHTML='';
@@ -1591,11 +1823,13 @@ function renderAccesoriosInteligentes(){
   const energiaInestable = guiaRespuestas.energia==='inestable'||guiaRespuestas.energia==='sin_red';
   const camino = caminoActual || 'automatizar';
 
-  // Reset selección si viene del camino automatizar
+  // Reset ANTES de renderImprescindibles
   if(camino === 'automatizar' || camino === ''){
     accSel = new Set();
     accQty = {};
   }
+
+  renderImprescindibles();
 
   // Hint contextual
   const hint = document.getElementById('acc-seg-hint');
@@ -1872,9 +2106,9 @@ function selTipo(id){
 const ACCS = {
   // ─ SEÑALIZACIÓN — compatible: corredera, batiente, basculante, barrera, cortina
   sen:[
-    {id:'slux',    n:'Semáforo Sinaleira LUX',       sku:'A36395',    p:169000, def:true,  qty:false, compat:['corredera_res','corredera_ind','batiente','basculante','barrera','cortina']},
+    {id:'slux',    n:'Semáforo Sinaleira LUX',       sku:'A36395',    p:169000, def:false,  qty:false, compat:['corredera_res','corredera_ind','batiente','basculante','barrera','cortina']},
     {id:'sce',     n:'Semáforo CE (12-240V)',          sku:'A408164',   p:138000, def:false, qty:false, compat:['corredera_res','corredera_ind','batiente','basculante','barrera','cortina']},
-    {id:'rele',    n:'Módulo Relé (semáforos/centrales)',sku:'A02034',  p:38000,  def:true,  qty:false, compat:['corredera_res','corredera_ind','batiente','basculante','barrera','cortina','seccional']},
+    {id:'rele',    n:'Módulo Relé (semáforos/centrales)',sku:'A02034',  p:38000,  def:false,  qty:false, compat:['corredera_res','corredera_ind','batiente','basculante','barrera','cortina','seccional']},
     {id:'rele2',   n:'Temporizador Trava DOG 127V',    sku:'A02275',    p:38000,  def:false, qty:false, compat:['corredera_res','corredera_ind','batiente','basculante','seccional']},
     {id:'rele3',   n:'Temporizador Trava DOG 220V',    sku:'A02276',    p:38000,  def:false, qty:false, compat:['corredera_res','corredera_ind','batiente','basculante','seccional']},
     {id:'prodelay',n:'PRODELAY — Retardo 1-30 seg',   sku:'PRODELAY',  p:31200,  def:false, qty:false, compat:['batiente','basculante','seccional','puerta_auto']},
@@ -2130,6 +2364,7 @@ function fmtCOP(n){ return '$' + Math.round(n).toLocaleString('es-CO'); }
 // ══════════════════════════════════════
 async function init(){
   document.getElementById('consecBadge').textContent = generarID();
+  cargarMunicipios();
   cargarPreciosSheets();
   renderAsesores();
   initFechaAgenda();
@@ -2160,6 +2395,220 @@ function updateConsecUI(n){
 // ══════════════════════════════════════
 // NAVEGACIÓN
 // ══════════════════════════════════════
+
+// ── IMPRESCINDIBLES ─────────────────────────────────────────
+function renderImprescindibles(){
+  var lista = document.getElementById('impresc-lista');
+  if(!lista) return;
+  var cat   = (equipoSel && equipoSel.cat) || '';
+  var idEq  = (equipoSel && equipoSel.id)  || '';
+  var largo = parseFloat((guiaRespuestas && guiaRespuestas.largo)) || 0;
+  var items = [];
+  var allAccFlat = Object.keys(ACCS).reduce(function(a,k){ return a.concat(ACCS[k]); }, []);
+
+  // Sin equipo seleccionado → no hay imprescindibles que calcular
+  if(!cat){
+    var sec = document.getElementById('impresc-section');
+    if(sec) sec.style.display = 'none';
+    return;
+  }
+
+  // ── PORTONES: F32 Plus obligatoria ──────────────────────
+  var esPorton = ['corredera_res','corredera_ind','batiente','basculante','seccional','cortina'].includes(cat);
+  if(esPorton){
+    items.push({ ico:'🔦', acc:'f32p',
+      t:'Fotocelda F32 Plus — Anti-aplastamiento',
+      s:'Sensor obligatorio en todo sistema certificado. Detecta personas o vehículos en el trayecto y detiene el movimiento antes del impacto. Estándar PPA para instalaciones profesionales.',
+      badge:'OBLIGATORIA' });
+  }
+
+  // ── CORREDERA: cremallera extra si largo > 4m ───────────
+  if(['corredera_res','corredera_ind'].includes(cat) && largo > 4){
+    var ext = Math.ceil(largo - 4);
+    items.push({ ico:'⛓', acc: cat==='corredera_ind' ? 'crem-ind' : 'crem-gold',
+      t:'Cremallera extra — portón mayor a 4m',
+      s:'Tu portón mide ' + largo + 'm. Necesitas ' + ext + ' metro(s) adicional(es) de cremallera para cubrir todo el recorrido.',
+      badge:'+' + ext + 'm EXTRA' });
+  }
+
+  // ── BATIENTE: electrocerradura ───────────────────────────
+  if(cat === 'batiente'){
+    items.push({ ico:'🔒',
+      t:'Electrocerradura de seguridad',
+      s:'El motor mueve el portón pero no lo bloquea. La electrocerradura lo asegura cuando está cerrado — sin ella el sistema queda vulnerable.',
+      badge:'RECOMENDADA' });
+  }
+
+  // ── BARRERAS ─────────────────────────────────────────────
+  // Reflectiva para todas — detecta vehículo bajo el brazo.
+  // Cultura vial colombiana: el vehículo puede quedar debajo.
+  // El espejo se monta sin cableado del otro lado. Recomendación PPA.
+  if(cat === 'barrera'){
+    items.push({ ico:'🔦', acc:'f10r',
+      t:'Fotocelda F10-R Reflectiva — Anti-golpe vehicular',
+      s:'Detecta vehículos detenidos bajo el brazo antes de bajar. Espejo sin cableado del otro lado. Recomendación PPA Central para todas las barreras.',
+      badge:'OBLIGATORIA' });
+
+    if(idEq === 'bc1'){
+      items.push({ ico:'⛓', acc:'bc1-ram',
+        t:'Rampa BC1 — componente requerido',
+        s:'La barrera de cadena BC1 necesita rampa para operar. Sin ella el sistema no funciona.',
+        badge:'OBLIGATORIA' });
+    }
+    else if(idEq === 'sempar'){
+      items.push({ ico:'✅',
+        t:'Brazo 3m — incluido con el equipo',
+        s:'El SEM PARAR viene con brazo rectangular de 3m integrado. No necesitas asta adicional.',
+        badge:'INCLUIDO' });
+      items.push({ ico:'🚦', acc:'slux',
+        t:'Semáforo Sinaleira LUX',
+        s:'En barreras de 1200 ciclos/día el semáforo es crítico. Indica libre/ocupado y evita conflictos vehiculares.',
+        badge:'MUY RECOMENDADO' });
+      items.push({ ico:'🔌', acc:'rele',
+        t:'Módulo Relé — conexión semáforo/central',
+        s:'Necesario para conectar el semáforo a la central de la barrera.',
+        badge:'REQUERIDO' });
+    }
+    else if(idEq === 'kd2'){
+      items.push({ ico:'🚧', acc:'asta-kd2-3b',
+        t:'Asta Slim 3m — KD2 (sin LED)',
+        s:'Asta obligatoria — sin ella la barrera no tiene función. Opción sin LED preseleccionada. Para LED integrado selecciona en accesorios.',
+        badge:'OBLIGATORIA' });
+      items.push({ ico:'💡',
+        t:'Upgrade disponible: Asta 3m con LED integrado',
+        s:'Mejor visibilidad nocturna y apariencia premium. Selecciona en accesorios para reemplazar la versión sin LED.',
+        badge:'UPGRADE DISPONIBLE' });
+    }
+    else if(['k1','k1-4'].includes(idEq)){
+      var k1Id = largo > 3 ? 'asta-k1-4b' : 'asta-k1-3b';
+      var k1Txt = largo > 3 ? '4m' : '3m';
+      items.push({ ico:'🚧', acc: k1Id,
+        t:'Asta Slim ' + k1Txt + ' — K1 (sin LED)',
+        s:'Para vano de ' + (largo||'hasta 4') + 'm. Asta obligatoria — la barrera sin asta no tiene función. Con LED disponible en accesorios.',
+        badge:'OBLIGATORIA' });
+      items.push({ ico:'💡',
+        t:'Upgrade: Asta ' + k1Txt + ' con LED integrado',
+        s:'Visibilidad nocturna superior — recomendado para conjuntos y parqueaderos. Selecciona en accesorios.',
+        badge:'UPGRADE DISPONIBLE' });
+    }
+    else if(idEq === 'k10'){
+      var k10Id = largo > 3 ? 'asta-k10-45b' : 'asta-k10-3b';
+      var k10Txt = largo > 3 ? '4.5m' : '3m';
+      items.push({ ico:'🚧', acc: k10Id,
+        t:'Asta Slim ' + k10Txt + ' — K10 (sin LED)',
+        s:'Asta obligatoria para K10. Sin ella la barrera no tiene función. LED disponible en accesorios.',
+        badge:'OBLIGATORIA' });
+      items.push({ ico:'💡',
+        t:'Upgrade: Asta ' + k10Txt + ' con LED',
+        s:'Selecciona en accesorios para reemplazar.',
+        badge:'UPGRADE DISPONIBLE' });
+    }
+    else if(['bar-1','bar-2'].includes(idEq)){
+      var barId, barTxt;
+      if(largo >= 5){ barId='asta-r6'; barTxt='6m'; }
+      else if(largo >= 4){ barId='asta-r4'; barTxt='4m'; }
+      else if(largo >= 3){ barId='asta-r4'; barTxt='4m'; }
+      else { barId='asta-r3'; barTxt='3m'; }
+      items.push({ ico:'🚧', acc: barId,
+        t:'Asta Rectangular ' + barTxt + ' — BARRIER (sin LED)',
+        s:'Asta obligatoria — la barrera sin asta no tiene función. Para vano de ' + (largo ? largo+'m' : 'hasta 6m') + '. Con LED disponible en accesorios.',
+        badge:'OBLIGATORIA' });
+      items.push({ ico:'💡',
+        t:'Upgrade: Asta ' + barTxt + ' con LED integrado',
+        s:'Apariencia premium y visibilidad nocturna superior. Selecciona en accesorios para reemplazar.',
+        badge:'UPGRADE DISPONIBLE' });
+    }
+
+    // Semáforo para todas excepto sempar y bc1 (ya cubiertos arriba)
+    if(idEq !== 'sempar' && idEq !== 'bc1'){
+      items.push({ ico:'🚦', acc:'slux',
+        t:'Semáforo de señalización',
+        s:'Indica si el acceso está libre u ocupado. Fundamental en parqueaderos y conjuntos — evita choques y organiza el flujo vehicular.',
+        badge:'RECOMENDADO' });
+      items.push({ ico:'🔌', acc:'rele',
+        t:'Módulo Relé — conexión semáforo/central',
+        s:'Conecta el semáforo a la central para que cambie automáticamente con la barrera.',
+        badge:'REQUERIDO' });
+    }
+  }
+
+  // ── PUERTA AUTOMÁTICA ────────────────────────────────────
+  if(cat === 'puerta_auto'){
+    if(['tore-4k','wind-4k','wind-6k'].includes(idEq)){
+      items.push({ ico:'✅',
+        t:'Radares incluidos con el equipo',
+        s:'Este kit ya incluye 2 radares integrados. No necesitas sensores adicionales para la operación básica.',
+        badge:'INCLUIDO' });
+    } else {
+      items.push({ ico:'📡', acc:'radar-mw',
+        t:'Radar Microondas — apertura automática',
+        s:'Sin radar la puerta no detecta personas. El Radar Microondas es la mejor relación precio/desempeño del catálogo. Para mayor precisión considera el BLUEZONE.',
+        badge:'OBLIGATORIO' });
+    }
+  }
+
+  // ── ENERGÍA INESTABLE ────────────────────────────────────
+  if((guiaRespuestas && guiaRespuestas.energia) === 'inestable' ||
+     (guiaRespuestas && guiaRespuestas.energia) === 'sin_red'){
+    items.push({ ico:'🔋',
+      t:'NoBreak — continuidad sin cortes de luz',
+      s:'Tu zona tiene energía inestable. El NoBreak garantiza que el acceso funcione aunque no haya red eléctrica.',
+      badge:'CRÍTICO' });
+  }
+
+  // ── RENDER ───────────────────────────────────────────────
+  var sec = document.getElementById('impresc-section');
+  if(!items.length){ if(sec) sec.style.display='none'; return; }
+  if(sec) sec.style.display='block';
+
+  items.forEach(function(it){
+    if(it.acc && !accSel.has(it.acc)){
+      accSel.add(it.acc);
+      var accObj = allAccFlat.find(function(a){ return a.id === it.acc; });
+      if(accObj && accObj.qty && !accQty[it.acc]) accQty[it.acc] = 1;
+    }
+  });
+  if(typeof actualizarTotales === 'function') actualizarTotales();
+
+  lista.innerHTML = items.map(function(it){
+    var on = it.acc ? accSel.has(it.acc) : (it.badge === 'INCLUIDO');
+    var cls = 'impresc-item' + (on ? ' impresc-on' : '');
+    var click = it.acc ? ' onclick="selAccImpres(\'' + it.acc + '\')" style="cursor:pointer"' : '';
+    var ico = on ? '✅' : it.ico;
+    var bdgCls = 'impresc-badge' + (on ? ' badge-on' : '');
+    var bdgTxt = on ? '✅ INCLUIDO' : it.badge;
+    return '<div class="' + cls + '"' + click + '>' +
+      '<div class="impresc-ico">' + ico + '</div>' +
+      '<div>' +
+        '<div class="impresc-t">' + it.t + '</div>' +
+        '<div class="impresc-s">' + it.s + '</div>' +
+        '<div class="' + bdgCls + '">' + bdgTxt + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function selAccImpres(id){
+  const acc = Object.values(ACCS).flat().find(a=>a.id===id);
+  if(!acc) return;
+  if(accSel.has(id)){ accSel.delete(id); delete accQty[id]; }
+  else{ accSel.add(id); if(acc.qty) accQty[id]=1; }
+  actualizarTotales?.();
+}
+
+function toggleOpcionales(){
+  var box    = document.getElementById('acc-acordeones');
+  var toggle = document.getElementById('opcionales-toggle');
+  if(!box) return;
+  var abierto = box.style.display !== 'none';
+  box.style.display = abierto ? 'none' : 'block';
+  if(toggle) toggle.classList.toggle('open', !abierto);
+  if(abierto){
+    var cont = document.querySelector('.content');
+    if(cont) cont.scrollTop = 0;
+  }
+}
+
 function goStep(n){
   currentStep = n;
   for(let i=1;i<=4;i++){
@@ -2209,13 +2658,14 @@ function selAsesor(id){
 // FOTO FACHADA
 // ══════════════════════════════════════
 function prevFoto(input){
-  const file = input.files[0]; if(!file) return;
-  const r = new FileReader();
-  r.onload = e => {
+  var file = input.files[0]; if(!file) return;
+  var r = new FileReader();
+  r.onload = function(e){
     fotoDataUrl = e.target.result;
-    const img = document.getElementById('foto-prev-img');
+    var img = document.getElementById('foto-prev-img');
     img.src = fotoDataUrl; img.style.display='block';
-    document.querySelector('.foto-drop').style.display='none';
+    var banner = document.getElementById('foto-banner');
+    if(banner) banner.style.display='none';
   };
   r.readAsDataURL(file);
 }
@@ -2287,6 +2737,10 @@ function cargarEquipos(tipo, tipoObj){
 function selEq(eq, card){
   document.querySelectorAll('.eq-card').forEach(c=>c.classList.remove('selected'));
   card.classList.add('selected');
+  if(!eq.cat){
+    var catKey = Object.keys(EQUIPOS).find(function(k){ return EQUIPOS[k].find(function(e){ return e.id===eq.id; }); });
+    if(catKey) eq.cat = catKey;
+  }
   equipoSel = eq;
 }
 
@@ -2297,7 +2751,7 @@ function selEq(eq, card){
 function renderAccGroup(cid, items){
   const c = document.getElementById(cid); c.innerHTML='';
   items.forEach(a => {
-    if(a.def) accSel.add(a.id);
+    // def:true ya no auto-selecciona — los imprescindibles manejan accSel
     const isOn = accSel.has(a.id);
     const qty  = accQty[a.id]||1;
     const pM   = precioMostrar(a.p);
@@ -3231,7 +3685,7 @@ function nuevaCot(){
   equipoSel=null; accSel=new Set(); accQty={}; fotoDataUrl=null; asesorSel=null; linkActual='';
   guiaRespuestas={}; guiaPasoActual=0;
   document.getElementById('foto-prev-img').style.display='none';
-  document.querySelector('.foto-drop').style.display='block';
+  var fotoBanner=document.getElementById('foto-banner'); if(fotoBanner) fotoBanner.style.display='block';
   document.getElementById('p4-vacia').style.display='block';
   document.getElementById('p4-content').style.display='none';
   document.querySelectorAll('.asesor-card').forEach(c=>c.classList.remove('selected'));
@@ -3352,8 +3806,11 @@ function confirmarAgenda(){
 
   agendaConfirmada = {fecha, hora, label};
 
-  // Mostrar confirmación visual
-  document.getElementById('pag-conf-texto').textContent = `Visita solicitada: ${label}`;
+  // Mostrar confirmación visual v12
+  const okEl = document.getElementById('agenda-v12-ok');
+  if(okEl){ okEl.textContent = `✅ Visita confirmada: ${label}`; okEl.style.display='block'; }
+  const pBtn = document.getElementById('pag-btn');
+  if(pBtn) pBtn.textContent = '✓ Confirmada — toca para cambiar';
   document.getElementById('pag-confirmado').style.display = 'flex';
   document.getElementById('pag-btn').textContent = '✓ Visita confirmada — puedes cambiarla';
 
@@ -3431,7 +3888,9 @@ function getAgendaLabel(){
 
 
 // INIT
-init();
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',init);
+}else{init();}
 </script>
 </body>
 </html>

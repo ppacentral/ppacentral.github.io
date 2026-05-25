@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Cotizador PPA Central v12.8</title>
+<title>Cotizador PPA Central v13.0</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -499,6 +499,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 ::-webkit-scrollbar-track{background:var(--ng);}
 ::-webkit-scrollbar-thumb{background:var(--naranja);border-radius:1px;}
 </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 
@@ -514,7 +515,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
     </div>
     <div>
       <div class="tl-title">NARA <span class="nara-badge">IA</span></div>
-      <div class="tl-sub">Asistente PPA Central · v12.8</div>
+      <div class="tl-sub">Asistente PPA Central · v13.0</div>
     </div>
   </div>
   <div class="tl-right">
@@ -638,7 +639,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
   <!-- FOTO FACHADA -->
   <div class="foto-banner" id="foto-banner" onclick="document.getElementById('fotoInput').click()" style="cursor:pointer">
     <input type="file" id="fotoInput" accept="image/*" onchange="prevFoto(this)" style="display:none">
-    <div class="foto-banner-emoji">📸</div>
+    <div class="foto-banner-emoji"><i class="bi bi-camera2" style="font-size:36px;color:#E85C00"></i></div>
     <div class="foto-banner-title">Muéstranos tu espacio</div>
     <div class="foto-banner-sub">Una foto del portón o la entrada nos ayuda a darte<br>la solución exacta — no una solución genérica.</div>
     <div class="foto-banner-btn">Tomar o subir foto</div>
@@ -1215,7 +1216,7 @@ const GRUPOS_ACCESORIOS = [
   {id:'asta',    label:'🚧 Astas para barrera',       cat:'accesorios'},
   {id:'acceso',  label:'🪪 Control de acceso RFID',  cat:'seguridad'},
   {id:'alarma',  label:'🚨 Alarmas y domótica',       cat:'seguridad'},
-  {id:'camwifi', label:'📷 Cámaras WiFi PPA ON',      cat:'seguridad'},
+  {id:'camwifi', label:'<i class="bi bi-camera-fill"></i> Cámaras WiFi PPA ON',      cat:'seguridad'},
   {id:'camip',   label:'🎥 Cámaras IP y análogas',   cat:'seguridad'},
   {id:'grabador',label:'💾 Grabadores y accesorios CCTV', cat:'seguridad'},
 ];
@@ -1661,16 +1662,16 @@ function mostrarResultadoMotor(){
 
   let encontrados = 0;
   const medallas = [
-    {ico:'🥇', lbl:'1ª opción', cls:'medalla-1'},
-    {ico:'🥈', lbl:'2ª opción', cls:'medalla-2'},
-    {ico:'🥉', lbl:'3ª opción', cls:'medalla-3'},
+    {ico:'<i class="bi bi-trophy-fill" style="color:#FFD700"></i>', lbl:'1ª opción', cls:'medalla-1'},
+    {ico:'<i class="bi bi-trophy-fill" style="color:#C0C0C0"></i>', lbl:'2ª opción', cls:'medalla-2'},
+    {ico:'<i class="bi bi-trophy-fill" style="color:#CD7F32"></i>', lbl:'3ª opción', cls:'medalla-3'},
   ];
 
   recs.filter(r=>r&&r.sku).forEach((rec,idx)=>{
     const eq = findEquipoBySku(rec.sku);
     if(!eq) return;
     encontrados++;
-    const med = medallas[idx] || {ico:'⭐', lbl:'Opción', cls:'medalla-3'};
+    const med = medallas[idx] || {ico:'<i class="bi bi-star-fill" style="color:#FFD700"></i>', lbl:'Opción', cls:'medalla-3'};
     const selId = `mc-${eq.id}`;
     html += `<div class="motor-card ${equipoSel?.id===eq.id?'sel':''}" id="${selId}" onclick="selEquipoMotor('${eq.id}')">
       <div class="motor-medalla ${med.cls}">
@@ -1839,7 +1840,7 @@ function renderAccesoriosInteligentes(){
   if(hint) hint.textContent =
     catEquipo==='barrera'   ? '🚧 Barrera — seleccione el asta compatible con su modelo.' :
     energiaInestable        ? '⚡ Energía inestable — se recomienda protección eléctrica.' :
-    camino==='seguridad'    ? '📷 Seleccione los equipos de seguridad para esta propuesta.' :
+    camino==='seguridad'    ? '<i class="bi bi-camera-fill"></i> Seleccione los equipos de seguridad para esta propuesta.' :
     camino==='accesorios'   ? '🔧 Seleccione los accesorios y repuestos para esta propuesta.' :
     'Revise los accesorios recomendados y agregue lo que necesite.';
 
@@ -2416,7 +2417,7 @@ function renderImprescindibles(){
   // ── PORTONES: F32 Plus obligatoria ──────────────────────
   var esPorton = ['corredera_res','corredera_ind','batiente','basculante','seccional','cortina'].includes(cat);
   if(esPorton){
-    items.push({ ico:'🔦', acc:'f32p',
+    items.push({ ico:'<i class="bi bi-lightbulb-fill" style="color:#FF6B00"></i>', acc:'f32p',
       t:'Fotocelda F32 Plus — Anti-aplastamiento',
       s:'Sensor obligatorio en todo sistema certificado. Detecta personas o vehículos en el trayecto y detiene el movimiento antes del impacto. Estándar PPA para instalaciones profesionales.',
       badge:'OBLIGATORIA' });
@@ -2425,7 +2426,7 @@ function renderImprescindibles(){
   // ── CORREDERA: cremallera extra si largo > 4m ───────────
   if(['corredera_res','corredera_ind'].includes(cat) && largo > 4){
     var ext = Math.ceil(largo - 4);
-    items.push({ ico:'⛓', acc: cat==='corredera_ind' ? 'crem-ind' : 'crem-gold',
+    items.push({ ico:'<i class="bi bi-link-45deg" style="color:#94A3B8"></i>', acc: cat==='corredera_ind' ? 'crem-ind' : 'crem-gold',
       t:'Cremallera extra — portón mayor a 4m',
       s:'Tu portón mide ' + largo + 'm. Necesitas ' + ext + ' metro(s) adicional(es) de cremallera para cubrir todo el recorrido.',
       badge:'+' + ext + 'm EXTRA' });
@@ -2433,7 +2434,7 @@ function renderImprescindibles(){
 
   // ── BATIENTE: electrocerradura ───────────────────────────
   if(cat === 'batiente'){
-    items.push({ ico:'🔒',
+    items.push({ ico:'<i class="bi bi-lock-fill" style="color:#E85C00"></i>',
       t:'Electrocerradura de seguridad',
       s:'El motor mueve el portón pero no lo bloquea. La electrocerradura lo asegura cuando está cerrado — sin ella el sistema queda vulnerable.',
       badge:'RECOMENDADA' });
@@ -2444,37 +2445,37 @@ function renderImprescindibles(){
   // Cultura vial colombiana: el vehículo puede quedar debajo.
   // El espejo se monta sin cableado del otro lado. Recomendación PPA.
   if(cat === 'barrera'){
-    items.push({ ico:'🔦', acc:'f10r',
+    items.push({ ico:'<i class="bi bi-lightbulb-fill" style="color:#FF6B00"></i>', acc:'f10r',
       t:'Fotocelda F10-R Reflectiva — Anti-golpe vehicular',
       s:'Detecta vehículos detenidos bajo el brazo antes de bajar. Espejo sin cableado del otro lado. Recomendación PPA Central para todas las barreras.',
       badge:'OBLIGATORIA' });
 
     if(idEq === 'bc1'){
-      items.push({ ico:'⛓', acc:'bc1-ram',
+      items.push({ ico:'<i class="bi bi-link-45deg" style="color:#94A3B8"></i>', acc:'bc1-ram',
         t:'Rampa BC1 — componente requerido',
         s:'La barrera de cadena BC1 necesita rampa para operar. Sin ella el sistema no funciona.',
         badge:'OBLIGATORIA' });
     }
     else if(idEq === 'sempar'){
-      items.push({ ico:'✅',
+      items.push({ ico:'<i class="bi bi-check-circle-fill" style="color:#4ADE80"></i>',
         t:'Brazo 3m — incluido con el equipo',
         s:'El SEM PARAR viene con brazo rectangular de 3m integrado. No necesitas asta adicional.',
         badge:'INCLUIDO' });
-      items.push({ ico:'🚦', acc:'slux',
+      items.push({ ico:'<i class="bi bi-traffic-light" style="color:#4ADE80"></i>', acc:'slux',
         t:'Semáforo Sinaleira LUX',
         s:'En barreras de 1200 ciclos/día el semáforo es crítico. Indica libre/ocupado y evita conflictos vehiculares.',
         badge:'MUY RECOMENDADO' });
-      items.push({ ico:'🔌', acc:'rele',
+      items.push({ ico:'<i class="bi bi-plug-fill" style="color:#60A5FA"></i>', acc:'rele',
         t:'Módulo Relé — conexión semáforo/central',
         s:'Necesario para conectar el semáforo a la central de la barrera.',
         badge:'REQUERIDO' });
     }
     else if(idEq === 'kd2'){
-      items.push({ ico:'🚧', acc:'asta-kd2-3b',
+      items.push({ ico:'<i class="bi bi-cone-striped" style="color:#FF8C00"></i>', acc:'asta-kd2-3b',
         t:'Asta Slim 3m — KD2 (sin LED)',
         s:'Asta obligatoria — sin ella la barrera no tiene función. Opción sin LED preseleccionada. Para LED integrado selecciona en accesorios.',
         badge:'OBLIGATORIA' });
-      items.push({ ico:'💡',
+      items.push({ ico:'<i class="bi bi-stars" style="color:#FFB347"></i>',
         t:'Upgrade disponible: Asta 3m con LED integrado',
         s:'Mejor visibilidad nocturna y apariencia premium. Selecciona en accesorios para reemplazar la versión sin LED.',
         badge:'UPGRADE DISPONIBLE' });
@@ -2482,11 +2483,11 @@ function renderImprescindibles(){
     else if(['k1','k1-4'].includes(idEq)){
       var k1Id = largo > 3 ? 'asta-k1-4b' : 'asta-k1-3b';
       var k1Txt = largo > 3 ? '4m' : '3m';
-      items.push({ ico:'🚧', acc: k1Id,
+      items.push({ ico:'<i class="bi bi-cone-striped" style="color:#FF8C00"></i>', acc: k1Id,
         t:'Asta Slim ' + k1Txt + ' — K1 (sin LED)',
         s:'Para vano de ' + (largo||'hasta 4') + 'm. Asta obligatoria — la barrera sin asta no tiene función. Con LED disponible en accesorios.',
         badge:'OBLIGATORIA' });
-      items.push({ ico:'💡',
+      items.push({ ico:'<i class="bi bi-stars" style="color:#FFB347"></i>',
         t:'Upgrade: Asta ' + k1Txt + ' con LED integrado',
         s:'Visibilidad nocturna superior — recomendado para conjuntos y parqueaderos. Selecciona en accesorios.',
         badge:'UPGRADE DISPONIBLE' });
@@ -2494,11 +2495,11 @@ function renderImprescindibles(){
     else if(idEq === 'k10'){
       var k10Id = largo > 3 ? 'asta-k10-45b' : 'asta-k10-3b';
       var k10Txt = largo > 3 ? '4.5m' : '3m';
-      items.push({ ico:'🚧', acc: k10Id,
+      items.push({ ico:'<i class="bi bi-cone-striped" style="color:#FF8C00"></i>', acc: k10Id,
         t:'Asta Slim ' + k10Txt + ' — K10 (sin LED)',
         s:'Asta obligatoria para K10. Sin ella la barrera no tiene función. LED disponible en accesorios.',
         badge:'OBLIGATORIA' });
-      items.push({ ico:'💡',
+      items.push({ ico:'<i class="bi bi-stars" style="color:#FFB347"></i>',
         t:'Upgrade: Asta ' + k10Txt + ' con LED',
         s:'Selecciona en accesorios para reemplazar.',
         badge:'UPGRADE DISPONIBLE' });
@@ -2509,11 +2510,11 @@ function renderImprescindibles(){
       else if(largo >= 4){ barId='asta-r4'; barTxt='4m'; }
       else if(largo >= 3){ barId='asta-r4'; barTxt='4m'; }
       else { barId='asta-r3'; barTxt='3m'; }
-      items.push({ ico:'🚧', acc: barId,
+      items.push({ ico:'<i class="bi bi-cone-striped" style="color:#FF8C00"></i>', acc: barId,
         t:'Asta Rectangular ' + barTxt + ' — BARRIER (sin LED)',
         s:'Asta obligatoria — la barrera sin asta no tiene función. Para vano de ' + (largo ? largo+'m' : 'hasta 6m') + '. Con LED disponible en accesorios.',
         badge:'OBLIGATORIA' });
-      items.push({ ico:'💡',
+      items.push({ ico:'<i class="bi bi-stars" style="color:#FFB347"></i>',
         t:'Upgrade: Asta ' + barTxt + ' con LED integrado',
         s:'Apariencia premium y visibilidad nocturna superior. Selecciona en accesorios para reemplazar.',
         badge:'UPGRADE DISPONIBLE' });
@@ -2521,11 +2522,11 @@ function renderImprescindibles(){
 
     // Semáforo para todas excepto sempar y bc1 (ya cubiertos arriba)
     if(idEq !== 'sempar' && idEq !== 'bc1'){
-      items.push({ ico:'🚦', acc:'slux',
+      items.push({ ico:'<i class="bi bi-traffic-light" style="color:#4ADE80"></i>', acc:'slux',
         t:'Semáforo de señalización',
         s:'Indica si el acceso está libre u ocupado. Fundamental en parqueaderos y conjuntos — evita choques y organiza el flujo vehicular.',
         badge:'RECOMENDADO' });
-      items.push({ ico:'🔌', acc:'rele',
+      items.push({ ico:'<i class="bi bi-plug-fill" style="color:#60A5FA"></i>', acc:'rele',
         t:'Módulo Relé — conexión semáforo/central',
         s:'Conecta el semáforo a la central para que cambie automáticamente con la barrera.',
         badge:'REQUERIDO' });
@@ -2535,12 +2536,12 @@ function renderImprescindibles(){
   // ── PUERTA AUTOMÁTICA ────────────────────────────────────
   if(cat === 'puerta_auto'){
     if(['tore-4k','wind-4k','wind-6k'].includes(idEq)){
-      items.push({ ico:'✅',
+      items.push({ ico:'<i class="bi bi-check-circle-fill" style="color:#4ADE80"></i>',
         t:'Radares incluidos con el equipo',
         s:'Este kit ya incluye 2 radares integrados. No necesitas sensores adicionales para la operación básica.',
         badge:'INCLUIDO' });
     } else {
-      items.push({ ico:'📡', acc:'radar-mw',
+      items.push({ ico:'<i class="bi bi-broadcast" style="color:#A78BFA"></i>', acc:'radar-mw',
         t:'Radar Microondas — apertura automática',
         s:'Sin radar la puerta no detecta personas. El Radar Microondas es la mejor relación precio/desempeño del catálogo. Para mayor precisión considera el BLUEZONE.',
         badge:'OBLIGATORIO' });
@@ -2550,7 +2551,7 @@ function renderImprescindibles(){
   // ── ENERGÍA INESTABLE ────────────────────────────────────
   if((guiaRespuestas && guiaRespuestas.energia) === 'inestable' ||
      (guiaRespuestas && guiaRespuestas.energia) === 'sin_red'){
-    items.push({ ico:'🔋',
+    items.push({ ico:'<i class="bi bi-battery-charging" style="color:#4ADE80"></i>',
       t:'NoBreak — continuidad sin cortes de luz',
       s:'Tu zona tiene energía inestable. El NoBreak garantiza que el acceso funcione aunque no haya red eléctrica.',
       badge:'CRÍTICO' });
@@ -3253,7 +3254,7 @@ function buildHTMLProp(){
   const ssg    = document.getElementById('ssg-items').innerHTML;
   const fachada= fotoDataUrl||'';
   const fecha  = new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'});
-  const asesor = {nombre:'NARA',cargo:'Asistente IA · PPA Central',emoji:'🟠'};
+  const asesor = {nombre:'NARA',cargo:'Asistente IA · PPA Central',emoji:'<i class="bi bi-circle-fill" style="color:#E85C00;font-size:14px"></i>'};
 
   // Segmento detectado automáticamente
   const seg    = detectarSegmento();
@@ -3290,32 +3291,32 @@ body{background:#060606;color:#fff;font-family:'Barlow',sans-serif;-webkit-print
 .af{width:52px;height:52px;border-radius:50%;background:#1A1A1A;border:2px solid ${SC};display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0;}
 .af img{width:100%;height:100%;object-fit:cover;}
 .an{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;}
-.ac{font-size:11px;color:#555;margin-top:2px;}
-.ae{font-size:11px;color:${SC};margin-top:3px;font-weight:600;}
+.ac{font-size:12px;color:#666;margin-top:3px;}
+.ae{font-size:12px;color:${SC};margin-top:3px;font-weight:700;}
 
 .aida{border-left:3px solid ${SC};padding:20px 22px;background:linear-gradient(90deg,${SC}12 0%,transparent 100%);margin-bottom:24px;border-radius:0 10px 10px 0;}
 .aq{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;line-height:1.05;margin-bottom:10px;}
-.ap{font-size:14px;color:#AAA;line-height:1.75;}.ap strong{color:#fff;}.ap em{color:#666;font-size:12px;}
+.ap{font-size:15px;color:#BBB;line-height:1.85;}.ap strong{color:#fff;}.ap em{color:#666;font-size:12px;}
 .eq-card{background:#111;border-radius:10px;overflow:hidden;margin-bottom:22px;display:grid;grid-template-columns:130px 1fr;border:1px solid #1E1E1E;}
 .ei{width:130px;height:120px;background:#181818;display:flex;align-items:center;justify-content:center;font-size:48px;}
 .einfo{padding:18px 20px;}
 .en{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:.5px;}
 .et{display:inline-block;background:${SC}25;color:${SC};font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin:7px 0;}
 .ed{font-size:12px;color:#555;line-height:1.5;}.ed strong{color:${SC};}
-.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#444;margin:22px 0 10px;}
+.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:${SC};margin:24px 0 12px;border-left:3px solid ${SC};padding-left:10px;};margin:24px 0 12px;border-left:3px solid ${SC};padding-left:10px;}
 .row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #141414;}
 .row:last-child{border-bottom:none;}
-.rn{font-size:14px;font-weight:600;}.rsku{font-size:9px;color:#444;margin-top:2px;}
-.rp{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;white-space:nowrap;}
+.rn{font-size:15px;font-weight:700;letter-spacing:.1px;}.rsku{font-size:10px;color:#555;margin-top:3px;letter-spacing:.3px;}
+.rp{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;white-space:nowrap;color:${SC};}
 .total{background:${SC};border-radius:12px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;margin:22px 0;}
 .tl{font-size:9px;letter-spacing:4px;text-transform:uppercase;opacity:.8;}.ts2{font-size:10px;opacity:.65;margin-top:3px;}
 .tm{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:46px;}
 .ventaja{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.18);border-radius:10px;padding:16px 18px;margin-bottom:20px;}
 .vt{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:1.5px;color:#4ADE80;text-transform:uppercase;margin-bottom:6px;}
-.vp{font-size:13px;color:#777;line-height:1.65;}.vp strong{color:#4ADE80;}
+.vp{font-size:14px;color:#888;line-height:1.75;}.vp strong{color:#4ADE80;}
 .ssg{background:linear-gradient(135deg,${SC}12 0%,${SC}06 100%);border:1px solid ${SC}30;border-radius:10px;padding:20px;margin-bottom:20px;}
 .ssg-t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;margin-bottom:14px;}
-.si{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#888;line-height:1.6;margin-bottom:12px;}
+.si{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:#999;line-height:1.7;margin-bottom:14px;}
 .si:last-child{margin-bottom:0;}
 .sd{width:24px;height:24px;border-radius:50%;background:${SC};color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px;}
 .si strong{color:#fff;}
@@ -3328,8 +3329,8 @@ body{background:#060606;color:#fff;font-family:'Barlow',sans-serif;-webkit-print
 .proj-items{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
 .proj-item{display:flex;align-items:flex-start;gap:12px;}
 .proj-dot{width:32px;height:32px;border-radius:9px;background:rgba(232,92,0,.1);border:1px solid rgba(232,92,0,.2);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
-.proj-it{font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;}
-.proj-is{font-size:11px;color:#666;line-height:1.5;}
+.proj-it{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;}
+.proj-is{font-size:12px;color:#777;line-height:1.6;}
 .proj-cta{font-size:12px;color:#999;line-height:1.7;border-top:1px solid rgba(232,92,0,.15);padding-top:14px;}
 .proj-cta strong{color:${SC};}
 .agenda-confirmada{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:18px;margin-bottom:22px;display:flex;align-items:flex-start;gap:14px;}
@@ -3480,9 +3481,8 @@ _${asesor} · PPA Central_
 
   const blob = new Blob([html], {type:'text/html;charset=utf-8'});
 
-  const waUrl = tel
-    ? `https://wa.me/57${tel}?text=${encodeURIComponent(msgTexto)}`
-    : `https://wa.me/?text=${encodeURIComponent(msgTexto)}`;
+  // Siempre enviar a PPA Central — el asesor reenvía al cliente
+  const waUrl = `https://wa.me/573177772333?text=${encodeURIComponent(msgTexto)}`;
 
   if(esMobil()){
     // ── MÓVIL iOS/Android ──────────────────────────────────────

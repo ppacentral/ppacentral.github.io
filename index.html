@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Cotizador PPA Central v12.8</title>
+<title>Cotizador PPA Central v15.2 · NARA</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -494,6 +494,45 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 .btn-wa-v12:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,.4);}
 .btn-wa-v12 svg{flex-shrink:0;}
 
+/* ── SPLASH NARA v14 ── */
+@keyframes splashFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes splashBarIn{from{width:0}to{width:100%}}
+@keyframes splashPulse{0%,100%{opacity:.5}50%{opacity:1}}
+.splash-overlay{position:fixed;inset:0;background:#060606;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;cursor:pointer;}
+.splash-overlay.hide{animation:splashHide .4s ease forwards;}
+@keyframes splashHide{to{opacity:0;pointer-events:none;}}
+.splash-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(232,92,0,.14) 0%,transparent 65%);pointer-events:none;}
+.splash-eyebrow{font-size:9px;letter-spacing:.2em;color:var(--naranja);text-transform:uppercase;font-weight:700;animation:splashFadeUp .5s .1s both;}
+.splash-headline{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(28px,8vw,40px);color:#fff;line-height:1.05;margin:14px 0 0;animation:splashFadeUp .5s .25s both;}
+.splash-headline strong{color:var(--naranja);}
+.splash-sub{font-size:clamp(13px,3.8vw,16px);color:#888;margin:18px 0 0;line-height:1.75;max-width:300px;animation:splashFadeUp .5s .42s both;}
+.splash-sub strong{color:#ddd;font-weight:600;}
+.splash-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:22px;animation:splashFadeUp .5s .52s both;}
+.splash-pill{font-size:10px;border:0.5px solid #222;border-radius:20px;padding:5px 14px;color:#666;}
+.splash-bar-wrap{width:160px;height:2px;background:#141414;border-radius:2px;margin:36px auto 0;animation:splashFadeUp .4s .6s both;}
+.splash-bar{height:2px;background:var(--naranja);border-radius:2px;animation:splashBarIn 3s .65s linear both;}
+.splash-hint{font-size:9px;color:#333;margin-top:10px;animation:splashFadeUp .3s .65s both;}
+
+/* ── GANCHO WA v14 — paso 3.5 ── */
+.gancho-wa-overlay{background:#060606;border-radius:0;padding:0;}
+.gancho-screen{display:none;padding:20px 16px 24px;flex-direction:column;gap:0;}
+.gancho-screen.active{display:flex;}
+.gancho-hero-txt{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(22px,6vw,28px);color:#fff;line-height:1.1;margin-bottom:6px;}
+.gancho-hero-txt .gn-mark{color:var(--naranja);}
+.gancho-hero-sub{font-size:12px;color:#666;line-height:1.7;margin-bottom:20px;}
+.gancho-card{background:var(--g2);border:1px solid var(--g4);border-radius:14px;padding:18px;margin-bottom:12px;}
+.gancho-card-ico{font-size:28px;margin-bottom:10px;}
+.gancho-card-tit{font-family:'Inter',sans-serif;font-weight:800;font-size:15px;color:#fff;margin-bottom:6px;line-height:1.3;}
+.gancho-card-tit .gct-key{font-weight:900;color:var(--naranja);font-size:17px;}
+.gancho-card-sub{font-size:11px;color:#888;line-height:1.75;}
+.gancho-card-sub strong{color:#ddd;font-weight:600;}
+.gancho-sep{height:1px;background:var(--g4);margin:14px 0;}
+.gancho-input-wrap{margin-bottom:10px;}
+.gancho-label{font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--naranja);display:block;margin-bottom:5px;}
+.gancho-input{width:100%;background:var(--g3);border:1.5px solid var(--g4);border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:16px;padding:13px 15px;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.gancho-input:focus{border-color:var(--naranja);}
+.gancho-skip{background:none;border:none;color:#444;font-size:11px;text-decoration:underline;cursor:pointer;margin-top:4px;padding:4px 0;}
+
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:2px;}
 ::-webkit-scrollbar-track{background:var(--ng);}
@@ -502,7 +541,165 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 </head>
 <body>
 
-<!-- TOPBAR -->
+<!-- ══ SPLASH v14.3 — cuadrantes silenciosos, mensaje central protagonista ══ -->
+<div class="splash-overlay" id="splash-nara" onclick="cerrarSplash()" style="padding:0;overflow:hidden;position:fixed;inset:0;z-index:999;cursor:pointer;">
+
+  <!-- Cuadrantes: casi negros, diferencia de tono mínima, icono como textura -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;width:100%;height:100dvh;position:relative;">
+
+    <!-- Q1 — tono #0A0F14 con icono textura -->
+    <div style="background:#0A0F14;border-right:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+      <div style="font-size:clamp(80px,22vw,140px);opacity:.04;pointer-events:none;user-select:none;line-height:1;">🏠</div>
+    </div>
+
+    <!-- Q2 — tono #0D0D0F -->
+    <div style="background:#0D0D0F;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+      <div style="font-size:clamp(80px,22vw,140px);opacity:.04;pointer-events:none;user-select:none;line-height:1;">🏢</div>
+    </div>
+
+    <!-- Q3 — tono #0C0A09 -->
+    <div style="background:#0C0A09;border-right:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+      <div style="font-size:clamp(80px,22vw,140px);opacity:.04;pointer-events:none;user-select:none;line-height:1;">🏪</div>
+    </div>
+
+    <!-- Q4 — tono #0F0A0B -->
+    <div style="background:#0F0A0B;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+      <div style="font-size:clamp(80px,22vw,140px);opacity:.04;pointer-events:none;user-select:none;line-height:1;">🏗</div>
+    </div>
+
+  </div>
+
+  <!-- RECTÁNGULO CENTRAL — todo el protagonismo aquí -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(6,6,6,.9);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:clamp(24px,6vw,40px) clamp(28px,8vw,52px);text-align:center;width:clamp(280px,78%,440px);pointer-events:none;">
+
+    <!-- NARA — punto de presencia, no elemento a leer -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:clamp(16px,4vw,24px);">
+      <div style="position:relative;width:32px;height:32px;flex-shrink:0;">
+        <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(232,92,0,.4);animation:nara-wave 2.2s ease-out infinite;animation-delay:.4s;"></div>
+        <div style="position:absolute;inset:6px;border-radius:50%;border:1.5px solid rgba(232,92,0,.6);animation:nara-wave 2.2s ease-out infinite;animation-delay:.9s;"></div>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:#E85C00;box-shadow:0 0 10px rgba(232,92,0,1);"></div>
+      </div>
+      <div style="font-family:'Inter',sans-serif;font-weight:700;font-size:clamp(11px,3vw,13px);color:rgba(255,255,255,.5);letter-spacing:.5px;">NARA · PPA Central</div>
+    </div>
+
+    <!-- GANCHO — el único texto que importa -->
+    <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(22px,6.5vw,30px);color:#fff;line-height:1.06;letter-spacing:-.5px;margin-bottom:clamp(10px,2.5vw,16px);">
+      Tu entrada habla<br>antes que tú.<br><span style="color:#E85C00;">¿Qué dice?</span>
+    </div>
+
+    <!-- SUBHOOK — una línea, no dos -->
+    <div style="font-size:clamp(11px,2.8vw,13px);color:rgba(255,255,255,.38);margin-bottom:clamp(18px,4.5vw,28px);line-height:1.6;">
+      La solución exacta en 90 segundos.
+    </div>
+
+    <!-- BARRA — progreso silencioso -->
+    <div style="width:100%;height:2px;background:rgba(255,255,255,.08);border-radius:1px;overflow:hidden;">
+      <div id="splash-bar" style="height:2px;background:#E85C00;border-radius:1px;width:0;animation:splashBarIn 4s .2s linear forwards;"></div>
+    </div>
+    <div style="font-size:clamp(8px,2vw,9px);color:rgba(255,255,255,.18);margin-top:10px;letter-spacing:.5px;">toca para continuar</div>
+
+  </div>
+
+</div>
+
+<!-- ══ FOTO INGRESO v14.1 — pantalla sin distractores ══ -->
+<div id="paso-foto-ingreso" style="display:none;position:fixed;inset:0;background:#060606;z-index:190;overflow-y:auto;">
+  <div style="max-width:600px;margin:0 auto;padding:24px 16px 40px;">
+
+    <!-- Header limpio -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
+      <div class="nara-ripple" style="flex-shrink:0"><div class="nara-ring nara-ring-3"></div><div class="nara-ring nara-ring-2"></div><div class="nara-ring nara-ring-1"></div><div class="nara-core"></div></div>
+      <div>
+        <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:15px;color:#fff;">NARA <span class="nara-badge">IA</span></div>
+        <div style="font-size:9px;color:var(--gtxt);letter-spacing:1.5px;text-transform:uppercase;">Un paso más</div>
+      </div>
+    </div>
+
+    <!-- Headline -->
+    <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(22px,6vw,28px);color:#fff;line-height:1.08;margin-bottom:10px;letter-spacing:-.3px;">
+      Muéstranos<br>tu ingreso.
+    </div>
+    <div style="font-size:13px;color:#666;line-height:1.75;margin-bottom:24px;">
+      Una foto del portón o la entrada convierte esta propuesta en una solución <strong style="color:#bbb;">hecha exactamente para tu espacio</strong> — no para uno parecido.
+    </div>
+
+    <!-- Zona de foto -->
+    <input type="file" id="fotoIngresoInput" accept="image/*" capture="environment" onchange="prevFotoIngreso(this)" style="display:none;">
+
+    <div id="foto-ingreso-preview" style="display:none;margin-bottom:16px;">
+      <img id="foto-ingreso-img" src="" alt="Tu ingreso" style="width:100%;max-height:260px;object-fit:cover;border-radius:14px;border:1px solid rgba(232,92,0,.3);">
+      <button onclick="cambiarFotoIngreso()" style="width:100%;margin-top:8px;background:var(--g3);border:1px solid var(--g4);border-radius:8px;color:#bbb;font-size:12px;padding:9px;cursor:pointer;font-family:'DM Sans',sans-serif;">
+        Cambiar foto
+      </button>
+    </div>
+
+    <div id="foto-ingreso-banner" onclick="document.getElementById('fotoIngresoInput').click()" style="background:linear-gradient(135deg,rgba(232,92,0,.1) 0%,rgba(10,5,0,.98) 100%);border:1.5px dashed rgba(232,92,0,.35);border-radius:16px;padding:36px 20px 30px;text-align:center;cursor:pointer;margin-bottom:16px;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(232,92,0,.7)'" onmouseout="this.style.borderColor='rgba(232,92,0,.35)'">
+      <div style="font-size:48px;margin-bottom:12px;">📸</div>
+      <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:18px;color:#fff;margin-bottom:8px;">Tomar o subir foto</div>
+      <div style="font-size:12px;color:#555;line-height:1.75;">Portón · Entrada · Fachada<br>La foto no se comparte — solo personaliza tu propuesta</div>
+    </div>
+
+    <!-- CTA principal -->
+    <button class="btn-wa" id="foto-ingreso-continuar" onclick="continuarDesdeFoto()" style="font-size:16px;padding:15px;">
+      Continuar →
+    </button>
+    <button onclick="saltarFotoIngreso()" style="display:block;width:100%;margin-top:8px;background:none;border:none;color:#333;font-size:11px;text-decoration:underline;cursor:pointer;padding:6px 0;font-family:'DM Sans',sans-serif;">
+      Continuar sin foto
+    </button>
+
+  </div>
+</div>
+
+
+<div id="paso-gancho" style="display:none;position:fixed;inset:0;background:#060606;z-index:200;overflow-y:auto;">
+  <div class="panel active" style="max-width:600px;margin:0 auto;padding:20px 16px 40px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
+      <div class="nara-ripple" style="flex-shrink:0"><div class="nara-ring nara-ring-3"></div><div class="nara-ring nara-ring-2"></div><div class="nara-ring nara-ring-1"></div><div class="nara-core"></div></div>
+      <div>
+        <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:15px;">NARA <span class="nara-badge">IA</span></div>
+        <div style="font-size:9px;color:var(--gtxt);letter-spacing:1.5px;text-transform:uppercase;">Tu solución está lista</div>
+      </div>
+    </div>
+    <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(20px,5.5vw,26px);color:#fff;line-height:1.08;margin-bottom:6px;letter-spacing:-.3px;">Tu solución está lista.<br><span style="color:var(--naranja);">¿A dónde la mandamos?</span></div>
+    <div style="font-size:12px;color:#555;line-height:1.75;margin-bottom:20px;">Dinos dónde estás — encontramos al <strong style="color:#bbb;">profesional certificado más cercano</strong> y tu propuesta llega directo a tu WhatsApp.</div>
+    <div style="background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.2);border-radius:14px;padding:16px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <div style="font-size:26px;">🎁</div>
+        <div>
+          <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:14px;color:#4ADE80;line-height:1.2;">Te regalamos la visita.</div>
+          <div style="font-size:11px;color:#666;margin-top:2px;">Sin costo. Sin compromiso. Es nuestro regalo.</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#888;line-height:1.75;border-top:1px solid rgba(34,197,94,.12);padding-top:10px;">Un instalador certificado PPA visita tu espacio y convierte esta propuesta en un proyecto <strong style="color:#bbb;">exacto</strong> — con el costo real de instalación, los materiales precisos y la fecha que eliges.<br><br><strong style="color:#4ADE80;">No vendemos la visita. La regalamos</strong> — porque cuando la solución es la correcta, se nota sola.</div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <label class="gancho-label" for="gancho-nombre">Tu nombre</label>
+      <input class="gancho-input" id="gancho-nombre" type="text" placeholder="¿Cómo te llamas?" autocomplete="given-name">
+    </div>
+    <div style="margin-bottom:10px;">
+      <label class="gancho-label" for="gancho-wa">WhatsApp — aquí llega tu propuesta</label>
+      <input class="gancho-input" id="gancho-wa" type="tel" placeholder="Número WhatsApp" inputmode="numeric" autocomplete="tel">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+      <div>
+        <label class="gancho-label" for="gancho-depto">Departamento</label>
+        <select class="gancho-input" id="gancho-depto" onchange="cargarMunicipiosGancho()" style="font-size:14px;padding:12px 13px;">
+          <option value="">Selecciona…</option>
+          <option>Amazonas</option><option>Antioquia</option><option>Arauca</option><option>Atlántico</option><option>Bolívar</option><option>Boyacá</option><option>Caldas</option><option>Caquetá</option><option>Casanare</option><option>Cauca</option><option>Cesar</option><option>Chocó</option><option>Córdoba</option><option>Cundinamarca</option><option>Guainía</option><option>Guaviare</option><option>Huila</option><option>La Guajira</option><option>Magdalena</option><option>Meta</option><option>Nariño</option><option>Norte de Santander</option><option>Putumayo</option><option>Quindío</option><option>Risaralda</option><option>San Andrés</option><option>Santander</option><option>Sucre</option><option>Tolima</option><option>Valle del Cauca</option><option>Vaupés</option><option>Vichada</option>
+        </select>
+      </div>
+      <div>
+        <label class="gancho-label" for="gancho-ciudad">Municipio</label>
+        <select class="gancho-input" id="gancho-ciudad" style="font-size:14px;padding:12px 13px;">
+          <option value="">Primero depto…</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-wa" onclick="confirmarGanchoYGenerar()" style="font-size:17px;padding:16px;">🚀 Ver mi propuesta</button>
+  </div>
+</div>
+
+
 <div class="topbar">
   <div class="tl-left">
     <!-- NARA ripple avatar -->
@@ -514,7 +711,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
     </div>
     <div>
       <div class="tl-title">NARA <span class="nara-badge">IA</span></div>
-      <div class="tl-sub">Asistente PPA Central · v12.8</div>
+      <div class="tl-sub">Asistente PPA Central · v14.2</div>
     </div>
   </div>
   <div class="tl-right">
@@ -569,111 +766,121 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 <!-- ── PASO 1: CLIENTE ── -->
 <div class="panel active" id="p1">
 
-  <!-- BIENVENIDA CON GANCHO -->
-  <div class="bienvenida-hero">
-    <div class="bv-tagline">30 segundos.<br><span>Tu acceso, automatizado.</span></div>
-    <div class="bv-promesa">Cuéntame dónde estás y qué necesitas.<br>Yo construyo la solución.</div>
-    <div class="bv-sub">Recibirás una propuesta completa, lista para compartir — con el equipo exacto, los accesorios correctos y el siguiente paso claro.</div>
-    <div class="bv-marca">PPA Central · Especialistas en Automatización y Portones Eléctricos</div>
+  <!-- Solo foto — sin distractores v14.5 -->
+  <div style="display:flex;flex-direction:column;justify-content:center;padding:16px 0 24px;">
+
+    <!-- Headline -->
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(20px,5.5vw,26px);color:#fff;line-height:1.1;letter-spacing:-.3px;margin-bottom:10px;">
+        Una foto de tu entrada<br>personaliza tu propuesta.
+      </div>
+      <div style="font-size:12px;color:#444;line-height:1.7;max-width:280px;margin:0 auto;">
+        Si no la tienes ahora, puedes continuar sin ella.
+      </div>
+    </div>
+
+    <!-- Input oculto -->
+    <input type="file" id="fotoInput" accept="image/*" capture="environment" onchange="prevFoto(this)" style="display:none">
+
+    <!-- Estado vacío: zona de toque grande -->
+    <div id="foto-banner" onclick="document.getElementById('fotoInput').click()" style="border:1.5px dashed rgba(232,92,0,.25);border-radius:20px;padding:40px 20px;text-align:center;cursor:pointer;margin-bottom:16px;transition:all .2s;background:rgba(232,92,0,.03);" onmouseover="this.style.borderColor='rgba(232,92,0,.55)';this.style.background='rgba(232,92,0,.07)'" onmouseout="this.style.borderColor='rgba(232,92,0,.25)';this.style.background='rgba(232,92,0,.03)'">
+      <div style="font-size:52px;margin-bottom:14px;opacity:.7;">📸</div>
+      <div style="font-family:'Inter',sans-serif;font-weight:700;font-size:16px;color:#fff;margin-bottom:6px;">Tomar o subir foto</div>
+      <div style="font-size:11px;color:#444;">Portón · Entrada · Fachada</div>
+    </div>
+
+    <!-- Estado con foto: preview compacto -->
+    <div id="foto-preview-wrap" style="display:none;margin-bottom:16px;position:relative;">
+      <img id="foto-prev-img" src="" alt="Tu entrada" style="width:100%;max-height:220px;object-fit:cover;border-radius:16px;display:block;border:1.5px solid rgba(232,92,0,.3);">
+      <button onclick="quitarFoto()" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.75);border:none;border-radius:20px;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;cursor:pointer;">✕ Cambiar</button>
+      <div style="position:absolute;bottom:10px;left:12px;background:rgba(0,0,0,.7);border-radius:8px;padding:4px 10px;font-size:10px;color:#4ADE80;font-weight:700;">✓ Lista para tu propuesta</div>
+    </div>
+
+    <!-- CTA principal -->
+    <button class="btn-wa" onclick="goStep(2)" style="font-size:16px;padding:15px;margin-top:4px;">
+      Continuar →
+    </button>
+
+    <!-- Escape suave -->
+    <button onclick="goStep(2)" style="display:block;width:100%;margin-top:10px;background:none;border:none;color:#333;font-size:11px;cursor:pointer;padding:6px 0;font-family:'DM Sans',sans-serif;">
+      Continuar sin foto
+    </button>
+
   </div>
 
-
-  <div class="sec-t">Datos del cliente</div>
-  <div class="fgroup">
-    <label class="flabel">¿A quién le llega esta propuesta?</label>
-    <input class="finput" id="c-nombre" type="text" placeholder="Nombre completo">
-  </div>
-  <div class="row2">
-    <div class="fgroup">
-      <label class="flabel">WhatsApp — aquí llega la propuesta</label>
-      <input class="finput" id="c-tel" type="tel" placeholder="Número WhatsApp">
-    </div>
-    <div class="fgroup">
-      <label class="flabel">¿Desde dónde nos escribes?</label>
-      <select class="fselect" id="c-depto" onchange="cargarMunicipios()">
-        <option value="">Seleccione…</option>
-        <option value="Amazonas">Amazonas</option><option value="Antioquia">Antioquia</option><option value="Arauca">Arauca</option>
-        <option value="Atlántico">Atlántico</option><option value="Bolívar">Bolívar</option><option value="Boyacá">Boyacá</option>
-        <option value="Caldas">Caldas</option><option value="Caquetá">Caquetá</option><option value="Casanare">Casanare</option>
-        <option value="Cauca">Cauca</option><option value="Cesar">Cesar</option><option value="Chocó">Chocó</option>
-        <option value="Córdoba">Córdoba</option><option value="Cundinamarca">Cundinamarca</option><option value="Guainía">Guainía</option>
-        <option value="Guaviare">Guaviare</option><option value="Huila">Huila</option><option value="La Guajira">La Guajira</option>
-        <option value="Magdalena">Magdalena</option><option value="Meta">Meta</option><option value="Nariño">Nariño</option>
-        <option value="Norte de Santander">Norte de Santander</option><option value="Putumayo">Putumayo</option><option value="Quindío">Quindío</option>
-        <option value="Risaralda">Risaralda</option><option value="San Andrés">San Andrés</option><option value="Santander">Santander</option>
-        <option value="Sucre">Sucre</option><option value="Tolima">Tolima</option><option value="Valle del Cauca">Valle del Cauca</option>
-        <option value="Vaupés">Vaupés</option><option value="Vichada">Vichada</option>
-      </select>
-    </div>
-    <div class="fgroup">
-      <label class="flabel">Ciudad o municipio</label>
-      <select class="fselect" id="c-ciudad">
-        <option value="">Seleccione departamento…</option>
-      </select>
-    </div>
-  </div>
-  <div class="row2">
-    <div class="fgroup">
-      <label class="flabel">¿Qué tipo de espacio vas a automatizar?</label>
-      <select class="fselect" id="c-tipo">
-        <option value="Residencia">Residencia</option>
-        <option value="Conjunto Residencial">Conjunto Residencial</option>
-        <option value="Local Comercial">Local Comercial</option>
-        <option value="Empresa">Empresa</option>
-        <option value="Bodega">Bodega</option>
-        <option value="Planta Industrial">Planta Industrial</option>
-      </select>
-    </div>
-    <div class="fgroup">
-      <label class="flabel">Barrio o sector de referencia</label>
-      <input class="finput" id="c-dir" type="text" placeholder="Ej: Barrio El Centro, cerca al parque">
-    </div>
-  </div>
-  <div class="fgroup">
-    <label class="flabel">¿Algo importante que debamos saber antes de preparar tu propuesta?</label>
-    <textarea class="ftextarea" id="c-obs" placeholder="Cuéntanos: condiciones del espacio, urgencia, presupuesto aproximado…"></textarea>
-  </div>
-
-
-  <!-- FOTO FACHADA -->
-  <div class="foto-banner" id="foto-banner" onclick="document.getElementById('fotoInput').click()" style="cursor:pointer">
-    <input type="file" id="fotoInput" accept="image/*" onchange="prevFoto(this)" style="display:none">
-    <div class="foto-banner-emoji">📸</div>
-    <div class="foto-banner-title">Muéstranos tu espacio</div>
-    <div class="foto-banner-sub">Una foto del portón o la entrada nos ayuda a darte<br>la solución exacta — no una solución genérica.</div>
-    <div class="foto-banner-btn">Tomar o subir foto</div>
-  </div>
-  <img id="foto-prev-img" src="" alt="Fachada" style="display:none;width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-bottom:12px">
-
-  <button class="btn-wa" onclick="goStep(2)">Empezar mi propuesta →</button>
 </div>
-
 
 <!-- ── PASO 2: MOTOR DE PREGUNTAS GUIADAS ── -->
 <div class="panel" id="p2">
+  <!-- Divs auxiliares del motor — ocultos -->
+  <div id="asesores-grid" style="display:none"></div>
 
   <!-- Selección de camino — aparece primero -->
   <div id="guia-camino-sel">
-    <div class="guia-pregunta">¿Qué necesita hoy?</div>
-    <div class="guia-sub">Seleccione el camino para esta cotización.</div>
-    <div class="guia-opciones" style="margin-bottom:8px">
-      <div class="guia-opt" onclick="selCamino('automatizar')">
-        <div class="guia-opt-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><rect x="6" y="10" width="22" height="26" rx="2" stroke="#005293" stroke-width="2"/><circle cx="23" cy="23" r="2" fill="#005293"/><path d="M30 16l8-2v14l-8-2" stroke="#005293" stroke-width="1.5" stroke-linecap="round"/><path d="M22 34l4 4 8-8" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="guia-opt-lbl">Automatizar una puerta</div><div class="guia-opt-sub">Motor guiado · Recomendación inteligente</div></div>
+
+  <!-- Header protagonista -->
+  <div style="text-align:center;padding:8px 0 22px;">
+    <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;">
+      <div class="nara-ripple" style="width:36px;height:36px;flex-shrink:0;">
+        <div class="nara-ring nara-ring-3"></div><div class="nara-ring nara-ring-2"></div>
+        <div class="nara-ring nara-ring-1"></div><div class="nara-core"></div>
       </div>
-      <div class="guia-opt" onclick="selCamino('accesorios')">
-        <div class="guia-opt-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="6" stroke="#4D4F53" stroke-width="2"/><path d="M22 6v5M22 33v5M6 22h5M33 22h5M10.1 10.1l3.5 3.5M30.4 30.4l3.5 3.5M10.1 33.9l3.5-3.5M30.4 13.6l3.5-3.5" stroke="#4D4F53" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <div><div class="guia-opt-lbl">Accesorios y repuestos</div><div class="guia-opt-sub">Centrales · Controles · Cremalleras · Protección</div></div>
-      </div>
-      <div class="guia-opt" onclick="selCamino('seguridad')">
-        <div class="guia-opt-icon"><svg width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M22 6L8 12v10c0 9 6 16 14 18 8-2 14-9 14-18V12L22 6z" stroke="#981E32" stroke-width="2" fill="rgba(152,30,50,.1)"/><circle cx="22" cy="22" r="5" stroke="#981E32" stroke-width="1.5"/><circle cx="22" cy="22" r="1.5" fill="#981E32"/></svg></div>
-        <div><div class="guia-opt-lbl">Seguridad y cámaras</div><div class="guia-opt-sub">CCTV · Alarmas · Control de acceso · Domótica</div></div>
+      <div style="text-align:left;">
+        <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:14px;color:#fff;">NARA <span class="nara-badge">IA</span></div>
+        <div style="font-size:9px;color:var(--gtxt);letter-spacing:1.5px;text-transform:uppercase;">PPA Central</div>
       </div>
     </div>
-    <button class="btn-sec" style="margin-top:4px" onclick="goStep(1)">← Volver al cliente</button>
+    <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(22px,6vw,28px);color:#fff;line-height:1.08;letter-spacing:-.5px;">¿Qué necesitas<br><span style="color:var(--naranja);">automatizar hoy?</span></div>
+    <div style="font-size:12px;color:var(--gtxt);margin-top:8px;">Elige tu camino — la solución exacta en minutos</div>
   </div>
 
-  <!-- Motor de preguntas — camino automatizar -->
+  <!-- Los 3 caminos — protagonistas, pantalla completa -->
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+
+    <!-- Camino 1: Automatizar -->
+    <div onclick="selCamino('automatizar')" style="background:var(--g2);border:1.5px solid rgba(0,82,147,.4);border-radius:16px;padding:20px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='#005293';this.style.background='rgba(0,82,147,.12)'" onmouseout="this.style.borderColor='rgba(0,82,147,.4)';this.style.background='var(--g2)'">
+      <div style="position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-size:72px;opacity:.07;pointer-events:none;">🚗</div>
+      <div style="width:52px;height:52px;border-radius:14px;background:rgba(0,82,147,.2);border:1.5px solid rgba(0,82,147,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="28" height="28" viewBox="0 0 44 44" fill="none"><rect x="6" y="10" width="22" height="26" rx="2" stroke="#005293" stroke-width="2"/><circle cx="23" cy="23" r="2" fill="#005293"/><path d="M30 16l8-2v14l-8-2" stroke="#005293" stroke-width="1.5" stroke-linecap="round"/><path d="M22 34l4 4 8-8" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(15px,4vw,18px);color:#fff;margin-bottom:4px;">Automatizar un acceso</div>
+        <div style="font-size:clamp(11px,2.8vw,12px);color:#888;line-height:1.6;">Portón · Barrera · Garaje · Cortina<br>Motor guiado con recomendación inteligente</div>
+      </div>
+      <div style="color:#005293;font-size:20px;flex-shrink:0;">›</div>
+    </div>
+
+    <!-- Camino 2: Accesorios -->
+    <div onclick="selCamino('accesorios')" style="background:var(--g2);border:1.5px solid rgba(77,79,83,.5);border-radius:16px;padding:20px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='#4D4F53';this.style.background='rgba(77,79,83,.15)'" onmouseout="this.style.borderColor='rgba(77,79,83,.5)';this.style.background='var(--g2)'">
+      <div style="position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-size:72px;opacity:.07;pointer-events:none;">⚙</div>
+      <div style="width:52px;height:52px;border-radius:14px;background:rgba(77,79,83,.25);border:1.5px solid rgba(77,79,83,.5);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="28" height="28" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="6" stroke="#4D4F53" stroke-width="2"/><path d="M22 6v5M22 33v5M6 22h5M33 22h5M10.1 10.1l3.5 3.5M30.4 30.4l3.5 3.5M10.1 33.9l3.5-3.5M30.4 13.6l3.5-3.5" stroke="#4D4F53" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(15px,4vw,18px);color:#fff;margin-bottom:4px;">Accesorios y repuestos</div>
+        <div style="font-size:clamp(11px,2.8vw,12px);color:#888;line-height:1.6;">Controles · Fotoceldas · Centrales<br>Cremalleras · Conectividad · Protección</div>
+      </div>
+      <div style="color:#4D4F53;font-size:20px;flex-shrink:0;">›</div>
+    </div>
+
+    <!-- Camino 3: Seguridad -->
+    <div onclick="selCamino('seguridad')" style="background:var(--g2);border:1.5px solid rgba(152,30,50,.4);border-radius:16px;padding:20px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='#981E32';this.style.background='rgba(152,30,50,.12)'" onmouseout="this.style.borderColor='rgba(152,30,50,.4)';this.style.background='var(--g2)'">
+      <div style="position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-size:72px;opacity:.07;pointer-events:none;">🛡</div>
+      <div style="width:52px;height:52px;border-radius:14px;background:rgba(152,30,50,.2);border:1.5px solid rgba(152,30,50,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="28" height="28" viewBox="0 0 44 44" fill="none"><path d="M22 6L8 12v10c0 9 6 16 14 18 8-2 14-9 14-18V12L22 6z" stroke="#981E32" stroke-width="2" fill="rgba(152,30,50,.1)"/><circle cx="22" cy="22" r="5" stroke="#981E32" stroke-width="1.5"/><circle cx="22" cy="22" r="1.5" fill="#981E32"/></svg>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(15px,4vw,18px);color:#fff;margin-bottom:4px;">Seguridad y vigilancia</div>
+        <div style="font-size:clamp(11px,2.8vw,12px);color:#888;line-height:1.6;">CCTV · Alarmas · Control de acceso<br>Domótica · Cámaras IP · Grabadores</div>
+      </div>
+      <div style="color:#981E32;font-size:20px;flex-shrink:0;">›</div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Motor de preguntas — camino automatizar -->
   <div id="guia-motor" style="display:none">
     <div class="guia-progress" id="guia-progress"></div>
     <div id="guia-pantalla"></div>
@@ -686,7 +893,9 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
       </div>
 
       <!-- Tarjetas con medallas -->
-      <div id="motor-cards"></div>
+      <div id="eq-lista" style="display:none"></div>
+    <div id="tipo-ficha" style="display:none"></div>
+    <div id="motor-cards"></div>
 
       <!-- Visita técnica rediseñada como propuesta de valor -->
       <div class="visita-regalo">
@@ -766,7 +975,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
   <!-- Acordeones opcionales (colapsados por defecto) -->
   <div id="acc-acordeones" style="display:none"></div>
 
-  <div style="position:sticky;bottom:0;background:var(--ng);padding:12px 0 4px;margin-top:14px;z-index:10"><button class="btn-wa" onclick="generarProp()" style="margin-top:0">🚀 Generar mi propuesta</button></div>
+  <div style="position:sticky;bottom:0;background:var(--ng);padding:12px 0 4px;margin-top:14px;z-index:10"><button class="btn-wa" onclick="mostrarGancho()" style="margin-top:0">🚀 Generar mi propuesta</button></div>
   <button class="btn-sec" style="margin-top:8px;" onclick="goStep(2)">← Volver</button>
 </div>
 
@@ -774,7 +983,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 <div class="panel" id="p4">
   <div id="p4-content" style="display:none">
 
-    <!-- HERO -->
+    <!-- HERO compacto -->
     <div class="prop-hero">
       <div class="ph-inner">
         <div class="ph-consec" id="ph-consec">— · PPA Central</div>
@@ -791,24 +1000,9 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
 
     <div class="prop-body">
 
-      <!-- 1. APRETÓN DE MANOS + FRASES -->
-      <div class="prop-handshake">
-        <div class="prop-hs-ico">🤝</div>
-        <div class="prop-hs-quote">
-          <em>"El precio es lo que pagas. El valor es lo que recibes."</em>
-        </div>
-        <div class="prop-hs-attr">— Warren Buffett</div>
-        <div class="prop-hs-firma">"Hay tres tipos de automatización: la que falla, la que dura — y la que te hace olvidar que existe."</div>
-        <div class="prop-hs-attr" style="margin-top:2px;color:var(--blanco)">— PPA Central</div>
-      </div>
-
-      <!-- 2. NARA -->
+      <!-- NARA -->
       <div class="prop-nara-box">
-        <div class="prop-nara-avatar">
-          <div class="pna-ring pna-r2"></div>
-          <div class="pna-ring pna-r1"></div>
-          <div class="pna-core"></div>
-        </div>
+        <div class="prop-nara-avatar"><div class="pna-ring pna-r2"></div><div class="pna-ring pna-r1"></div><div class="pna-core"></div></div>
         <div>
           <div class="pa-nombre">NARA <span class="nara-badge">IA</span></div>
           <div class="pa-cargo">Asistente IA · PPA Central</div>
@@ -816,68 +1010,14 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
         </div>
       </div>
 
-      <!-- 3. COPY AIDA -->
+      <!-- A: GANCHO -->
       <div class="prop-aida">
         <div class="pa-q" id="pa-q"></div>
         <div class="pa-p" id="pa-p"></div>
       </div>
 
-      <!-- 4. PRECIO TOTAL — el globo naranja grande -->
-      <div class="prop-total">
-        <div><div class="ptl">Total Equipos ★</div><div class="pts" id="pts-lista">PSVP · Referencia usuario final</div></div>
-        <div class="ptm" id="prop-total-num"></div>
-      </div>
-
-      <!-- 5. AGENDA VISITA V12 — calendario izq + hora der + ícono evolución -->
-      <div class="agenda-v12" id="bloque-agenda">
-        <div class="agenda-v12-header">
-          <div class="agenda-v12-ico">🌱</div>
-          <div>
-            <div class="agenda-v12-titulo">Agenda tu visita gratuita</div>
-            <div class="agenda-v12-sub">El siguiente paso convierte esta propuesta en tu proyecto real — con costos exactos y fecha de instalación.</div>
-          </div>
-        </div>
-        <div class="agenda-v12-grid" id="pag-campos">
-          <div class="pag-grupo">
-            <label class="pag-label">📅 Fecha</label>
-            <input type="date" class="pag-input" id="agenda-fecha" lang="es" onchange="validarFechaAgenda()" style="color-scheme:dark;">
-            <div class="pag-hint" id="agenda-fecha-hint"></div>
-          </div>
-          <div class="pag-grupo">
-            <label class="pag-label">🕐 Hora</label>
-            <select class="pag-input" id="agenda-hora">
-              <option value="">Primero elige fecha…</option>
-            </select>
-          </div>
-        </div>
-        <div class="agenda-v12-resultado" id="agenda-v12-ok"></div>
-        <button class="pag-btn" id="pag-btn" onclick="confirmarAgenda()" style="margin-top:8px">Confirmar visita gratuita →</button>
-        <button class="regalo-btn-no" onclick="sinAgenda()" style="width:100%;margin-top:6px">Me contactan después →</button>
-      </div>
-
-      <!-- 6. BOTÓN WHATSAPP LLAMATIVO -->
-      <button class="btn-wa-v12" id="btn-pub" onclick="publicarYEnviar()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.116 1.532 5.843L.058 23.617a.75.75 0 00.917.911l5.877-1.533A11.937 11.937 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.73 9.73 0 01-4.96-1.355l-.355-.214-3.687.963.983-3.595-.232-.37A9.726 9.726 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
-        Descargar y Enviar por WhatsApp
-      </button>
-
-      <!-- 7. LINK BOX -->
-      <div class="link-box" id="link-box">
-        <div class="lb-lbl">📎 Cómo enviar al cliente</div>
-        <div style="font-size:12px;color:#ccc;line-height:1.7;margin-bottom:10px">El archivo HTML ya se descargó. En WhatsApp adjúntelo desde Descargas.</div>
-        <div class="lb-btns">
-          <button class="lb-btn" onclick="publicarYEnviar()">📲 Re-abrir WA</button>
-          <button class="lb-btn" onclick="verLink()">👁 Ver propuesta</button>
-        </div>
-      </div>
-
-      <!-- 8. SEPARADOR: "Lo que sigue en detalle" -->
-      <div style="text-align:center;margin:20px 0 12px;border-top:1px solid var(--g4);padding-top:16px">
-        <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#555">Resumen completo de tu selección</div>
-      </div>
-
-      <!-- 9. EQUIPO SELECCIONADO -->
-      <div class="prop-eq-card">
+      <!-- I: EQUIPO — card compacto, sin tabla de precios -->
+      <div class="prop-eq-card" style="margin-bottom:16px">
         <div class="peq-img" id="peq-img">🚪</div>
         <div class="peq-info">
           <div class="peq-nombre" id="peq-nombre"></div>
@@ -885,63 +1025,128 @@ body{font-family:'DM Sans',sans-serif;color:var(--blanco);display:flex;flex-dire
           <div class="peq-desc" id="peq-desc"></div>
         </div>
       </div>
-
-      <!-- 10. TABLA EQUIPAMIENTO -->
-      <div class="prop-sec">Equipamiento propuesto</div>
-      <div id="prop-rows"></div>
-
-      <!-- 11. SSG / Ventaja -->
-      <div class="prop-ventaja" id="prop-ventaja" style="display:none">
-        <div class="pvt" id="pvt"></div>
-        <div class="pvp" id="pvp"></div>
+      <!-- Rows ocultos — solo para buildHTMLProp -->
+      <div id="prop-rows" style="display:none"></div>
+      <!-- D: SSG compacto -->
+      <div id="prop-ventaja" style="display:none;margin-bottom:12px">
+        <div id="pvt" style="font-family:'Inter',sans-serif;font-weight:700;font-size:13px;color:#fff;margin-bottom:4px;"></div>
+        <div id="pvp" style="font-size:12px;color:#888;line-height:1.65;"></div>
       </div>
-      <div class="prop-ssg">
-        <div class="ssg-t">¿Por qué elegirnos?</div>
+      <div class="prop-ssg" style="margin-bottom:16px">
+        <div class="ssg-t">¿Por qué PPA Central?</div>
         <div class="ssg-items" id="ssg-items"></div>
       </div>
 
-      <!-- 12. PROYECTO COMPLETO -->
-      <div class="prop-proyecto">
-        <div class="pproj-header">
-          <div class="pproj-icon">🏗</div>
+      <!-- PRECIO ELIMINADO DE PANTALLA v15.2 -->
+      <!-- El precio vive exclusivamente en la propuesta descargable -->
+      <div id="prop-total-num" style="display:none"></div>
+      <div id="pts-lista" style="display:none">PSVP · Referencia usuario final</div>
+
+      <!-- Separador visual suave -->
+      <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(232,92,0,.2),transparent);margin:4px 0 20px;"></div>
+      <!-- A: VISITA v15.1 — neuromarketing, entregables, CTA doble -->
+      <div style="margin-bottom:16px;">
+
+        <!-- Headline de impacto -->
+        <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(18px,5vw,22px);color:#fff;line-height:1.1;margin-bottom:4px;">
+          En la visita técnica recibes esto.
+        </div>
+        <div style="font-size:12px;color:rgba(232,92,0,.8);font-weight:700;letter-spacing:.5px;margin-bottom:18px;">
+          SIN COSTO · SIN COMPROMISO · PARTE DEL PROCESO
+        </div>
+
+        <!-- Entregable 1: Render -->
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;margin-bottom:8px;">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(0,82,147,.15);border:1px solid rgba(0,82,147,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">🖼</div>
           <div>
-            <div class="pproj-titulo">Proyecto de automatización</div>
-            <div class="pproj-sub">Esta propuesta cubre equipo y accesorios. Para completar el proyecto necesitamos conocer el espacio.</div>
+            <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:13px;color:#fff;margin-bottom:3px;">Render antes / después</div>
+            <div style="font-size:11px;color:#666;line-height:1.65;">Ve exactamente cómo queda tu entrada con la solución instalada — <strong style="color:#aaa;">antes de decidir.</strong></div>
           </div>
         </div>
-        <div class="pproj-divider">Lo siguiente solo se determina con una visita técnica</div>
-        <div class="pproj-items">
-          <div class="pproj-item"><div class="pproj-dot">⚒</div><div><div class="pproj-item-t">Mano de obra de instalación</div><div class="pproj-item-s">Varía según condiciones del espacio y tipo de estructura</div></div></div>
-          <div class="pproj-item"><div class="pproj-dot">⚡</div><div><div class="pproj-item-t">Materiales eléctricos requeridos</div><div class="pproj-item-s">Cableado, canaleta y protecciones según distancias reales</div></div></div>
-          <div class="pproj-item"><div class="pproj-dot">🔩</div><div><div class="pproj-item-t">Materiales de ornamentación</div><div class="pproj-item-s">Aplica según estado de la estructura y acabados requeridos</div></div></div>
+
+        <!-- Entregable 2: Estructural -->
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;margin-bottom:8px;">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(77,79,83,.2);border:1px solid rgba(77,79,83,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">📐</div>
+          <div>
+            <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:13px;color:#fff;margin-bottom:3px;">Viabilidad estructural</div>
+            <div style="font-size:11px;color:#666;line-height:1.65;">Tu espacio, evaluado por un especialista. Sin esto, <strong style="color:#aaa;">cualquier cotización es una estimación con logo.</strong></div>
+          </div>
         </div>
-        <div class="pproj-cta">PPA Central coordinará un <strong>instalador certificado</strong> para la visita y recibirás el proyecto completo.</div>
+
+        <!-- Entregable 3: Fotovoltaica -->
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.2);border-radius:12px;margin-bottom:16px;">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">☀️</div>
+          <div>
+            <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:13px;color:#4ADE80;margin-bottom:3px;">Viabilidad fotovoltaica</div>
+            <div style="font-size:11px;color:#666;line-height:1.65;">Tu acceso, autónomo de la red eléctrica. <strong style="color:#4ADE80;">Aunque no haya luz.</strong> Solo se puede proyectar visitando tu espacio.</div>
+          </div>
+        </div>
+
+        <!-- Nota de autoridad técnica -->
+        <div style="font-size:10px;color:#444;line-height:1.7;text-align:center;margin-bottom:18px;padding:0 8px;">
+          Con PPA Central o con quien decidas — estos son los pasos mínimos<br>para proyectar bien y escalar la inversión correctamente.
+        </div>
+
+        <!-- CTA doble -->
+        <div class="agenda-v12" id="bloque-agenda" style="background:none;border:none;padding:0;margin-bottom:0">
+          <div class="agenda-v12-grid" id="pag-campos" style="margin-bottom:10px;">
+            <div class="pag-grupo">
+              <label class="pag-label">📅 Fecha preferida</label>
+              <input type="date" class="pag-input" id="agenda-fecha" lang="es" onchange="validarFechaAgenda()" style="color-scheme:dark;">
+              <div class="pag-hint" id="agenda-fecha-hint"></div>
+            </div>
+            <div class="pag-grupo">
+              <label class="pag-label">🕐 Hora</label>
+              <select class="pag-input" id="agenda-hora"><option value="">Primero elige fecha…</option></select>
+            </div>
+          </div>
+          <div class="agenda-v12-resultado" id="agenda-v12-ok"></div>
+          <div id="pag-confirmado" style="display:none;align-items:center;gap:8px;margin-bottom:8px;font-size:12px;color:#4ADE80;font-weight:600;">✅ Visita confirmada</div>
+          <button class="pag-btn" id="pag-btn" onclick="confirmarAgenda()" style="margin-bottom:8px;">
+            📅 Programar visita técnica →
+          </button>
+          <button class="regalo-btn-no" onclick="sinAgenda()" style="width:100%;">
+            Me contactan después →
+          </button>
+        </div>
+
+      </div>
+      <!-- CTA PRINCIPAL v15.2 — propuesta descargable -->
+      <div style="border-top:1px solid rgba(255,255,255,.06);padding-top:20px;margin-top:4px;">
+
+        <!-- Contexto antes del CTA -->
+        <div style="text-align:center;margin-bottom:14px;">
+          <div style="font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(16px,4.5vw,20px);color:#fff;margin-bottom:6px;">Tu propuesta completa incluye<br>el precio total del proyecto.</div>
+          <div style="font-size:11px;color:#444;line-height:1.7;">Equipamiento · Accesorios · PSVP · Vigencia 7 días<br>Lista para compartir o imprimir.</div>
+        </div>
+
+        <!-- Botón principal -->
+        <button class="btn-wa-v12" id="btn-pub" onclick="publicarYEnviar()" style="margin-bottom:10px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.557 4.116 1.532 5.843L.058 23.617a.75.75 0 00.917.911l5.877-1.533A11.937 11.937 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.73 9.73 0 01-4.96-1.355l-.355-.214-3.687.963.983-3.595-.232-.37A9.726 9.726 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+          Recibir propuesta completa por WhatsApp
+        </button>
+
       </div>
 
-      <!-- 13. FIRMA -->
+      <div class="link-box" id="link-box">
+        <div class="lb-lbl">📎 Cómo enviar al cliente</div>
+        <div style="font-size:12px;color:#ccc;line-height:1.7;margin-bottom:10px">El archivo HTML se descargó. En WhatsApp adjúntalo desde Descargas.</div>
+        <div class="lb-btns">
+          <button class="lb-btn" onclick="publicarYEnviar()">📲 Re-abrir WA</button>
+          <button class="lb-btn" onclick="verLink()">👁 Ver propuesta</button>
+        </div>
+      </div>
+
+      <!-- FIRMA -->
       <div class="prop-firma">
         <div>
           <div class="pf-empresa">PPA Central</div>
-          <div class="pf-datos">Distribuidor Autorizado PPA Latam<br>🌐 <a href="https://ppacentral.com">ppacentral.com</a> · 📱 @ppacentral<br>📞 +57 317 777 2 333<br>📍 Cra. 10 N 6-20 · B. Las Avenidas · Florencia, Caquetá</div>
+          <div class="pf-datos">Distribuidor Autorizado PPA Latam<br>📞 +57 317 777 2 333 · @ppacentral<br>📍 Florencia, Caquetá</div>
         </div>
         <div>
           <div class="pf-soy">#PPACentral</div>
-          <div class="pf-sub">Tu acceso a la mejor<br>tecnología PPA.<br>Siempre a tu servicio.</div>
+          <div id="pf-fecha-display" class="pf-fecha"></div>
         </div>
-      </div>
-
-
-          <button class="lb-btn" onclick="descargarHTML()">⬇ Re-descargar</button>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-sec" onclick="descargarHTML()">⬇ HTML</button>
-        <button class="btn-sec" onclick="imprimirPDF()">🖨 PDF</button>
-      </div>
-      <div class="btn-row">
-        <button class="btn-sec" onclick="nuevaCot()">+ Nueva</button>
-        <button class="btn-sec" onclick="goStep(1)">✏ Editar</button>
       </div>
 
     </div>
@@ -1777,9 +1982,9 @@ function accRecomendadosPara(tipoEquipo, skuEquipo){
   return {
     // IDs de accesorios recomendados automáticamente
     recomendados: [
-      'slux',   // Semáforo siempre
-      'rele',   // Módulo relé siempre
-      'f32c',   // Fotocelda siempre
+      ...(!esBarrera ? ['slux'] : []),  // Semáforo: NO en barreras
+      ...(!esBarrera ? ['rele'] : []),  // Relé: NO en barreras
+      'f32c',   // Fotocelda: todos los tipos
       ...(energiaInestable ? ['pred'] : []),
     ],
     // IDs obligatorios (no se pueden desmarcar en barreras)
@@ -2055,7 +2260,8 @@ function renderTiposSegmento(){
     </div>`).join('');
   document.getElementById('tipo-ficha').classList.remove('vis');
   document.getElementById('eq-rec').classList.remove('vis');
-  document.getElementById('eq-lista').innerHTML='';
+  setHTML('eq-lista', '');
+
   tipoSel=''; equipoSel=null;
 }
 
@@ -2083,14 +2289,15 @@ function selTipo(id){
   const tipo=tipos.find(t=>t.id===id);
   if(tipo){
     const sp=tipo.specs;
-    document.getElementById('tipo-ficha').innerHTML=`
+    setHTML('tipo-ficha', `
       <div class="tipo-ficha-titulo">📊 ${tipo.lbl} — Parámetros técnicos</div>
       <div class="tipo-specs">
         <div class="tipo-spec"><div class="tipo-spec-lbl">Capacidad de peso</div><div class="tipo-spec-val">${sp.peso}</div></div>
         <div class="tipo-spec"><div class="tipo-spec-lbl">Velocidad apertura</div><div class="tipo-spec-val ok">${sp.velocidad}</div></div>
         <div class="tipo-spec"><div class="tipo-spec-lbl">Ciclos recomendados</div><div class="tipo-spec-val warn">${sp.ciclos}</div></div>
         <div class="tipo-spec"><div class="tipo-spec-lbl">Uso ideal</div><div class="tipo-spec-val" style="font-size:10px">${sp.uso}</div></div>
-      </div>`;
+      </div>`);
+
     document.getElementById('tipo-ficha').classList.add('vis');
     const rec=document.getElementById('eq-rec');
     rec.textContent='💡 '+tipo.rec; rec.classList.add('vis');
@@ -2348,6 +2555,11 @@ const SEG_COLORS = {L01:'#005293',L02:'#4D4F53',L03:'#F15A22',L04:'#981E32'};
 // ══════════════════════════════════════
 let asesorSel  = null;
 let equipoSel  = null;
+// v14.5 — datos cliente capturados en gancho
+let clienteNombre = '';
+let clienteTel    = '';
+let clienteDepto  = '';
+let clienteCiudad = '';
 let accSel     = new Set();
 let accQty     = {};   // id -> cantidad (para accesorios con qty:true)
 const listaPrecios = 'final';
@@ -2360,16 +2572,6 @@ function precioMostrar(p){ return p; }
 function fmtCOP(n){ return '$' + Math.round(n).toLocaleString('es-CO'); }
 
 // ══════════════════════════════════════
-// INIT — sin JSONBin, todo local + Sheets + Bitrix
-// ══════════════════════════════════════
-async function init(){
-  document.getElementById('consecBadge').textContent = generarID();
-  cargarMunicipios();
-  cargarPreciosSheets();
-  renderAsesores();
-  initFechaAgenda();
-}
-
 // ══════════════════════════════════════
 // CONSECUTIVO — localStorage
 // ══════════════════════════════════════
@@ -2460,14 +2662,7 @@ function renderImprescindibles(){
         t:'Brazo 3m — incluido con el equipo',
         s:'El SEM PARAR viene con brazo rectangular de 3m integrado. No necesitas asta adicional.',
         badge:'INCLUIDO' });
-      items.push({ ico:'🚦', acc:'slux',
-        t:'Semáforo Sinaleira LUX',
-        s:'En barreras de 1200 ciclos/día el semáforo es crítico. Indica libre/ocupado y evita conflictos vehiculares.',
-        badge:'MUY RECOMENDADO' });
-      items.push({ ico:'🔌', acc:'rele',
-        t:'Módulo Relé — conexión semáforo/central',
-        s:'Necesario para conectar el semáforo a la central de la barrera.',
-        badge:'REQUERIDO' });
+      // slux y rele: opcionales — disponibles en sección de accesorios
     }
     else if(idEq === 'kd2'){
       items.push({ ico:'🚧', acc:'asta-kd2-3b',
@@ -2519,17 +2714,7 @@ function renderImprescindibles(){
         badge:'UPGRADE DISPONIBLE' });
     }
 
-    // Semáforo para todas excepto sempar y bc1 (ya cubiertos arriba)
-    if(idEq !== 'sempar' && idEq !== 'bc1'){
-      items.push({ ico:'🚦', acc:'slux',
-        t:'Semáforo de señalización',
-        s:'Indica si el acceso está libre u ocupado. Fundamental en parqueaderos y conjuntos — evita choques y organiza el flujo vehicular.',
-        badge:'RECOMENDADO' });
-      items.push({ ico:'🔌', acc:'rele',
-        t:'Módulo Relé — conexión semáforo/central',
-        s:'Conecta el semáforo a la central para que cambie automáticamente con la barrera.',
-        badge:'REQUERIDO' });
-    }
+    // slux y rele son opcionales — van en sección de accesorios, no en imprescindibles
   }
 
   // ── PUERTA AUTOMÁTICA ────────────────────────────────────
@@ -2640,13 +2825,14 @@ function selSeg(code, nombre, desc, icon, btn){
 // ASESORES
 // ══════════════════════════════════════
 function renderAsesores(){
-  document.getElementById('asesores-grid').innerHTML = ASESORES.map(a=>`
+  setHTML('asesores-grid', ASESORES.map(a=>`
     <div class="asesor-card" id="ac-${a.id}" onclick="selAsesor('${a.id}')">
       <div class="asesor-sel-dot">✓</div>
       <div class="asesor-foto">${a.foto?`<img src="${a.foto}" alt="${a.nombre}">`:`<span>${a.emoji}</span>`}</div>
       <div class="asesor-nombre">${a.nombre}</div>
       <div class="asesor-cargo">${a.cargo}</div>
-    </div>`).join('');
+    </div>`).join(''));
+
 }
 function selAsesor(id){
   document.querySelectorAll('.asesor-card').forEach(c=>c.classList.remove('selected'));
@@ -2663,11 +2849,23 @@ function prevFoto(input){
   r.onload = function(e){
     fotoDataUrl = e.target.result;
     var img = document.getElementById('foto-prev-img');
-    img.src = fotoDataUrl; img.style.display='block';
-    var banner = document.getElementById('foto-banner');
-    if(banner) banner.style.display='none';
+    img.src = fotoDataUrl;
+    document.getElementById('foto-banner').style.display='none';
+    document.getElementById('foto-preview-wrap').style.display='block';
   };
   r.readAsDataURL(file);
+}
+
+function quitarFoto(){
+  fotoDataUrl = null;
+  const img = document.getElementById('foto-prev-img');
+  if(img) img.src = '';
+  const wrap = document.getElementById('foto-preview-wrap');
+  if(wrap) wrap.style.display = 'none';
+  const banner = document.getElementById('foto-banner');
+  if(banner) banner.style.display = 'flex';
+  const input = document.getElementById('fotoInput');
+  if(input) input.value = '';
 }
 
 // ══════════════════════════════════════
@@ -2836,10 +3034,11 @@ function nombreArchivoMarketing(nombre, cotID){
 function generarProp(){
   if(!equipoSel){ showToast('⚠ Selecciona un equipo'); goStep(2); return; }
 
-  const nombre = document.getElementById('c-nombre').value.trim()||'Cliente';
-  const ciudad = document.getElementById('c-ciudad').value.trim()||'Colombia';
-  const tipo   = document.getElementById('c-tipo').value||'Propiedad';
-  const obs    = document.getElementById('c-obs').value.trim();
+  // v14.5 — leer de campos del paso 1 o de variables globales del gancho
+  const nombre = (document.getElementById('c-nombre')?.value?.trim()) || clienteNombre || 'Cliente';
+  const ciudad = (document.getElementById('c-ciudad')?.value?.trim()) || clienteCiudad || 'Colombia';
+  const tipo   = document.getElementById('c-tipo')?.value || 'Propiedad';
+  const obs    = document.getElementById('c-obs')?.value?.trim() || '';
   const consec = document.getElementById('consecBadge').textContent;
   const fecha  = new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'});
 
@@ -3052,15 +3251,12 @@ function generarProp(){
   };
   const v = ventajas[equipoSel.tec];
   const vbox = document.getElementById('prop-ventaja');
-  if(v){ document.getElementById('pvt').textContent=v.t; document.getElementById('pvp').innerHTML=v.p; vbox.style.display='block'; }
+  if(v){ document.getElementById('pvt').textContent=v.t; setHTML('pvp', v.p); vbox.style.display='block'; }
   else { vbox.style.display='none'; }
 
-  // SSG
-  document.getElementById('ssg-items').innerHTML = [
-    {s:`<strong>Situación:</strong> Su propiedad requiere seguridad, comodidad y tecnología de primera línea.`},
-    {s:`<strong>Solución:</strong> ${equipoSel.n} — tecnología ${equipoSel.tec}. Instalación profesional certificada, garantía respaldada por PPA Latinoamérica.`},
-    {s:`<strong>Garantía:</strong> Soporte técnico local, repuestos originales y mantenimiento preventivo programado. PPA Central siempre disponible.`},
-  ].map((i,idx)=>`<div class="ssg-item"><div class="ssg-dot">${idx+1}</div><div>${i.s}</div></div>`).join('');
+  // SSG v14.1 — específico por segmento
+  document.getElementById('ssg-items').innerHTML = ssgPorSegmento(segCode, equipoSel);
+
 
   // Guardar historial local + registrar en Bitrix24
   (async()=>{
@@ -3081,7 +3277,7 @@ function generarProp(){
       lista:    String(listaPrecios||'final'),
       cliente:{
         nombre: String(nombre||''),
-        tel:    String(document.getElementById('c-tel').value||''),
+        tel:    String((document.getElementById('c-tel')?.value||'')||''),
         ciudad: String(ciudad||''),
         obs:    String(obs||''),
         asesor: String(asesorSel?.nombre||'—'),
@@ -3137,13 +3333,13 @@ const MUNICIPIOS = {
 };
 
 function cargarMunicipios(){
-  const depto = document.getElementById('c-depto').value;
+  const depto = (document.getElementById('c-depto')?.value||'');
   const sel   = document.getElementById('c-ciudad');
+  if(!sel) return; // v15: el campo puede no existir si el paso 1 fue eliminado
   const munis = MUNICIPIOS[depto]||[];
   sel.innerHTML = munis.length
     ? munis.map(m=>`<option value="${m}">${m}</option>`).join('')
     : '<option value="">Seleccione departamento…</option>';
-  // Preseleccionar Florencia si es Caquetá
   if(depto==='Caquetá') sel.value='Florencia';
 }
 
@@ -3239,30 +3435,29 @@ async function registrarEnBitrix(entry){
 // BUILD HTML PROPUESTA (para envío/descarga)
 // ══════════════════════════════════════
 function buildHTMLProp(){
-  const nombre = document.getElementById('c-nombre').value.trim()||'Cliente';
-  const ciudad = document.getElementById('c-ciudad').value.trim()||'Colombia';
-  const tipo   = document.getElementById('c-tipo').value||'Propiedad';
-  const total  = document.getElementById('prop-total-num').textContent;
-  const consec = document.getElementById('ph-consec').textContent;
-  const paq    = document.getElementById('pa-q').textContent;
-  const pap    = document.getElementById('pa-p').innerHTML;
-  const rows   = document.getElementById('prop-rows').innerHTML;
-  const vvis   = document.getElementById('prop-ventaja').style.display!=='none';
-  const vt     = document.getElementById('pvt').textContent;
-  const vp     = document.getElementById('pvp').innerHTML;
-  const ssg    = document.getElementById('ssg-items').innerHTML;
-  const fachada= fotoDataUrl||'';
-  const fecha  = new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'});
-  const asesor = {nombre:'NARA',cargo:'Asistente IA · PPA Central',emoji:'🟠'};
+    const nombre = (document.getElementById('c-nombre')?.value?.trim()) || clienteNombre || 'Cliente';
+    const ciudad = (document.getElementById('c-ciudad')?.value?.trim()) || clienteCiudad || 'Colombia';
+    const tipo   = document.getElementById('c-tipo')?.value || 'Propiedad';
+    const total  = document.getElementById('prop-total-num').textContent;
+    const consec = document.getElementById('ph-consec').textContent;
+    const paq    = document.getElementById('pa-q').textContent;
+    const pap    = document.getElementById('pa-p').innerHTML;
+    const rows   = document.getElementById('prop-rows').innerHTML;
+    const vvis   = document.getElementById('prop-ventaja').style.display!=='none';
+    const vt     = document.getElementById('pvt').textContent;
+    const vp     = (document.getElementById('pvp')?.innerHTML||'');
+    const ssg    = document.getElementById('ssg-items').innerHTML;
+    const fachada= fotoDataUrl||'';
+    const fecha  = new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'});
+    const asesor = {nombre:'NARA',cargo:'Asistente IA · PPA Central',emoji:'🟠'};
+  
+    const seg    = detectarSegmento();
+    const SC     = seg.color;
+    const SG     = seg.grad;
+    const SL     = seg.nombre;
+    const SK     = seg.code;
 
-  // Segmento detectado automáticamente
-  const seg    = detectarSegmento();
-  const SC     = seg.color;   // Color principal del segmento
-  const SG     = seg.grad;    // Gradiente del hero
-  const SL     = seg.nombre;  // Nombre del segmento
-  const SK     = seg.code;    // Código L01-L04
-
-return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -3272,92 +3467,126 @@ return `<!DOCTYPE html>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#060606;color:#fff;font-family:'Barlow',sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 .page{max-width:720px;margin:0 auto;}
+
+/* ── HERO ── */
 .hero{background:linear-gradient(150deg,${SG.split(',')[0]} 0%,${SG.split(',')[1]} 40%,#060606 100%);position:relative;overflow:hidden;border-bottom:1px solid #1E1E1E;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 92% 50%,${SC}38 0%,transparent 70%);}
 .hero::after{content:'PPA';position:absolute;right:-6px;top:-16px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:140px;color:rgba(255,255,255,.03);letter-spacing:-6px;pointer-events:none;}
 .h-in{padding:38px 32px 0;position:relative;z-index:1;}
 .h-consec{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:${SC};margin-bottom:8px;font-weight:600;}
-.h-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:56px;line-height:.92;text-transform:uppercase;letter-spacing:-2px;}
+.h-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:52px;line-height:.95;text-transform:uppercase;letter-spacing:-1px;}
 .h-title span{color:${SC};}
-.h-sub{font-size:13px;color:#555;margin-top:8px;font-weight:300;letter-spacing:.5px;}
+.h-sub{font-size:13px;color:#666;margin-top:10px;font-weight:400;letter-spacing:.3px;}
 .h-bar{display:grid;grid-template-columns:1fr 1fr;padding:22px 32px 32px;border-top:1px solid rgba(255,255,255,.06);margin-top:24px;position:relative;z-index:1;}
 .hbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:4px;}
-.hbv{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;}
+.hbv{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;color:#fff;}
 .hbs{font-size:12px;color:#555;margin-top:2px;}
-.fachada{width:100%;max-height:280px;object-fit:cover;display:block;}
-.body{padding:32px;}
-.asesor-row{display:flex;align-items:center;gap:14px;background:#111;border-radius:10px;padding:14px;margin-bottom:22px;border:1px solid #1E1E1E;}
+.seg-badge{display:inline-block;background:${SC};color:#fff;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
+.fachada{width:100%;max-height:260px;object-fit:cover;display:block;}
+
+/* ── BODY ── */
+.body{padding:28px 32px 32px;font-family:'DM Sans','Inter',sans-serif;}
+
+/* ── GANCHO AIDA ── */
+.aida{border-left:4px solid ${SC};padding:20px 22px;background:linear-gradient(90deg,${SC}15 0%,transparent 100%);margin-bottom:24px;border-radius:0 12px 12px 0;}
+.aq{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;line-height:1.02;margin-bottom:12px;color:#fff;}
+.ap{font-size:13.5px;color:#BBB;line-height:1.85;letter-spacing:.1px;}.ap strong{color:#fff;font-weight:600;}.ap em{color:#666;font-size:12px;}
+
+/* ── EQUIPO ── */
+.eq-card{background:#111;border-radius:12px;overflow:hidden;margin-bottom:24px;display:grid;grid-template-columns:120px 1fr;border:1px solid #1E1E1E;}
+.ei{width:120px;height:110px;background:#181818;display:flex;align-items:center;justify-content:center;font-size:44px;}
+.einfo{padding:16px 18px;}
+.en{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:.5px;color:#fff;}
+.et{display:inline-block;background:${SC}25;color:${SC};font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin:6px 0;}
+.ed{font-size:12px;color:#555;line-height:1.5;}.ed strong{color:${SC};}
+
+/* ── PRUEBA SOCIAL (SSG) ── */
+.ssg{background:linear-gradient(135deg,${SC}10 0%,${SC}04 100%);border:1px solid ${SC}28;border-radius:12px;padding:20px;margin-bottom:20px;}
+.ssg-t{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;margin-bottom:14px;color:#fff;letter-spacing:.3px;}
+.si{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:#AAA;line-height:1.75;margin-bottom:14px;}
+.si:last-child{margin-bottom:0;}
+.sd{width:24px;height:24px;border-radius:50%;background:${SC};color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:3px;}
+.si strong{color:#fff;font-weight:600;}
+
+/* ── VENTAJA TÉCNICA ── */
+.ventaja{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.15);border-radius:10px;padding:16px 18px;margin-bottom:20px;}
+.vt{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:1.5px;color:#4ADE80;text-transform:uppercase;margin-bottom:6px;}
+.vp{font-size:13px;color:#777;line-height:1.7;}.vp strong{color:#4ADE80;font-weight:600;}
+
+/* ── LISTA PRODUCTOS ── */
+.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:${SC};margin:22px 0 12px;border-left:3px solid ${SC};padding-left:10px;}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #181818;letter-spacing:.1px;}
+.row:last-child{border-bottom:none;}
+.rn{font-size:15px;font-weight:600;color:#ddd;}.rsku{font-size:10px;color:#444;margin-top:2px;}
+.rp{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;white-space:nowrap;color:${SC};}
+
+/* ── TOTAL ── */
+.total{background:linear-gradient(135deg,${SC} 0%,${SC}CC 100%);border-radius:14px;padding:24px 28px;display:flex;justify-content:space-between;align-items:center;margin:22px 0 28px;box-shadow:0 8px 32px ${SC}40;}
+.tl{font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.85;font-weight:600;}
+.ts2{font-size:11px;opacity:.65;margin-top:4px;}
+.tm{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:48px;letter-spacing:-1px;}
+
+/* ── VIGENCIA ── */
+.vigencia{background:#0A0A0A;border:1px solid #1E1E1E;border-radius:10px;padding:14px 18px;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.vig-ico{font-size:20px;flex-shrink:0;}
+.vig-t{font-size:12px;color:#666;line-height:1.6;}
+.vig-t strong{color:#aaa;font-weight:600;}
+
+/* ── AGENDA ── */
+.agenda-confirmada{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.18);border-radius:12px;padding:18px;margin-bottom:22px;display:flex;align-items:flex-start;gap:14px;}
+.ag-icon{font-size:24px;flex-shrink:0;}
+.ag-titulo{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:#4ADE80;margin-bottom:4px;}
+.ag-fecha{font-size:16px;font-weight:600;color:#fff;margin-bottom:3px;}
+.ag-nota{font-size:11px;color:#777;}
+.agenda-pendiente{background:linear-gradient(135deg,${SC}10 0%,transparent 100%);border:1px solid ${SC}30;border-radius:12px;padding:20px;margin-bottom:22px;text-align:center;}
+.agp-t{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;color:#fff;margin-bottom:6px;}
+.agp-s{font-size:13px;color:#888;line-height:1.7;}
+.agp-num{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:${SC};margin-top:12px;}
+
+/* ── PROYECTO ── */
+.proyecto{background:#0A0A0A;border:1px solid #1A1A1A;border-radius:12px;padding:18px;margin-bottom:22px;}
+.proj-t{font-size:11px;font-weight:700;color:#444;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.proj-items{display:flex;flex-direction:column;gap:8px;}
+.proj-item{display:flex;align-items:center;gap:10px;font-size:12px;color:#555;}
+.proj-dot{font-size:13px;flex-shrink:0;}
+
+/* ── ASESOR ── */
+.asesor-row{display:flex;align-items:center;gap:14px;background:#0E0E0E;border-radius:10px;padding:16px;margin-bottom:22px;border:1px solid #1A1A1A;}
 .af{width:52px;height:52px;border-radius:50%;background:#1A1A1A;border:2px solid ${SC};display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0;}
 .af img{width:100%;height:100%;object-fit:cover;}
-.an{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;}
-.ac{font-size:11px;color:#555;margin-top:2px;}
-.ae{font-size:11px;color:${SC};margin-top:3px;font-weight:600;}
+.an{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:#fff;}
+.ac{font-size:12px;color:#555;margin-top:2px;}
+.ae{font-size:12px;color:${SC};margin-top:3px;font-weight:600;}
 
-.aida{border-left:3px solid ${SC};padding:20px 22px;background:linear-gradient(90deg,${SC}12 0%,transparent 100%);margin-bottom:24px;border-radius:0 10px 10px 0;}
-.aq{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;line-height:1.05;margin-bottom:10px;}
-.ap{font-size:14px;color:#AAA;line-height:1.75;}.ap strong{color:#fff;}.ap em{color:#666;font-size:12px;}
-.eq-card{background:#111;border-radius:10px;overflow:hidden;margin-bottom:22px;display:grid;grid-template-columns:130px 1fr;border:1px solid #1E1E1E;}
-.ei{width:130px;height:120px;background:#181818;display:flex;align-items:center;justify-content:center;font-size:48px;}
-.einfo{padding:18px 20px;}
-.en{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:.5px;}
-.et{display:inline-block;background:${SC}25;color:${SC};font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin:7px 0;}
-.ed{font-size:12px;color:#555;line-height:1.5;}.ed strong{color:${SC};}
-.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#444;margin:22px 0 10px;}
-.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #141414;}
-.row:last-child{border-bottom:none;}
-.rn{font-size:14px;font-weight:600;}.rsku{font-size:9px;color:#444;margin-top:2px;}
-.rp{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;white-space:nowrap;}
-.total{background:${SC};border-radius:12px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;margin:22px 0;}
-.tl{font-size:9px;letter-spacing:4px;text-transform:uppercase;opacity:.8;}.ts2{font-size:10px;opacity:.65;margin-top:3px;}
-.tm{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:46px;}
-.ventaja{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.18);border-radius:10px;padding:16px 18px;margin-bottom:20px;}
-.vt{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:1.5px;color:#4ADE80;text-transform:uppercase;margin-bottom:6px;}
-.vp{font-size:13px;color:#777;line-height:1.65;}.vp strong{color:#4ADE80;}
-.ssg{background:linear-gradient(135deg,${SC}12 0%,${SC}06 100%);border:1px solid ${SC}30;border-radius:10px;padding:20px;margin-bottom:20px;}
-.ssg-t{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;margin-bottom:14px;}
-.si{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#888;line-height:1.6;margin-bottom:12px;}
-.si:last-child{margin-bottom:0;}
-.sd{width:24px;height:24px;border-radius:50%;background:${SC};color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px;}
-.si strong{color:#fff;}
-.proyecto{background:linear-gradient(135deg,rgba(232,92,0,.06) 0%,rgba(255,107,0,.02) 100%);border:1px solid rgba(232,92,0,.2);border-radius:14px;padding:22px;margin-bottom:22px;}
-.proj-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
-.proj-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
-.proj-titulo{font-family:'Inter',sans-serif;font-weight:800;font-size:16px;color:#fff;margin-bottom:4px;}
-.proj-sub{font-size:12px;color:#888;line-height:1.6;}
-.proj-div{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${SC};border-top:1px solid rgba(232,92,0,.2);border-bottom:1px solid rgba(232,92,0,.2);padding:8px 0;margin-bottom:14px;}
-.proj-items{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
-.proj-item{display:flex;align-items:flex-start;gap:12px;}
-.proj-dot{width:32px;height:32px;border-radius:9px;background:rgba(232,92,0,.1);border:1px solid rgba(232,92,0,.2);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
-.proj-it{font-size:13px;font-weight:600;color:#fff;margin-bottom:3px;}
-.proj-is{font-size:11px;color:#666;line-height:1.5;}
-.proj-cta{font-size:12px;color:#999;line-height:1.7;border-top:1px solid rgba(232,92,0,.15);padding-top:14px;}
-.proj-cta strong{color:${SC};}
-.agenda-confirmada{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:18px;margin-bottom:22px;display:flex;align-items:flex-start;gap:14px;}
-.ag-icon{font-size:24px;flex-shrink:0;}
-.ag-titulo{font-family:'Inter',sans-serif;font-weight:700;font-size:13px;color:#4ADE80;margin-bottom:4px;}
-.ag-fecha{font-size:15px;font-weight:600;color:#fff;margin-bottom:3px;}
-.ag-nota{font-size:11px;color:#777;}
-.agenda-pendiente{background:#0D0D0D;border:1px dashed #2A2A2A;border-radius:12px;padding:18px;margin-bottom:22px;display:flex;align-items:flex-start;gap:12px;}
-.agp-icon{font-size:22px;flex-shrink:0;}
-.agp-t{font-size:13px;font-weight:600;color:#777;margin-bottom:4px;}
-.agp-s{font-size:11px;color:#555;line-height:1.7;}
-.pi{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #141414;font-size:13px;color:#BBB;}
-.pi:last-child{border-bottom:none;}
-.pd{width:18px;height:18px;border-radius:50%;background:${SC}25;border:1px solid ${SC}50;display:flex;align-items:center;justify-content:center;font-size:8px;color:${SC};flex-shrink:0;}
-.firma{display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid #1A1A1A;padding-top:18px;margin-top:6px;}
-.fe{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:${SC};}
-.fd{font-size:10px;color:#555;line-height:2;margin-top:4px;}.fd a{color:${SC};text-decoration:none;}
-.fs{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;color:${SC};text-align:right;}
-.fsub{font-size:10px;color:#555;text-align:right;line-height:1.8;margin-top:2px;}
+/* ── FRASES ── */
+.frases{background:#0A0A0A;border:1px solid #1A1A1A;border-radius:12px;padding:18px 20px;margin-bottom:22px;}
+.fr-q{font-size:15px;color:#ccc;font-style:italic;line-height:1.85;margin-bottom:5px;}
+.fr-autor{font-size:14px;font-weight:800;color:${SC};margin-top:4px;}
+.fr-autor::before{content:'— ';}
+.fr-div{height:1px;background:#1A1A1A;margin:12px 0;}
+.fr-q2{font-size:14px;color:#bbb;font-style:italic;line-height:1.85;margin-bottom:5px;}
+.fr-autor2{font-size:14px;font-weight:800;color:#fff;margin-top:4px;}
+.fr-autor2::before{content:'— ';}
+
+/* ── FIRMA ── */
+.firma{display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid #1A1A1A;padding-top:20px;margin-top:6px;}
+.fe{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:${SC};}
+.fd{font-size:11px;color:#666;line-height:2;margin-top:4px;}.fd a{color:${SC};text-decoration:none;}
+.fs{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:${SC};text-align:right;}
+.fsub{font-size:11px;color:#555;text-align:right;line-height:1.8;margin-top:2px;}
 .ffecha{font-size:9px;color:#333;text-align:right;margin-top:4px;}
-.seg-badge{display:inline-block;background:${SC};color:#fff;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;}
-.btn-print{display:block;width:100%;margin-top:22px;background:#1A1A1A;color:#AAA;border:1px solid #2A2A2A;border-radius:8px;padding:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.5px;cursor:pointer;text-align:center;}
-.btn-print:hover{background:#2A2A2A;}
-@media print{.btn-print{display:none!important}}
+
+/* ── CTA FINAL ── */
+.cta-guardar{display:block;width:100%;margin-top:24px;background:${SC};color:#fff;border:none;border-radius:10px;padding:15px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:.5px;cursor:pointer;text-align:center;}
+.cta-guardar:hover{opacity:.9;}
+.cta-print{display:block;width:100%;margin-top:10px;background:#0D0D0D;color:#555;border:1px solid #1A1A1A;border-radius:10px;padding:12px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:13px;cursor:pointer;text-align:center;}
+@media print{.cta-guardar,.cta-print{display:none!important}}
 </style>
 </head>
 <body>
 <div class="page">
+
+  <!-- 1. HERO -->
   <div class="hero">
     <div class="h-in">
       <div class="seg-badge">${SK} · ${SL}</div>
@@ -3375,70 +3604,159 @@ body{background:#060606;color:#fff;font-family:'Barlow',sans-serif;-webkit-print
       <div style="text-align:right"><div class="hbl">Ubicación</div><div class="hbv">${ciudad}</div><div class="hbs">Colombia · ${fecha}</div></div>
     </div>
   </div>
+
+  <!-- 2. FOTO FACHADA -->
   ${fachada?`<img class="fachada" src="${fachada}" alt="Fachada ${nombre}">`:''}
+
   <div class="body">
-    <div class="asesor-row">
-      <div class="af">${asesor.foto?`<img src="${asesor.foto}" alt="${asesor.nombre}">`:`<span>${asesor.emoji||'👤'}</span>`}</div>
-      <div><div class="an">${asesor.nombre}</div><div class="ac">${asesor.cargo}</div><div class="ae">PPA Central · Distribuidor Autorizado PPA Latam</div></div>
+
+    <!-- A — GANCHO EMOCIONAL: activa dolor/deseo por segmento -->
+    <div class="aida">
+      <div class="aq">${paq}</div>
+      <div class="ap">${pap}</div>
     </div>
-    <div class="aida"><div class="aq">${paq}</div><div class="ap">${pap}</div></div>
+
+    <!-- I — EQUIPO: construye interés con datos reales -->
     <div class="eq-card">
       <div class="ei"><span>${equipoSel.e}</span></div>
       <div class="einfo">
-        <div class="en">${equipoSel.n}</div><span class="et">${equipoSel.tec}</span>
-        <div class="ed">${tipo} · ${ciudad}<br><strong>${equipoSel.vel?'⚡ '+equipoSel.vel+' · ':''} ${equipoSel.v||''} ${equipoSel.kg?'· '+equipoSel.kg+'kg':''}</strong></div>
+        <div class="en">${equipoSel.n}</div>
+        <span class="et">${equipoSel.tec}</span>
+        <div class="ed">${tipo} · ${ciudad}<br><strong>${equipoSel.vel&&equipoSel.vel!=='—'?'⚡ '+equipoSel.vel+' · ':''} ${equipoSel.v||''} ${equipoSel.kg?'· '+equipoSel.kg+'kg':''}</strong></div>
       </div>
     </div>
-    <div class="sec">Equipamiento propuesto</div>
-    ${rows.replace(/class="prop-row"/g,'class="row"').replace(/class="prn"/g,'class="rn"').replace(/class="prsku"/g,'class="rsku"').replace(/class="prp"/g,'class="rp"')}
-    <div class="total">
-      <div><div class="tl">Total Equipos ★</div><div class="ts2">PSVP · Referencia usuario final · Sujeto a cambio</div></div>
-      <div class="tm">${total}</div>
-    </div>
-    ${vvis?`<div class="ventaja"><div class="vt">${vt}</div><div class="vp">${vp}</div></div>`:''}
+
+    <!-- D — SSG por segmento — usa función existente -->
     <div class="ssg">
-      <div class="ssg-t">¿Por qué elegir PPA Central?</div>
-      ${ssg.replace(/class="ssg-item"/g,'class="si"').replace(/class="ssg-dot"/g,'class="sd"')}
+      <div class="ssg-t">¿Por qué PPA Central?</div>
+      ${(function(){
+        var dolor = {
+          L01: 'Un portón que falla a las 11pm no es un inconveniente — es una vulnerabilidad. Casi siempre por elegir el motor por precio, no por durabilidad.',
+          L02: 'Un acceso fallido en un conjunto cuesta quejas en junta, multas e incidentes sin registro. El problema no es el motor — es no tener el correcto.',
+          L03: 'Un acceso detenido tiene un costo por hora: proveedores esperando, clientes que se van, operación frenada. Ese costo no aparece en la factura del motor barato.',
+          L04: 'En industria el tiempo de parada tiene un costo exacto: producción detenida, cadena afectada, penalizaciones. Un acceso que falla no es un problema técnico — es financiero.'
+        };
+        var sol = {
+          L01: equipoSel.n + ' con tecnología ' + equipoSel.tec + '. Abre en segundos, opera aunque se vaya la luz. Diseñado para el uso diario colombiano — fluctuaciones eléctricas incluidas.',
+          L02: equipoSel.n + ' — cada apertura registrada, cada ciclo calculado. Operación sin sorpresas para quienes dependen de ti todos los días.',
+          L03: equipoSel.n + ' con tecnología ' + equipoSel.tec + '. Velocidad comercial, ciclos intensivos, autonomía ante cortes. Tu operación no espera — tu acceso tampoco.',
+          L04: equipoSel.n + ' tecnología ' + equipoSel.tec + '. Ciclos continuos, cargas industriales, operación 24/7. La que elige quien sabe que el mantenimiento no planificado es el más caro.'
+        };
+        var garantia = {
+          L01: 'Más de 40 años de PPA en más de 50 países. Repuestos originales localmente. PPA Central en Florencia — a una llamada, no a un ticket de soporte.',
+          L02: 'PPA: mayor distribución en automatismos de América Latina. Instalación certificada, garantía directa, soporte local. Una decisión que la junta va a agradecer.',
+          L03: 'Más de 4.000 referencias PPA. Repuestos disponibles, instaladores certificados, soporte que responde cuando el negocio no puede parar.',
+          L04: 'Mayor red de distribución industrial en América Latina. Repuestos originales, soporte especializado, garantía de fábrica.'
+        };
+        var k = SK || 'L01';
+        return '<div class="si"><div class="sd">1</div><div>' + (dolor[k]||dolor.L01) + '</div></div>'
+             + '<div class="si"><div class="sd">2</div><div><strong>' + (sol[k]||sol.L01) + '</strong></div></div>'
+             + '<div class="si"><div class="sd">3</div><div>' + (garantia[k]||garantia.L01) + '</div></div>';
+      })()}
     </div>
-    <div class="proyecto">
-      <div class="proj-header">
-        <div class="proj-icon">🏗</div>
-        <div>
-          <div class="proj-titulo">Proyecto de automatización</div>
-          <div class="proj-sub">Esta propuesta cubre el equipo y los accesorios seleccionados. Para completar el proyecto necesitamos conocer el espacio.</div>
-        </div>
-      </div>
-      <div class="proj-div">Lo siguiente solo se puede determinar con una visita técnica</div>
-      <div class="proj-items">
-        <div class="proj-item"><div class="proj-dot">⚒</div><div><div class="proj-it">Mano de obra de instalación</div><div class="proj-is">Varía según condiciones del espacio y tipo de estructura</div></div></div>
-        <div class="proj-item"><div class="proj-dot">⚡</div><div><div class="proj-it">Materiales eléctricos requeridos</div><div class="proj-is">Cableado, canaleta y protecciones según distancias reales</div></div></div>
-        <div class="proj-item"><div class="proj-dot">🔩</div><div><div class="proj-it">Materiales de ornamentación</div><div class="proj-is">Aplica según estado de la estructura y acabados requeridos</div></div></div>
-      </div>
-      <div class="proj-cta">PPA Central coordinará para que un <strong>instalador certificado</strong> realice la visita y recibas el proyecto completo con todos los costos reales.</div>
-    </div>
+
+    <!-- D — VENTAJA TÉCNICA: justifica el precio antes de verlo -->
+    ${vvis?`<div class="ventaja"><div class="vt">${vt}</div><div class="vp">${vp}</div></div>`:''}
+
+    <!-- JOLT — costo del statu quo + urgencia pegada al precio -->
+    <!-- A — CTA VISITA: acción mientras el deseo está caliente -->
     ${getAgendaLabel() ? `
     <div class="agenda-confirmada">
       <div class="ag-icon">📅</div>
       <div>
-        <div class="ag-titulo">Visita técnica solicitada</div>
+        <div class="ag-titulo">✅ Visita técnica confirmada</div>
         <div class="ag-fecha">${getAgendaLabel()}</div>
-        <div class="ag-nota">PPA Central confirmará esta cita a la brevedad.</div>
+        <div class="ag-nota">PPA Central te contactará al WhatsApp registrado.</div>
       </div>
     </div>` : `
-    <div class="agenda-pendiente">
-      <div class="agp-icon">📅</div>
-      <div class="agp-t">Visita técnica por agendar</div>
-      <div class="agp-s">Contáctanos para coordinar la visita de un instalador certificado.<br>📞 +57 317 777 2 333 · @ppacentral</div>
+    <div class="agenda-pendiente" style="background:linear-gradient(135deg,rgba(34,197,94,.08) 0%,transparent 100%);border:1.5px solid rgba(34,197,94,.2);border-radius:14px;padding:20px;margin-bottom:20px;">
+      <div style="font-size:28px;margin-bottom:10px;">🎁</div>
+      <div class="agp-t" style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;color:#4ADE80;margin-bottom:8px;">Te regalamos la visita técnica</div>
+      <div class="agp-s" style="font-size:13px;color:#888;line-height:1.75;">Un instalador certificado PPA evalúa tu espacio sin costo — proyecto exacto con costos reales y la fecha que tú eliges.<br><br><strong style="color:#4ADE80;">No vendemos la visita. La regalamos</strong> — porque cuando la solución es la correcta, se nota sola.</div>
+      <div class="agp-num" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:#4ADE80;margin-top:14px;">📞 +57 317 777 2 333</div>
     </div>`}
-    <div class="firma">
-      <div><div class="fe">PPA Central</div><div class="fd">Distribuidor Autorizado PPA Latam<br>🌐 <a href="https://ppacentral.com">ppacentral.com</a> · 📱 @ppacentral<br>📞 +57 317 777 2 333<br>📍 Cra. 10 N 6-20 · B. Las Avenidas · Florencia, Caquetá</div></div>
-      <div><div class="fs">#PPACentral</div><div class="fsub">Tu acceso a la mejor<br>tecnología PPA.<br>Siempre a tu servicio.</div><div class="ffecha">${fecha}</div></div>
+
+    <!-- A — LISTA + TOTAL CON JOLT: precio real + costo de no actuar -->
+    <!-- ENTREGABLES VISITA v15.1 en exportable -->
+    <div style="background:linear-gradient(135deg,rgba(232,92,0,.07) 0%,transparent 100%);border:1px solid rgba(232,92,0,.18);border-radius:14px;padding:22px 20px;margin-bottom:24px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;color:#fff;letter-spacing:.3px;margin-bottom:4px;">En la visita técnica recibes esto.</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(232,92,0,.8);margin-bottom:18px;">SIN COSTO · SIN COMPROMISO · PARTE DEL PROCESO</div>
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;"><div style="width:36px;height:36px;border-radius:9px;background:rgba(0,82,147,.15);border:1px solid rgba(0,82,147,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🖼</div><div><div style="font-weight:700;font-size:13px;color:#fff;margin-bottom:2px;">Render antes / después</div><div style="font-size:12px;color:#666;line-height:1.65;">Ve exactamente cómo queda tu entrada con la solución instalada — <strong style="color:#aaa;">antes de decidir.</strong></div></div></div>
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;"><div style="width:36px;height:36px;border-radius:9px;background:rgba(77,79,83,.2);border:1px solid rgba(77,79,83,.35);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📐</div><div><div style="font-weight:700;font-size:13px;color:#fff;margin-bottom:2px;">Viabilidad estructural</div><div style="font-size:12px;color:#666;line-height:1.65;">Tu espacio evaluado por un especialista. Sin esto, <strong style="color:#aaa;">cualquier cotización es una estimación con logo.</strong></div></div></div>
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:16px;"><div style="width:36px;height:36px;border-radius:9px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">☀️</div><div><div style="font-weight:700;font-size:13px;color:#4ADE80;margin-bottom:2px;">Viabilidad fotovoltaica</div><div style="font-size:12px;color:#666;line-height:1.65;">Tu acceso, autónomo de la red eléctrica. <strong style="color:#4ADE80;">Aunque no haya luz.</strong></div></div></div>
+      <div style="font-size:10px;color:#444;line-height:1.7;text-align:center;padding-top:12px;border-top:1px solid rgba(255,255,255,.05);">Con PPA Central o con quien decidas — estos son los pasos mínimos para proyectar bien y escalar la inversión.</div>
     </div>
-    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Guardar como PDF</button>
+
+    <div class="sec">Equipamiento propuesto</div>
+    ${rows.replace(/class="prop-row"/g,'class="row"').replace(/class="prn"/g,'class="rn"').replace(/class="prsku"/g,'class="rsku"').replace(/class="prp"/g,'class="rp"')}
+
+    <div class="total">
+      <div><div class="tl">Total Equipos ★</div><div class="ts2">PSVP · Referencia usuario final</div></div>
+      <div class="tm">${total}</div>
+    </div>
+
+    <div class="vigencia">
+      <div class="vig-ico">⏳</div>
+      <div class="vig-t">
+        <strong>Precios vigentes 7 días hábiles.</strong>
+        ${{
+          L01: ' Sin automatizar, tu acceso sigue siendo una vulnerabilidad — el costo de un incidente siempre supera el de la solución.',
+          L02: ' Cada día sin control de acceso es un día sin registro. En un conjunto, eso tiene consecuencias reales.',
+          L03: ' Una operación sin acceso controlado tiene un costo por hora. Este sistema no lo tiene.',
+          L04: ' En industria, el tiempo de parada tiene un costo exacto. Este sistema lo elimina.'
+        }[SK]||' Consulta disponibilidad con tu asesor PPA Central.'}
+      </div>
+    </div>
+
+    <!-- Proyecto — siguiente paso, no advertencia -->
+    <div class="proyecto">
+      <div class="proj-t">El siguiente paso incluye</div>
+      <div class="proj-items">
+        <div class="proj-item"><div class="proj-dot">⚒</div><span>Costo exacto de instalación — medido en tu espacio real</span></div>
+        <div class="proj-item"><div class="proj-dot">⚡</div><span>Materiales eléctricos precisos — sin estimados</span></div>
+        <div class="proj-item"><div class="proj-dot">📅</div><span>Fecha de instalación — la que tú eliges</span></div>
+      </div>
+    </div>
+
+    <!-- NARA — humanización después de la decisión -->
+    <div class="asesor-row">
+      <div class="af"><span>🟠</span></div>
+      <div>
+        <div class="an">NARA</div>
+        <div class="ac">Asistente IA · PPA Central</div>
+        <div class="ae">Distribuidor Autorizado PPA Latam</div>
+      </div>
+    </div>
+
+    <!-- Frases — cierre emocional -->
+    <div class="frases">
+      <div class="fr-q">"El precio es lo que pagas. El valor es lo que recibes."</div>
+      <div class="fr-autor">Warren Buffett</div>
+      <div class="fr-div"></div>
+      <div class="fr-q2">"Hay tres tipos de automatización: la que falla, la que dura — y la que te hace olvidar que existe."</div>
+      <div class="fr-autor2">PPA Central</div>
+    </div>
+
+    <!-- Firma -->
+    <div class="firma">
+      <div>
+        <div class="fe">PPA Central</div>
+        <div class="fd">Distribuidor Autorizado PPA Latam<br>🌐 <a href="https://ppacentral.com">ppacentral.com</a> · 📱 @ppacentral<br>📞 +57 317 777 2 333<br>📍 Cra. 10 N 6-20 · B. Las Avenidas · Florencia, Caquetá</div>
+      </div>
+      <div>
+        <div class="fs">#PPACentral</div>
+        <div class="fsub">Tu acceso a la mejor<br>tecnología PPA.<br>Siempre disponibles.</div>
+        <div class="ffecha">${fecha}</div>
+      </div>
+    </div>
+    <!-- 15. CTA FINAL -->
+    <button class="cta-guardar" onclick="window.print()">⬇ Guardar mi propuesta</button>
+    <button class="cta-print" onclick="window.print()">🖨 Imprimir</button>
+
   </div>
 </div>
-</body></html>`;
-}
+</body></html>
+`;}
 
 // ══════════════════════════════════════
 // DETECCIÓN DISPOSITIVO
@@ -3457,13 +3775,13 @@ async function publicarYEnviar(){
   btn.textContent='⏳ Preparando...'; btn.disabled=true;
 
   const html   = buildHTMLProp();
-  const nombre = document.getElementById('c-nombre').value.trim()||'Cliente';
+  const nombre = (document.getElementById('c-nombre')?.value?.trim()) || clienteNombre || 'Cliente';
   const cotID  = document.getElementById('consecBadge').textContent;
   const fname  = nombreArchivoMarketing(nombre, cotID)+'.html';
-  const ciudad = document.getElementById('c-ciudad').value.trim()||'';
+  const ciudad = (document.getElementById('c-ciudad')?.value||'').trim()||'';
   const total  = document.getElementById('prop-total-num').textContent;
   const asesor = asesorSel ? asesorSel.nombre : 'PPA Central';
-  const tel    = document.getElementById('c-tel').value.trim().replace(/\D/g,'');
+  const tel    = ((document.getElementById('c-tel')?.value?.trim()) || clienteTel || '').replace(/\D/g,'');
 
   const msgTexto =
 `🏠 *${nombre}* — su propuesta PPA está lista
@@ -3480,9 +3798,7 @@ _${asesor} · PPA Central_
 
   const blob = new Blob([html], {type:'text/html;charset=utf-8'});
 
-  const waUrl = tel
-    ? `https://wa.me/57${tel}?text=${encodeURIComponent(msgTexto)}`
-    : `https://wa.me/?text=${encodeURIComponent(msgTexto)}`;
+  const waUrl = `https://wa.me/573177772333?text=${encodeURIComponent(msgTexto)}`;
 
   if(esMobil()){
     // ── MÓVIL iOS/Android ──────────────────────────────────────
@@ -3561,7 +3877,7 @@ function mostrarPanelPost(fname, esMov){
 function reenviarWA(){ publicarYEnviar(); }
 
 function copiarLink(){
-  const tel = document.getElementById('c-tel').value.trim().replace(/\D/g,'');
+  const tel = (document.getElementById('c-tel')?.value||'').trim().replace(/\D/g,'');
   if(tel){ navigator.clipboard.writeText(`+57${tel}`).then(()=>showToast('✅ Número copiado')).catch(()=>{}); }
   else{ showToast('⚠ Sin número de teléfono'); }
 }
@@ -3580,7 +3896,7 @@ function verLink(){
 function descargarHTML(){
   const html   = buildHTMLProp();
   const blob   = new Blob([html],{type:'text/html;charset=utf-8'});
-  const nombre = document.getElementById('c-nombre').value.trim()||'Cliente';
+  const nombre = (document.getElementById('c-nombre')?.value?.trim()) || clienteNombre || 'Cliente';
   const cotID  = document.getElementById('consecBadge').textContent;
   descargarBlob(blob, `${nombreArchivoMarketing(nombre,cotID)}.html`);
   showToast('⬇ HTML descargado');
@@ -3604,7 +3920,7 @@ async function imprimirPDF(){
       cargarScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')
     ]);
 
-    const nombre = document.getElementById('c-nombre').value.trim()||'Cliente';
+    const nombre = (document.getElementById('c-nombre')?.value?.trim()) || clienteNombre || 'Cliente';
     const consec = document.getElementById('ph-consec').textContent.split('·')[0].trim();
     const fname  = nombreArchivoMarketing(nombre,consec);
 
@@ -3887,10 +4203,298 @@ function getAgendaLabel(){
 
 
 
-// INIT
+
+// ══════════════════════════════════════
+// SPLASH v14.1 — 4 segundos
+// ══════════════════════════════════════
+function cerrarSplash(){
+  const sp = document.getElementById('splash-nara');
+  if(!sp || sp._cerrando) return;
+  sp._cerrando = true;
+  sp.style.opacity = '0';
+  sp.style.transition = 'opacity .28s ease';
+  setTimeout(()=>{
+    sp.remove();
+    goStep(1); // paso 1: foto
+  }, 300);
+}
+
+function initSplash(){
+  // Estrategia triple — la primera que dispare gana
+  // 1. Listener en animationend de la barra naranja
+  const barra = document.getElementById('splash-bar');
+  if(barra){
+    barra.addEventListener('animationend', ()=>cerrarSplash(), {once:true});
+  }
+  // 2. setTimeout alineado con la duración real de la barra (4s + .2s delay)
+  setTimeout(()=>cerrarSplash(), 4500);
+  // 3. Fallback duro: 6 segundos sin importar nada
+  setTimeout(()=>cerrarSplash(), 6000);
+}
+
+// ══════════════════════════════════════
+// v14.2 — mostrarGancho directo a captura de datos (foto en paso 1)
+// ══════════════════════════════════════
+function mostrarGancho(){
+  if(!equipoSel){ showToast('⚠ Selecciona un equipo'); goStep(2); return; }
+  mostrarPantallaGancho();
+}
+
+function prevFotoIngreso(input){
+  const file = input.files[0]; if(!file) return;
+  const r = new FileReader();
+  r.onload = function(e){
+    fotoDataUrl = e.target.result;
+    // Actualizar preview en pantalla foto ingreso
+    const img = document.getElementById('foto-ingreso-img');
+    img.src = fotoDataUrl;
+    document.getElementById('foto-ingreso-preview').style.display = 'block';
+    document.getElementById('foto-ingreso-banner').style.display = 'none';
+    // Actualizar también el preview del paso 1 si existe
+    const p1img = document.getElementById('foto-prev-img');
+    if(p1img){ p1img.src = fotoDataUrl; p1img.style.display='block'; }
+  };
+  r.readAsDataURL(file);
+}
+
+function cambiarFotoIngreso(){
+  document.getElementById('foto-ingreso-preview').style.display = 'none';
+  document.getElementById('foto-ingreso-banner').style.display = 'block';
+  fotoDataUrl = null;
+}
+
+function continuarDesdeFoto(){
+  document.getElementById('paso-foto-ingreso').style.display = 'none';
+  mostrarPantallaGancho();
+}
+
+function saltarFotoIngreso(){
+  document.getElementById('paso-foto-ingreso').style.display = 'none';
+  mostrarPantallaGancho();
+}
+
+function mostrarPantallaGancho(){
+  const nombreP1 = document.getElementById('c-nombre')?.value?.trim();
+  const telP1    = document.getElementById('c-tel')?.value?.trim();
+  const deptoP1  = document.getElementById('c-depto')?.value;
+  const ciudadP1 = document.getElementById('c-ciudad')?.value;
+  if(nombreP1) document.getElementById('gancho-nombre').value = nombreP1;
+  if(telP1)    document.getElementById('gancho-wa').value = telP1;
+  if(deptoP1){
+    document.getElementById('gancho-depto').value = deptoP1;
+    cargarMunicipiosGancho();
+    if(ciudadP1) setTimeout(()=>{ document.getElementById('gancho-ciudad').value = ciudadP1; }, 50);
+  }
+  document.getElementById('paso-gancho').style.display = 'block';
+}
+
+// ══════════════════════════════════════
+// MUNICIPIOS GANCHO v14.1
+// ══════════════════════════════════════
+function cargarMunicipiosGancho(){
+  const depto = document.getElementById('gancho-depto').value;
+  const sel   = document.getElementById('gancho-ciudad');
+  const munis = MUNICIPIOS[depto] || [];
+  sel.innerHTML = munis.length
+    ? munis.map(m=>`<option value="${m}">${m}</option>`).join('')
+    : '<option value="">Primero depto…</option>';
+  if(depto === 'Caquetá') sel.value = 'Florencia';
+}
+
+// ══════════════════════════════════════
+// GANCHO — confirmar y generar
+// ══════════════════════════════════════
+function confirmarGanchoYGenerar(){
+  const nombre = document.getElementById('gancho-nombre').value.trim();
+  const wa     = document.getElementById('gancho-wa').value.trim();
+  const depto  = document.getElementById('gancho-depto').value;
+  const ciudad = document.getElementById('gancho-ciudad').value;
+
+  // v14.5 — obligatorios: sin datos no hay propuesta
+  if(!nombre){ showToast('⚠ Ingresa tu nombre'); document.getElementById('gancho-nombre').focus(); return; }
+  if(!wa || wa.replace(/\D/g,'').length < 7){ showToast('⚠ Ingresa tu WhatsApp'); document.getElementById('gancho-wa').focus(); return; }
+
+  if(nombre){ const n1=document.getElementById('c-nombre'); if(n1&&!n1.value.trim()) n1.value=nombre; }
+  if(wa){     const t1=document.getElementById('c-tel');    if(t1&&!t1.value.trim()) t1.value=wa; }
+  if(depto){
+    const d1=document.getElementById('c-depto'); if(d1) d1.value=depto;
+    cargarMunicipios();
+  }
+  if(ciudad){
+    setTimeout(()=>{ const c1=document.getElementById('c-ciudad'); if(c1) c1.value=ciudad; }, 80);
+  }
+  // Guardar globalmente para generarProp
+  clienteNombre = nombre || clienteNombre;
+  clienteTel    = wa     || clienteTel;
+  clienteDepto  = depto  || clienteDepto;
+  clienteCiudad = ciudad || clienteCiudad;
+
+  // v15 — Bitrix24: lead automático en el momento de captura
+  registrarEnBitrix({
+    nombre:   clienteNombre,
+    tel:      clienteTel,
+    ciudad:   clienteCiudad || clienteDepto || 'Colombia',
+    equipo:   equipoSel ? equipoSel.n : 'Por definir',
+    total:    document.getElementById('prop-total-num')?.textContent || 'Por cotizar',
+    segmento: typeof SK !== 'undefined' ? SK : 'Sin segmento',
+    consec:   document.getElementById('consecBadge')?.textContent || '—',
+  });
+
+  cerrarGancho();
+  generarProp();
+}
+
+function saltarGancho(){ cerrarGancho(); generarProp(); }
+function cerrarGancho(){ document.getElementById('paso-gancho').style.display='none'; }
+
+// ══════════════════════════════════════
+// NARA fija v14.1
+// ══════════════════════════════════════
+function initNara(){
+  asesorSel = {id:'nara',nombre:'NARA',cargo:'Asistente IA · PPA Central',emoji:'🟠',foto:''};
+}
+
+// ══════════════════════════════════════
+// SSG POR SEGMENTO v14.1 — específico, con dolor real
+// ══════════════════════════════════════
+function ssgPorSegmento(segCode, equipo){
+  const n = equipo?.n || 'equipo PPA';
+  const tec = equipo?.tec || '';
+  const SSG_MAP = {
+    L01:[
+      `<strong>El problema real:</strong> Un portón que falla a las 11pm no es un inconveniente — es una vulnerabilidad. Y la causa casi siempre es haber elegido el motor por precio, no por durabilidad.`,
+      `<strong>Tu solución hoy:</strong> ${n} con tecnología ${tec}. Abre en segundos, cierra con precisión, opera aunque se vaya la luz. Diseñado para resistir el uso diario de una familia colombiana — con las fluctuaciones eléctricas incluidas.`,
+      `<strong>Respaldo real:</strong> Más de 40 años de PPA en más de 50 países. Repuestos originales disponibles localmente. PPA Central en Florencia, Caquetá — a una llamada, no a un ticket de soporte.`,
+    ],
+    L02:[
+      `<strong>Lo que un acceso fallido le cuesta a un conjunto:</strong> Quejas en la junta, multas, incidentes que no pudiste demostrar porque no había registro. El problema no es el motor — es no tener el correcto.`,
+      `<strong>Tu solución hoy:</strong> ${n} — diseñado para el tráfico real de un conjunto residencial. Cada apertura registrada. Cada ciclo calculado. Operación sin sorpresas para quienes dependen de ti todos los días.`,
+      `<strong>Respaldo real:</strong> PPA es la marca con mayor distribución en automatismos de América Latina. Instalación certificada, garantía directa y soporte técnico local. Una decisión que la junta va a agradecer.`,
+    ],
+    L03:[
+      `<strong>Lo que un acceso detenido le cuesta a tu negocio:</strong> Proveedores esperando, clientes que se van, operación frenada. Cada minuto parado tiene un costo que no aparece en la factura del motor barato.`,
+      `<strong>Tu solución hoy:</strong> ${n} con tecnología ${tec}. Velocidad comercial, ciclos de uso intensivo, autonomía ante cortes de energía. Tu operación no espera — tu acceso tampoco debería.`,
+      `<strong>Respaldo real:</strong> Tecnología PPA presente en más de 4.000 referencias. Repuestos disponibles, instaladores certificados y soporte técnico que responde cuando el negocio no puede parar.`,
+    ],
+    L04:[
+      `<strong>En industria, el tiempo de parada tiene un costo exacto:</strong> Producción detenida, cadena de suministro afectada, penalizaciones contractuales. Un acceso que falla no es un problema técnico — es un problema financiero.`,
+      `<strong>Tu solución hoy:</strong> ${n} — tecnología ${tec}. Construida para ciclos continuos, cargas industriales y operación 24/7. La que elige quien sabe que el mantenimiento más caro es el no planificado.`,
+      `<strong>Respaldo real:</strong> PPA tiene la mayor red de distribución de automatismos industriales en América Latina. Repuestos originales, soporte técnico especializado y garantía respaldada de fábrica.`,
+    ],
+  };
+  const items = SSG_MAP[segCode] || SSG_MAP.L01;
+  return items.map((s,idx)=>`<div class="ssg-item"><div class="ssg-dot">${idx+1}</div><div>${s}</div></div>`).join('');
+}
+
+// ══════════════════════════════════════
+// HELPER v15 — setHTML seguro
+// ══════════════════════════════════════
+function setHTML(id, html){
+  var el = document.getElementById(id);
+  if(el) el.innerHTML = html;
+}
+
+// ══════════════════════════════════════
+// ALIAS v15 — actualizarTotales era llamada pero nunca definida
+// Apunta a renderAccesoriosInteligentes que recalcula y renderiza
+// ══════════════════════════════════════
+function actualizarTotales(){
+  // Solo actualiza contadores visuales — NO re-renderiza para evitar bucle
+  // renderImprescindibles → actualizarTotales → renderAcc → renderImprescindibles = stack overflow
+  if(!equipoSel) return;
+  try {
+    // Actualizar badge de cantidades seleccionadas en acordeones
+    var grupos = document.querySelectorAll('[id^="cnt-"]');
+    grupos.forEach(function(el){
+      var gId = el.id.replace('cnt-','');
+      var items = document.querySelectorAll('#'+gId+' .acc-item');
+      var sel = 0;
+      items.forEach(function(it){ if(it.classList.contains('on')) sel++; });
+      el.textContent = sel + ' sel.';
+      el.className = sel > 0 ? 'acc-badge-count' : 'acc-badge-count acc-badge-0';
+    });
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════
+// BITRIX24 v15 — lead automático al capturar datos
+// Reemplaza BITRIX_WEBHOOK con tu URL real de Bitrix24
+// ══════════════════════════════════════
+const BITRIX_WEBHOOK = 'REEMPLAZAR_CON_TU_WEBHOOK_BITRIX24';
+
+async function registrarEnBitrix(datos){
+  if(!BITRIX_WEBHOOK || BITRIX_WEBHOOK.includes('REEMPLAZAR')) return;
+  try {
+    const payload = {
+      fields: {
+        TITLE:       'PPA Central · ' + datos.nombre + ' · ' + datos.ciudad,
+        NAME:         datos.nombre,
+        PHONE:       [{ VALUE: datos.tel, VALUE_TYPE: 'WORK' }],
+        SOURCE_ID:   'WEB',
+        SOURCE_DESCRIPTION: 'Cotizador Web PPA Central v15.2',
+        COMMENTS:    [
+          'Equipo: '     + datos.equipo,
+          'Total PSVP: ' + datos.total,
+          'Segmento: '   + datos.segmento,
+          'Ciudad: '     + datos.ciudad,
+          'Consecutivo: '+ datos.consec,
+          'Asesor: NARA IA',
+        ].join('\n'),
+        ASSIGNED_BY_ID: 1,
+      }
+    };
+    await fetch(BITRIX_WEBHOOK + 'crm.lead.add.json', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+    });
+  } catch(e) {
+    console.warn('Bitrix24:', e.message);
+  }
+}
+
+// ══════════════════════════════════════
+// INIT v14.1
+// ══════════════════════════════════════
+async function init(){
+  document.getElementById('consecBadge').textContent = generarID();
+  cargarMunicipios();
+  cargarPreciosSheets();
+  renderAsesores();
+  initFechaAgenda();
+  initNara();
+}
+
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded',init);
 }else{init();}
+
+
+</script>
+
+<!-- Splash init — inline al final del body, DOM garantizado -->
+<script>
+(function(){
+  function cerrarS(){
+    var sp = document.getElementById('splash-nara');
+    if(!sp || sp._done) return;
+    sp._done = true;
+    sp.style.transition = 'opacity .28s';
+    sp.style.opacity = '0';
+    setTimeout(function(){
+      sp.style.display = 'none';
+      goStep(1); // paso 1: foto
+    }, 300);
+  }
+
+  // Arrancar cuando el DOM está listo (este script ES el último del body)
+  var barra = document.getElementById('splash-bar');
+  if(barra){
+    barra.addEventListener('animationend', cerrarS, {once: true});
+  }
+  setTimeout(cerrarS, 4600);   // barra: 4s + .2s delay + .4s margen
+  setTimeout(cerrarS, 7000);   // fallback duro
+})();
 </script>
 </body>
 </html>
